@@ -1,0 +1,618 @@
+\documentclass{report}
+%\usepackage[utopia]{mathdesign}
+%\usepackage{amsmath, amsthm}
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+%\usepackage[varbb]{newpxmath}
+%\usepackage[osf,largesc,theoremfont]{newpxtext}
+%\usepackage{coelacanth}
+%\usepackage{beraserif} % Bitstream Vera Serif font
+%\usepackage{berasans} % Bitstream Vera Sans font
+%\usepackage{beramono} % Bitstream Vera Sans Mono font
+%\usepackage{berasans}
+%\usepackage{libertine}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{crimson}
+
+
+%% Choose one of the following (if not choosing the  
+%% default, viz., Computer Modern, font family):
+%\usepackage{lmodern}
+\usepackage{bold-extra}
+%%
+%\usepackage{mathpazo}
+% \usepackage{newpxmath}
+%\usepackage{kpfonts} % Very good
+%%
+%\usepackage{mathptmx} %Very good
+%\usepackage{stix} 
+%\usepackage{txfonts} %Very good
+\usepackage{newtxtext,newtxmath} %Very good
+%%
+%\usepackage{libertine} \usepackage[libertine]{newtxmath}
+%\usepackage{libertine,libertinust1math} % added 2019/11/28
+%%
+%\usepackage{newpxtext} \usepackage[euler-digits]{eulervm}
+%\usepackage{textcomp}
+%\usepackage{bm}
+\usepackage{contour}
+\usepackage{adjustbox}
+
+
+
+
+
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/preamble.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+\renewcommand{\ttdefault}{cmtt}
+\newcommand{\textttbf}[1]{\contour{yellow!45}{\texttt{#1}}}
+\newcommand{\varitem}[3][black]{%
+    \item[%
+        \colorbox{#2}{\textcolor{#1}{\makebox(5.5,7){#3}}}%
+    ]
+}
+
+
+
+
+
+
+\title{\huge{MATH1400}\\\Huge{Calcul à plusieurs variables}\\\vspace{2em}Introduction }
+\author{\huge{Franz Girardin}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+
+\titleformat*{\section}{%
+    \large\bfseries%
+}
+
+
+\begin{multicols*}{3}
+    \footnotesize
+
+    \chapter{Fonctions et propriétés}
+
+    \section{Fonction exponentielle}
+    \begin{itemize}
+        \item[$\rhd$]  \textbf{Domaine} : $\mathbb{R}$  
+        \item[$\rhd$]  \textbf{Continuité} : Continue sur \textbf{dom} 
+        \item[$\rhd$]  \textbf{Croissance}  $0 < base < 1$ : 
+            Stric. $\downarrow$
+
+        \item[$\rhd$]  \textbf{Croissance}  $base > 1$ : Stric. $\uparrow$
+        \item[$\rhd$]  \textbf{Ordonnée O.} : $e^0 = 1$   
+        \item[$\rhd$]  \textbf{Signe} : $\forall x \in \mathbb{R}, e^x > 0$  
+        \item[$\rhd$]   $e^x : x\longrightarrow\infty+$ :  
+            $\lim\limits_{x\to+\infty}e^x  = \infty$  
+            \item[$\rhd$]   $e^x : x\longrightarrow\infty-$ :  
+                $\lim\limits_{x\to-\infty}e^x  = 0$
+    \end{itemize}
+
+
+\section{Propriétés exponentielles}  
+\begin{align*}
+      e^{x+y} = e^{x}e^{y} \quad |& \quad e^{xy} = (e^{x})^{y} \\
+      (e^x)^{\prime} = e^x \quad | & \quad (a^x)^{\prime} = a^x\log_ea
+\end{align*}
+
+
+    \section{Fonction logarithmique}
+    \begin{itemize}
+        \item[$\rhd$]  \textbf{Domaine} : $]0, \infty [$  
+        \item[$\rhd$]  \textbf{Continuité} : Continue sur \textbf{dom} 
+        \item[$\rhd$]  \textbf{Croissance}  $0 < base < 1$ : 
+            Stric. $\downarrow$
+
+        \item[$\rhd$]  \textbf{Croissance}  $base > 1$ : Stric. $\uparrow$
+        \item[$\rhd$]  \textbf{Abscisse O.} : $\log_e(1) = 0$ 
+        \item[$\rhd$]  \textbf{Signe} : $\forall x > AO, \log_ax > 0; \; 
+            \forall x, 0 < x < AO, \log_ax < 0$  
+        \item[$\rhd$]   $e^x : x\longrightarrow\infty+$ :  
+            $\lim\limits_{x\to+\infty}\log_ax  = \infty$  
+            \item[$\rhd$]   $e^x : x\longrightarrow\infty-$ :  
+                $\lim\limits_{x\to-\infty}\log_ax  = -\infty$
+    \end{itemize}
+
+
+
+    \begin{align*}
+      \log(x+y) = \log x + \log y \; \Big| & \; \log x^y = y\log x \\
+      \log_a x = \dfrac{\log_a x}{\log_b x} \; \Big| & \; 
+                                     (\log x)^{\prime} = \dfrac{1}{x}  
+    \end{align*}
+
+    \section{Optimisation}
+
+    \begin{itemize}
+        \item[$\rhd$]  \textbf{Maximum} : point $x \in \textbf{ dom } : 
+            \forall y \in f, y \neq x, f(x) \geq f(y)$     
+        \item[$\rhd$]  \textbf{Minimum} : point $x \in \textbf{ dom } : 
+            \forall y \in f, y \neq x, f(x) \leq f(y)$    
+        \item[$\rhd$]  \textbf{Point d'inflexion}: $\uparrow - \downarrow$ 
+            ou $\downarrow - \uparrow$
+        \item[$\rhd$]  \textbf{Potentiel max ou min} :   
+        $f^{\prime} \left( x \right) = 0$ ou 
+        $f^{\prime} \left(x\right) \nexists$
+    \end{itemize}
+
+    \section{Test de la dérivé première}
+    Soit $f\left(x\right)$, on peut considérer $f^{\prime}(x)$ 
+    pour déduire des \textbf{informations} propres à $f$.   
+
+    \begin{table}[H]
+    \centering
+
+      \caption {Test de la dérivé première pour une fonction hypothétique}
+
+    \begin{adjustbox}{width=0.33\textwidth}
+        \renewcommand{\arraystretch}{1.5}
+        \fontfamily{flr}\selectfont
+        \begin{tabular}{|l|l|l|l|l|l|l|l|l}
+        \arrayrulecolor{blue}\hline
+        \rowcolor{lightBlue}
+        \textcolor{myb}{} & \textcolor{myb}{ $-\infty$ } & & -2 & & 1 & & 10
+        \\
+        \hline
+        \hline
+        \arrayrulecolor{black} 
+        $f^{\prime} $ &  & + &  & + & $\nexists$  & - & 
+        \\ 
+        \hline 
+        $f$ & $-\infty$  & $\nearrow$ & inflex. & 
+        $\nearrow$ & max & $\searrow$ & 0 
+        \\ 
+        \hline
+      \end{tabular}
+    \end{adjustbox}
+    \end{table}
+    
+
+    \begin{table}[h]
+      \caption {Test de la dérivé première pour une fonction hypothétique}
+
+      \begin{center}
+        \renewcommand{\arraystretch}{1.5}
+        \fontfamily{flr}\selectfont
+        \footnotesize
+        \begin{tabular}{|l|l|l|l|l|l|l|l|l}
+        \arrayrulecolor{blue}\hline
+        \rowcolor{lightBlue}
+        \textcolor{myb}{} & \textcolor{myb}{ $-\infty$ } & & -2 & & 1 & & 10
+        \\
+        \hline
+        \hline
+        \arrayrulecolor{black} 
+        $f^{\prime} $ &  & + &  & + & $\nexists$  & - & 
+        \\ 
+        \hline 
+        $f$ & $-\infty$  & $\nearrow$ & inflex. & $\nearrow$ & max & $\searrow$ & 0 
+        \\ 
+        \hline
+      \end{tabular}
+    \end{center}
+    \end{table}
+\begin{EExample}{Interpréter un tableau de test de dérivé première}{}
+  \textbf{1. Comportement à la frontière} 
+  Appliquer une limite aux deux frontières de la fonction, dans ce cas-ci $x \rightarrow -\infty$ et 
+  $x \rightarrow 10$. On a :
+  \begin{align*}
+    \lim\limits_{x\to\infty^{+}}f(x) = \infty  \textbf{ et }\lim\limits_{x\to 10}f(x) = 0        
+  \end{align*}
+  2. Calculer $f^{\prime}$. Trouver $x$ tels que :
+  \begin{enumerate}
+    \varitem{blue!40}{\textbf{1}} $f^{\prime}\left(x\right) = 0$
+  \varitem{blue!40}{\textbf{2}} $f^{\prime}\left(x\right)$ n'existe pas  
+  \end{enumerate}
+  \textbf{Dans le contexte de l'exemple}, on a trouvé la valeur $-2$, qui correspond au moment ou 
+  $f^{\prime}\left(x\right) = 0$. Et la valeur $1$ correspond au moment ou la dérivé n'existe pas. \\\\ 
+  \textbf{3. Trouver le signe $f^{\prime}$} sur chacun des intervales entre nos points d'intérêts pour déterminer 
+  le comportement de la fonction. \\ 
+  \textbf{Entre $-\infty$ et $-2$}, la dérivé est positive; la fonction est donc \textbf{croissante} 
+  sur cet interval. \\
+  \textbf{Entre $-2$ et $1$}, la dérivé est positive; la fonction est donc \textbf{croissante} 
+  sur cet interval. \\
+  \textbf{Entre $1$ et $10$}, la dérivé est négative; la fonction est donc \textbf{décroissante} 
+  sur cet interval. \\\\
+Noter que pour déterminer le signe de la dérivé, il suffit d'évaluer $f^{\prime}\left(x\right)$ à n'importe 
+quel endroit dans l'interval (e.g.  $f^{\prime}\left(1\right)$  pour l'intervale de $-\infty$ à $-2$)  
+\end{EExample}
+
+
+
+\section{Test de la dérivé seconde}
+\begin{Concept}{Test de la dérivé seconde}{}
+\textbf{Si et seulement si} on obtient un point d'intérêt ou la dérivée première est nulle, on peut trouver 
+les maximums et minimums locaux, grâce au test de la dérivé seconde    
+\end{Concept}
+
+\begin{Definitionx*}{Maximum et minimum local}{}
+  Soit $f^{\prime}\left(x\right) = 0$ \textcolor{myb}{\textbf{et}} $f^{\prime\prime}\left(x\right) < 0$, on a  
+  un \textbf{maximum local} en x. \\\\
+    Soit $f^{\prime}\left(x\right) = 0$ \textcolor{myb}{\textbf{et}} $f^{\prime\prime}\left(x\right) > 0$, on a  
+  un \textbf{minimum local} en x.
+\end{Definitionx*}
+
+\section{Fonctions sinus et cosinus}
+\begin{table}[H]
+  \caption {Propriétés des fonctions sinus et cosinus}
+
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \fontfamily{flr}\selectfont
+    \footnotesize
+    \begin{tabular}{l|l}
+    \arrayrulecolor{blue}\hline
+    \rowcolor{lightBlue}
+    \textcolor{myb}{Propriété} & \textcolor{myb}{Descritpion}
+    \\
+    \hline
+    \arrayrulecolor{black}
+Domaine
+& 
+$\mathbb{R}$
+\\
+\hline
+Continuité
+&
+Continue sur leur domaine  
+\\
+\hline
+Croissance 
+&
+Toutes deux $2\pi$ périodiques. 
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{Identite}{Cosinus pair et sinus impart}{}
+  $\cos\left(-x\right) = \cos\left(x\right)$ \textcolor{myb}{\textbf{et}} 
+  $\sin\left(-x\right) = -\sin\left(x\right)$
+\end{Identite}
+
+\begin{Identite}{Règle de dérivation de la fonction cosinus}{}
+  $\dfrac{d}{dx}\cos\left(x\right) = -\sin\left(x\right)$
+\end{Identite}
+
+\begin{Identite}{Règle de dérivation de la fonction sinus}{}
+  $\dfrac{d}{dx}\sin\left(x\right) = -\cos\left(x\right)$
+\end{Identite}
+
+\begin{Identite}{}{}
+    $\cos^2\left(x\right) + \sin^2\left(x\right) = 1 $ 
+\end{Identite}
+
+\begin{Identite}{}{}
+    $\cos\left(a +b \right) = \cos a \cos b -\sin a \sin b$
+    $\sin\left(a +b \right) = -\sin a \cos b + \cos a \sin b$
+\end{Identite}
+
+\chapter{Limites des fonctions}
+\section{Limite}
+\columnbreak
+\begin{Definitionx*}{}{}
+  $ \lim\limits_{x\to a}f(x)$ \textcolor{myb}{Converge vers L} si $f(x)$ est aussi proche que l'on veut de 
+  $L$ \textbf{lorsque}   $x \to a$
+
+\end{Definitionx*}
+\vspace{-1em}
+
+\section{Limite à droite et à gauche}
+\begin{Definitionx*}{}{}
+    Soit $f D\rightarrow \mathbb{R}$ \\ 
+    \textcolor{myb}{La limite à droite} est la limite lorsque $x$ s'approche de a, venant de la 
+    \textbf{droite}   : \\ 
+    \[ \lim\limits_{x\to a^{+}} f(x) \implies  x \in D \text{ et } x > a \] 
+
+    \textcolor{myb}{La limite à droite} est la limite lorsque $x$ s'approche de a, venant de la \textbf{gauche} : \\ 
+    \[ \lim\limits_{x\to a^{+}} f(x) \implies  x \in D \text{ et } x < a \]   
+  \textbf{Lorsque les deux limites sont équivalente}, \textcolor{myb}{la limite existe } :   
+  
+  \begin{center}
+    $\lim\limits_{x\to a^{-}}f(x) = L = \lim\limits_{x\to a^{+}}f(x) $\\ 
+    $\big\Updownarrow$ \\
+    $\lim\limits_{x\to a} = L$
+  \end{center}
+
+  \textbf{Si aucun} $x < a$ :  
+  
+  \begin{center}
+    $\lim\limits_{x\to a^{+}}f(x) = L $ \\ 
+    $\big\Updownarrow$ \\
+    $\lim\limits_{x\to a}f(x) = L $
+  \end{center}
+
+  \textbf{Si aucun} $x > a$ :  
+  
+  \begin{center}
+    $\lim\limits_{x\to a^{-}}f(x) = L $ \\ 
+    $\big\Updownarrow$ \\
+    $\lim\limits_{x\to a}f(x) = L $
+  \end{center}
+
+\end{Definitionx*}
+
+\begin{Definitionx*}{Divergence d'une fonction}{}
+  $\lim\limits_{x\to a}f(x) $ \textbf{diverge}   si la limite ne converge vers aucun $L \in \mathbb{R}$
+  \\
+  \textcolor{myb}{Cas particulier} si 
+  {\begin{enumerate}
+      \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a^{-}}f(x) = L $
+      \varitem{blue!40}{\textbf{2}} $\lim\limits_{x\to a^{+}}f(x) = M $ 
+      \varitem{blue!40}{\textbf{3}} $ L \neq M$ 
+  \end{enumerate}}
+  \begin{center}
+  \textbf{alors}, $\lim\limits_{x\to a}f(x) $ \textcolor{myb}{diverge}. 
+  \end{center}
+\end{Definitionx*}
+
+
+\section{Propriétés des limites}
+\begin{Concept}{Addition, soustraction et multiplication de limite}{}
+  Supposon que $\lim\limits_{x\to a}f(x) = L $ et $\lim\limits_{x\to a}g(x) \; | \; L, M \in \mathbb{R} $
+  \begin{enumerate}
+    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x) + g(x) \Bigr) $ 
+    =  $\lim\limits_{x\to a}f(x)$ +  $\lim\limits_{x\to a}g(x) = L + M$
+
+    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x) - g(x) \Bigr) $ 
+    =  $\lim\limits_{x\to a}f(x)$ -  $\lim\limits_{x\to a}g(x) = L - M$ 
+
+    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x)g(x) \Bigr) $ 
+    =  $\lim\limits_{x\to a}f(x)$ $\lim\limits_{x\to a}g(x) = LM$
+
+    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(c f(x)\Bigr) =  c\lim\limits_{x\to a}f(x)$ 
+
+    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a} \dfrac{f(x)}{g(x)} $ 
+    =  $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} = \dfrac{L}{M} \; si \; M \neq 0$
+
+\end{enumerate}
+\end{Concept}
+
+
+\begin{Concept}{Comportement asymptotique et c > 0}{}
+  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} \; | \; 
+  \lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$ si c > 0, on a 
+
+\end{Concept}
+  \begin{table}[h]
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \fontfamily{flr}\selectfont
+      \footnotesize
+      \begin{tabular}{|l|l|l|l|l|}
+      \arrayrulecolor{blue}\hline
+      \rowcolor{lightBlue}
+      \textcolor{myb}{Forme} & \textcolor{myb}{$\dfrac{c}{0^{+}}$} & \textcolor{myb}{$\dfrac{c}{0^{-}}$}
+                             & \textcolor{myb}{$\dfrac{c}{\infty}$} & \textcolor{myb}{$\dfrac{c}{-\infty}$}
+      \\
+      \hline
+      \hline
+      \arrayrulecolor{black}
+      tend vers & $\infty$ & $-\infty$ & 0 & 0 
+      \\
+      \hline
+      
+
+  \end{tabular}
+  \end{center}
+  \end{table}
+
+
+\begin{Concept}{Comportement asymptotique et c < 0}{}
+  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} \; | \; 
+  \lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$ si c < 0, on a 
+
+\end{Concept}
+  \begin{table}[h]
+    \begin{center}
+      \renewcommand{\arraystretch}{1.5}
+      \fontfamily{flr}\selectfont
+      \footnotesize
+      \begin{tabular}{|l|l|l|l|l|}
+      \arrayrulecolor{blue}\hline
+      \rowcolor{lightBlue}
+      \textcolor{myb}{Forme} & \textcolor{myb}{$\dfrac{c}{0^{+}}$} & \textcolor{myb}{$\dfrac{c}{0^{-}}$}
+                             & \textcolor{myb}{$\dfrac{c}{\infty}$} & \textcolor{myb}{$\dfrac{c}{-\infty}$}
+      \\
+      \hline
+      \hline
+      \arrayrulecolor{black}
+      tend vers & $-\infty$ & $\infty$ & 0 & 0 
+      \\
+      \hline
+      
+
+  \end{tabular}
+  \end{center}
+  \end{table}
+\section{Continuité}
+\begin{Concept}{Fonction continue}{}
+  $f\text{:} \; D \rightarrow \mathbb{R}$ est \textcolor{myb}{continue}   en $a \in D$ si $\lim\limits_{x\to a} f(x) = f(a)$. 
+  Autrement dit, une fonction est continue sur sont domaine si pour chaque élément $a \in D$, la limite 
+  lorsque $x \rightarrow a$ est égale à $f(a)$. Et donc, la limite à gauche et à droite est approche 
+  la même valeur $f(a)$
+\end{Concept}
+
+\begin{Identite}{Conséquence de la continuité de deux fonctions}{}
+    Si $f$ et $g$ sont continues en $a$, alors 
+    \begin{enumerate}
+      \varitem{blue!40}{\textbf{1.}} $f+g$ et $fg$ sont continues en $a$ 
+      \varitem{blue!40}{\textbf{2.}} $\dfrac{f}{g}$ est $fg$ continues en $a$ si $g(a) \neq 0$
+      \varitem{blue!40}{\textbf{3.}} $f \circ g$ et $fg$ sont continues en $a$ si $f \circ g$ 
+      est définie près de $a$
+    \end{enumerate}
+\end{Identite}
+\columnbreak
+
+\section{Dérivée}
+\begin{Definitionx*}{La dérivée d'une fonction}{}
+  Soit $f^{\prime}(a) = \lim\limits_{h\to 0}\frac{f(a + h) - f(a)}{h} $ Si cette limite existe, on dit que 
+  on dit qu'il s'agit de \textcolor{myb}{la dérivée de la fonction}   $f$ au point $a$. Géométriquement, 
+  la valeur vers laquelle converge $f^{\prime}(a)$ correspond à la pente de la droite tengente en $a$.
+\end{Definitionx*}
+
+\section{Formule}
+\begin{Concept}{Règles de dérivations pour des fonctions courantes}{}
+  $ \textbf{1. }   (c)^{\prime} = 1$, c une constante \;\;
+  $ \textbf{2. }   (x^r)^{\prime} = rx^{r -1}, \; \forall r \in \mathbb{R}$ \\\\
+  $ \textbf{3. }   (a^x)^{\prime} = a^xln(a)\;\;$ 
+  $ \textbf{4. }   (e^x)^{\prime} = e^x$ \;\; 
+  $ \textbf{5. }   (\ln(x))^{\prime} = \dfrac{1}{x} $ \;\; 
+  $ \textbf{6. }   (\log_a(x))^{\prime} = \dfrac{1}{x\ln(a)}$ \\\\\\\\
+  $ \textbf{7. }   (\sin x)^{\prime} = \cos x$ \;\; 
+  $ \textbf{8. }   (\cos x)^{\prime} = - \sin x$ \;\;
+  $ \textbf{9. }   (\tan x)^{\prime} = -\sec^2 x$ \\\\\
+  $ \textbf{10. }   (\arctan x)^{\prime} = \dfrac{1}{x^2 +1}$ \;\;
+  $ \textbf{11. }   (\text{arcsec}x)^{\prime} = \dfrac{1}{x\sqrt{x^2 -1}}$ \;\;
+  $ \textbf{11. }   (\arcsin x)^{\prime} = \dfrac{1}{x\sqrt{1 - x^2}}$ \;\;
+  $ \textbf{11. }   (\arcsin x)^{\prime} = -\dfrac{1}{x\sqrt{1 - x^2}}$ \;\;
+
+\end{Concept}
+
+\section{Propriétés d'addition et de multiplication}
+\begin{Concept}{Propriétés de la dérivée}{}
+  Soit $f, g \text{:} \; I \rightarrow \mathbb{R}$ deux fonctions dérivables \\\\
+  $\textbf{1. } \Bigl(cf(x)\Bigr)^{\prime} = cf^{\prime}(x)$, ou c est une constante. \\\\
+  $\textbf{2. } \Bigl(f(x) + g(x)\Bigr)^{\prime} = cf^{\prime}(x) +  g^{\prime}(x)$ \\\\
+  $\textbf{3. } f^{\prime}(x) = 0$ si et seulement si $f$ est une constante. 
+\end{Concept}
+
+
+
+\section{Règles de différenciation}
+\begin{Concept}{Règles de calcul}{}
+\begin{adjustbox}{width=1\textwidth}
+\textbf{1. Produit :}
+  $\Bigl(f(x)g(x)\Bigr)^{\prime} = f^{\prime}(x)g(x) + f(x)g^{\prime}(x)$
+\end{adjustbox}
+
+\vspace{1em}
+
+\begin{adjustbox}{width=1\textwidth}
+  $\textbf{2. Quotient :} \Bigl(\dfrac{f(x)}{g(x)}\Bigr)^{\prime} = \dfrac{f^{\prime}(x)g(x) - f(x)g^{\prime}(x)}{g(x)^2}$ 
+\end{adjustbox}
+
+\vspace{1em}
+
+\begin{adjustbox}{width=1\textwidth}
+  $\textbf{3. Dérivation en chaîne :} \Bigl(f(g(x)) \Bigr)^{\prime} = f^{\prime}\Bigl(g(x)\Bigr)g^{\prime}(x)$
+\end{adjustbox}
+\end{Concept} 
+
+\section{Les formes indéterminées}
+Toute expression représenté par une des formes suivantes est dite \textcolor{myb}{indéterminée} :
+\begin{align*}
+  \textcolor{red}{\dfrac{0}{0}}, \;\; \textcolor{red}{\dfrac{\infty}{\infty}}, \;\; 
+  \textcolor{black}{\infty - \infty} \;\; \textcolor{myyellow}{1^{\infty}}, \;\; 
+  0 \times \infty, \;\; \textcolor{myyellow}\infty^{0}, \;\; \textcolor{myyellow}{0^0}   
+\end{align*}
+Ces formes indéterminées peuvent être simplifiées en utilisant différentes techniques :
+\begin{enumerate}
+  \varitem{black}{} \textbf{Manipulations algébriques} facorisation, multipliucation par le conjugué, simplification
+  \varitem{red}{} Règle de l'Hôpital 
+  \varitem{myyellow}{} Utilisation du logarithme
+\end{enumerate}
+
+\chapter{Intégration}
+\section{Définition d'une intégrale}
+
+\begin{Concept}{Intégrale et théorème fondamental du calcul}{}
+  Soit $f \text{:} \; [a,b] \rightarrow \mathbb{R} $ une fonction continue, \textcolor{myb}{l'intégrale} 
+  de $a$ à $b$ de $f$ est noté :  
+  \[ \int_{a}^{b}f(x)dx \]
+\end{Concept}
+
+
+\section{Propriétés de l'intégrale}
+
+\begin{Concept}{}{}
+
+$$\text{Soit } f\text{:} \; [a,b] \rightarrow \mathbb{R}$$ \textbf{Alors}, \\\\
+$$\int_{a}^{a}f(x)dx = 0 \textbf{ et }$$
+\\
+$$\int_{b}^{a}f(x)dx = - \int_{a}^{b}f(x)dx$$
+
+
+\vspace{2em}
+$$\textbf{Si } a < c < b,  \textbf{alors}$$ 
+\\ 
+$$\int_{a}^{b}f(x)dx = \int_{a}^{c}f(x)dx + \int_{c}^{b}f(x)dx $$ 
+\\
+$$\int_{a}^{b}cf(x)dx = c\int_{a}^{b}f(x)dx$$ 
+\\
+
+$$ \int_{a}^{b}\Bigl(f(x) + g(x)\Bigr)dx =$$ \\ 
+$$\int_{a}^{b}f(x)dx \; +  \int_{a}^{b}g(x)dx$$
+\end{Concept}
+
+\begin{Definitionx*}{}{}
+    $$\text{Soit } f\text{:} \; [a,b] \rightarrow \mathbb{R} \text{continue,}$$  \\ 
+  \textbf{1. } $$\text{Si on pose } \textcolor{myb}{F}^{\prime}(x) = \int_{a}^{b}f(t)dt$$ \textbf{Alors}, \\\\ 
+  $$F^{\prime}(x) = f(t) \Leftrightarrow \dfrac{d}{dx}\int_{a}^{b}f(t)dt = f(x)$$
+
+  \vspace{2em}
+  \textbf{2. } 
+  $$\text{Soit } F \text{ telle que } F^{\prime}(x) = f(x)$$ \textbf{ Alors}, \\\\
+  
+  $$\int_{a}^{b}f(x)dx = F(x)  \bigg|_{a}^{b} = F(b) - F(a) $$
+  $$\big\Updownarrow$$
+  $$\int_{a}^{b}\dfrac{d}{dt}f(t)dt  f(b) - f(a)$$ 
+\end{Definitionx*}
+
+
+\section{Trouver l'aire sous la courbe}
+
+
+\chapter{Techniques de bases}
+\section{Polynôme}
+\begin{Definitionx*}{}{}
+  Un polynôme a la forme $p(x) = a_0 + a_1x + \cdots + a_nx^n$ et la \textcolor{myb}{puissance} d'un polynôme 
+  est l'exposant le plus elevé de l'expression.    
+\end{Definitionx*}
+
+\begin{note}{}{}
+    Lorsque le degré du numérateur est plus grand ou égal au degré du dénominateur, on peut effectuer une division 
+    polynomiale pour simplifier une expression : 
+    \begin{align*}
+      \dfrac{x^-1}{x^2 +1} = 1 - \dfrac{2}{x^2 +1}
+    \end{align*}
+\end{note}
+
+
+
+\begin{Concept}{Complétion du carré}{}
+  Soit un polynôme $p = ax^2 + bx + c$, on peut compléter le carré en considérant : 
+  \begin{align*}
+  &h = \left(\dfrac{b}{2}\right)^2 \\ 
+  &p(x) = a\Bigl(x^2 + \dfrac{b}{a}x - \textcolor{blue}{\left(\dfrac{b}{2a}\right)^2} 
+  - \textcolor{red}{\left(\dfrac{b}{2a}\right)^2}\Bigr)  + c               
+  \\
+  &p(x) = a\Bigl(x^2 + \dfrac{b}{a} x - \textcolor{blue}{\dfrac{b^2}{4a}}\Bigr) + \textcolor{red}{\dfrac{b^2}{4a}}  + c   
+  \\
+  &p(x) = a\Bigl(x - \textcolor{blue}{\dfrac{b}{2}}\Bigr)^2 +  
+  \textcolor{red}{\dfrac{b^2}{4a}}  + c  
+  \end{align*}
+
+
+  
+\end{Concept}
+
+\end{multicols*}
+
+
+\end{document}
