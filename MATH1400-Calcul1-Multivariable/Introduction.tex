@@ -560,18 +560,25 @@ $$ \int_{a}^{b}\Bigl(f(x) + g(x)\Bigr)dx =$$ \\
 $$\int_{a}^{b}f(x)dx \; +  \int_{a}^{b}g(x)dx$$
 \end{Concept}
 
-\begin{Definitionx*}{}{}
-    $$\text{Soit } f\text{:} \; [a,b] \rightarrow \mathbb{R} \text{continue,}$$  \\ 
-  \textbf{1. } $$\text{Si on pose } \textcolor{myb}{F}^{\prime}(x) = \int_{a}^{b}f(t)dt$$ \textbf{Alors}, \\\\ 
-  $$F^{\prime}(x) = f(t) \Leftrightarrow \dfrac{d}{dx}\int_{a}^{b}f(t)dt = f(x)$$
+\begin{Definitionx*}{Théorème fondamental du calcul}{}
+    Soit $f\text{:} \; [a,b] \rightarrow \mathbb{R}$ une fonction continue
+    et dérivable sur l'intervale. 
+    Si une fonction  $F(x)$ correspond à la dérivée de  $f(t)$ en fonction de $x$ 
+    sur l'intervalle  $[a, b]$, autrement dit : 
+    $$\textcolor{myb}{F}(x) = \int_{a}^{x}f(t)dt$$ 
+    \textbf{Alors}, $F(x)$ est dérivable et on a :\\\\ 
+    $$\textcolor{red}{F^{\prime}}(x) = f(t) \Leftrightarrow \dfrac{d}{dx}\int_{a}^{b}f(t)dt = f(x)$$
 
   \vspace{2em}
-  \textbf{2. } 
-  $$\text{Soit } F \text{ telle que } F^{\prime}(x) = f(x)$$ \textbf{ Alors}, \\\\
+  Si $F$ est une fonction de la dérivée est $f$; autrement dit : 
+  $$\textcolor{myb}{F}^{\prime}(x) = f(x)$$            
+  \textbf{Alors}, l'intégrale définit de $f(x)$ sur l'intervale $[a, b]$ correspond à
+  la différence entre les ordonnées de $a$ et $b$ sur $F$ :
+  \\\\
   
   $$\int_{a}^{b}f(x)dx = F(x)  \bigg|_{a}^{b} = F(b) - F(a) $$
   $$\big\Updownarrow$$
-  $$\int_{a}^{b}\dfrac{d}{dt}f(t)dt  f(b) - f(a)$$ 
+  $$\int_{a}^{b}\dfrac{d}{dt}f(t)dt =  f(b) - f(a)$$ 
 \end{Definitionx*}
 
 
