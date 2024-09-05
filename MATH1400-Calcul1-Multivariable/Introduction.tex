@@ -89,51 +89,58 @@
     \section{Fonction exponentielle}
     \begin{itemize}
         \item[$\rhd$]  \textbf{Domaine} : $\mathbb{R}$  
-        \item[$\rhd$]  \textbf{Continuité} : Continue sur \textbf{dom} 
-        \item[$\rhd$]  \textbf{Croissance}  $0 < base < 1$ : 
-            Stric. $\downarrow$
+        \item[$\rhd$]  \textbf{Continuité} : Continue sur \textbf{domaine} 
+        \item[$\rhd$]  \textbf{Croissance} : $0 < \textbf{base}   < 1 \implies $ 
+            \textcolor{myr}{\textbf{Strict.}} $\downarrow$
 
-        \item[$\rhd$]  \textbf{Croissance}  $base > 1$ : Stric. $\uparrow$
-        \item[$\rhd$]  \textbf{Ordonnée O.} : $e^0 = 1$   
+        \item[$\rhd$]  \textbf{Croissance} :  $\textbf{base} > 1 \implies$  \textcolor{myr}{\textbf{Strict.}} $\uparrow$
+        \item[$\rhd$]  \textbf{Ordonnée  à l'ori}. : $e^0 = 1$   
         \item[$\rhd$]  \textbf{Signe} : $\forall x \in \mathbb{R}, e^x > 0$  
-        \item[$\rhd$]   $e^x : x\longrightarrow\infty+$ :  
-            $\lim\limits_{x\to+\infty}e^x  = \infty$  
+        \item[$\rhd$]   $e^x : x\longrightarrow\infty +$ :  
+            $\lim\limits_{x\to+\infty }e^x  = \infty$  
             \item[$\rhd$]   $e^x : x\longrightarrow\infty-$ :  
                 $\lim\limits_{x\to-\infty}e^x  = 0$
     \end{itemize}
 
 
 \section{Propriétés exponentielles}  
-\begin{align*}
-      e^{x+y} = e^{x}e^{y} \quad |& \quad e^{xy} = (e^{x})^{y} \\
-      (e^x)^{\prime} = e^x \quad | & \quad (a^x)^{\prime} = a^x\log_ea
-\end{align*}
+        \begin{enumerate}
+            \item $e^{x+y} = e^{x}e^{y}k$
+            \item $e^{xy} = (e^{x})^{y}$
+            \item  $(e^x)^{\prime} = e^x$
+            \item $(a^x)^{\prime} = a^x\log_e$
+
+        \end{enumerate}
+
 
 
     \section{Fonction logarithmique}
     \begin{itemize}
-        \item[$\rhd$]  \textbf{Domaine} : $]0, \infty [$  
-        \item[$\rhd$]  \textbf{Continuité} : Continue sur \textbf{dom} 
-        \item[$\rhd$]  \textbf{Croissance}  $0 < base < 1$ : 
-            Stric. $\downarrow$
+        \item[$\rhd$ ] \textbf{Domaine} : $]0, \infty [$  
+        \item[$\rhd$ ] \textbf{Continuité} : Continue sur son \textbf{domaine} 
+        \item[$\rhd$ ] \textbf{Croissance}  $0 < \textbf{base} < 1$ : 
+            \textcolor{myr}{\textbf{Strict.}} $\downarrow$
 
-        \item[$\rhd$]  \textbf{Croissance}  $base > 1$ : Stric. $\uparrow$
-        \item[$\rhd$]  \textbf{Abscisse O.} : $\log_e(1) = 0$ 
-        \item[$\rhd$]  \textbf{Signe} : $\forall x > AO, \log_ax > 0; \; 
-            \forall x, 0 < x < AO, \log_ax < 0$  
-        \item[$\rhd$]   $e^x : x\longrightarrow\infty+$ :  
-            $\lim\limits_{x\to+\infty}\log_ax  = \infty$  
-            \item[$\rhd$]   $e^x : x\longrightarrow\infty-$ :  
-                $\lim\limits_{x\to-\infty}\log_ax  = -\infty$
+        \item[$\rhd$ ] \textbf{Croissance} : $\textbf{base}> 1$ : \textcolor{myr}{\textbf{Strict.}} $\uparrow$
+        \item[$\rhd$ ] \textbf{Abscisse à l'ori.} : $\log_e(\textcolor{myr}{1}) = 0$ 
+        \item[$\rhd$ ] \textbf{Signe} : $\forall x > \textcolor{myr}{1} \log_ax > 0$
+        \item[$\rhd$ ] \textbf{Signe} : $\forall x, \; 0 < x < \textcolor{myr}{1}, \log_ax < 0$  
+        \item[$\rhd$ ] $\lim\limits_{x\to+\infty}\log_ax  = \infty$  
+        \item[$\rhd$ ] $\lim\limits_{x\to-\infty}\log_ax  = -\infty$
     \end{itemize}
 
 
+\section{Propriétés logarithmiques}  
+        \begin{enumerate}
+            \item $\log(x+y) = \log x + \log y$
+            \item $\log x^y = y\log x$ 
+            \item  $\log_a b = \dfrac{\log_c a}{\log_c b} 
+                \Leftrightarrow
+                \dfrac{\ln a}{\ln b}$
+            \item $(\log x)^{\prime} = \dfrac{1}{x}$
+        \end{enumerate}
 
-    \begin{align*}
-      \log(x+y) = \log x + \log y \; \Big| & \; \log x^y = y\log x \\
-      \log_a x = \dfrac{\log_a x}{\log_b x} \; \Big| & \; 
-                                     (\log x)^{\prime} = \dfrac{1}{x}  
-    \end{align*}
+
 
     \section{Optimisation}
 
@@ -145,12 +152,11 @@
         \item[$\rhd$]  \textbf{Point d'inflexion}: $\uparrow - \downarrow$ 
             ou $\downarrow - \uparrow$
         \item[$\rhd$]  \textbf{Potentiel max ou min} :   
-        $f^{\prime} \left( x \right) = 0$ ou 
-        $f^{\prime} \left(x\right) \nexists$
+        $\bigl( f^{\prime} \left( x \right) = 0 \lor f^{\prime} \left(x\right) \nexists \bigr) \implies \textbf{max}. \lor \textbf{min}.     $
     \end{itemize}
 
     \section{Test de la dérivé première}
-    Soit $f\left(x\right)$, on peut considérer $f^{\prime}(x)$ 
+    Soit $f(x)$, on peut considérer $f^{\prime}(x)$ 
     pour déduire des \textbf{informations} propres à $f$.   
 
     \begin{table}[H]
@@ -281,8 +287,10 @@ Toutes deux $2\pi$ périodiques.
 \end{table}
 
 \begin{Identite}{Cosinus pair et sinus impart}{}
-  $\cos\left(-x\right) = \cos\left(x\right)$ \textcolor{myb}{\textbf{et}} 
-  $\sin\left(-x\right) = -\sin\left(x\right)$
+    \begin{enumerate}
+        \item   $\cos\left(-x\right) = \cos\left(x\right)$ 
+        \item $\sin\left(-x\right) = -\sin\left(x\right)$
+    \end{enumerate}
 \end{Identite}
 
 \begin{Identite}{Règle de dérivation de la fonction cosinus}{}
@@ -293,14 +301,16 @@ Toutes deux $2\pi$ périodiques.
   $\dfrac{d}{dx}\sin\left(x\right) = -\cos\left(x\right)$
 \end{Identite}
 
-\begin{Identite}{}{}
+\begin{Identite}{Rayon d'un cercle}{}
     $\cos^2\left(x\right) + \sin^2\left(x\right) = 1 $ 
 \end{Identite}
 
-\begin{Identite}{}{}
-    $\cos\left(a +b \right) = \cos a \cos b -\sin a \sin b$
-    $\sin\left(a +b \right) = -\sin a \cos b + \cos a \sin b$
-\end{Identite}
+\begin{Identite}{Sinus d'une addition}{}
+    \begin{enumerate}
+        \item $\cos\left(a +b \right) = \cos a \cos b -\sin a \sin b$
+        \item $\sin\left(a +b \right) = -\sin a \cos b + \cos a \sin b$
+    \end{enumerate}
+ \end{Identite}
 
 \chapter{Limites des fonctions}
 \section{Limite}
@@ -314,13 +324,13 @@ Toutes deux $2\pi$ périodiques.
 
 \section{Limite à droite et à gauche}
 \begin{Definitionx*}{}{}
-    Soit $f D\rightarrow \mathbb{R}$ \\ 
+    Soit $f : D\rightarrow \mathbb{R}$ \\ 
     \textcolor{myb}{La limite à droite} est la limite lorsque $x$ s'approche de a, venant de la 
     \textbf{droite}   : \\ 
     \[ \lim\limits_{x\to a^{+}} f(x) \implies  x \in D \text{ et } x > a \] 
 
     \textcolor{myb}{La limite à droite} est la limite lorsque $x$ s'approche de a, venant de la \textbf{gauche} : \\ 
-    \[ \lim\limits_{x\to a^{+}} f(x) \implies  x \in D \text{ et } x < a \]   
+    \[ \lim\limits_{x\to a^{-}} f(x) \implies  x \in D \text{ et } x < a \]   
   \textbf{Lorsque les deux limites sont équivalente}, \textcolor{myb}{la limite existe } :   
   
   \begin{center}
@@ -329,7 +339,9 @@ Toutes deux $2\pi$ périodiques.
     $\lim\limits_{x\to a} = L$
   \end{center}
 
-  \textbf{Si aucun} $x < a$ :  
+  \textbf{Si aucun} $x < a$ on considère uniquement la limite à droite, 
+  puisque $f$ est définit sur un domaine $[x > a, b]$. Et si la limite 
+  à droite existe, la limite de $f$ correspond à la limite à droite : 
   
   \begin{center}
     $\lim\limits_{x\to a^{+}}f(x) = L $ \\ 
@@ -350,44 +362,66 @@ Toutes deux $2\pi$ périodiques.
 \begin{Definitionx*}{Divergence d'une fonction}{}
   $\lim\limits_{x\to a}f(x) $ \textbf{diverge}   si la limite ne converge vers aucun $L \in \mathbb{R}$
   \\
-  \textcolor{myb}{Cas particulier} si 
+  \\
+  \textcolor{myb}{\textbf{Cas particulier}} si 
   {\begin{enumerate}
       \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a^{-}}f(x) = L $
       \varitem{blue!40}{\textbf{2}} $\lim\limits_{x\to a^{+}}f(x) = M $ 
       \varitem{blue!40}{\textbf{3}} $ L \neq M$ 
   \end{enumerate}}
   \begin{center}
-  \textbf{alors}, $\lim\limits_{x\to a}f(x) $ \textcolor{myb}{diverge}. 
+      \textbf{alors}, $\lim\limits_{x\to a}f(x) $ \textcolor{myr}{\textbf{diverge}}. 
   \end{center}
 \end{Definitionx*}
+\columnbreak
 
 
 \section{Propriétés des limites}
 \begin{Concept}{Addition, soustraction et multiplication de limite}{}
   Supposon que $\lim\limits_{x\to a}f(x) = L $ et $\lim\limits_{x\to a}g(x) \; | \; L, M \in \mathbb{R} $
   \begin{enumerate}
-    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x) + g(x) \Bigr) $ 
-    =  $\lim\limits_{x\to a}f(x)$ +  $\lim\limits_{x\to a}g(x) = L + M$
+    \varitem{blue!40}{\textbf{1}} 
+    $\lim\limits_{x\to a}\Bigl(f(x) + g(x) \Bigr) =$ \\\\
+    $\lim\limits_{x\to a}f(x) +  \lim\limits_{x\to a}g(x) = L + M$
 
-    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x) - g(x) \Bigr) $ 
-    =  $\lim\limits_{x\to a}f(x)$ -  $\lim\limits_{x\to a}g(x) = L - M$ 
+    \varitem{blue!40}{\textbf{2}} 
+    $\lim\limits_{x\to a}\Bigl(f(x) - g(x) \Bigr) = $ \\\\ 
+    $\lim\limits_{x\to a}f(x) - \lim\limits_{x\to a}g(x) = L - M$ 
 
-    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(f(x)g(x) \Bigr) $ 
-    =  $\lim\limits_{x\to a}f(x)$ $\lim\limits_{x\to a}g(x) = LM$
+    \varitem{blue!40}{\textbf{3}} \
+    $\lim\limits_{x\to a}\Bigl(f(x)g(x) \Bigr) = $ \\\\
+    $\lim\limits_{x\to a}f(x) \lim\limits_{x\to a}g(x) = LM$
 
-    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a}\Bigl(c f(x)\Bigr) =  c\lim\limits_{x\to a}f(x)$ 
+    \varitem{blue!40}{\textbf{4}} $\lim\limits_{x\to a}\Bigl(c f(x)\Bigr) =  c\lim\limits_{x\to a}f(x)$ 
 
-    \varitem{blue!40}{\textbf{1}} $\lim\limits_{x\to a} \dfrac{f(x)}{g(x)} $ 
-    =  $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} = \dfrac{L}{M} \; si \; M \neq 0$
+    \varitem{blue!40}{\textbf{5}} $\lim\limits_{x\to a} \dfrac{f(x)}{g(x)} $ 
+    =  $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} = \dfrac{L}{M} \; \textbf{\textcolor{myr}{si}} \; M \neq 0$
 
 \end{enumerate}
 \end{Concept}
 
 
 \begin{Concept}{Comportement asymptotique et c > 0}{}
-  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} \; | \; 
-  \lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$ si c > 0, on a 
+  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)}$ 
+  \textcolor{myb}{\textbf{\quad et}} \\ 
+  $\lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$ si c > 0, on a : 
+\end{Concept}
 
+
+\begin{Concept}{Comportement asymptotique et c > 0}{}
+  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)}$, 
+  \textcolor{myb}{\textbf{\quad et}} \\
+  $\lim\limits_{x\to a}g(x) = 0$, \textcolor{myb}{\textbf{\quad mais}}$ \\
+  $$\lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$.
+  \vspace{1em}
+  
+  Si $c > 0$, on a alors un comportement asymptotique équivalent. En d'autres termes, 
+  il existe une constante $C$ telle que pour $x$ proche de $a$, $f(x)$ et $g(x)$ 
+  partagent la même "tendance" de croissance ou de décroissance, de sorte que :
+  \[
+  \lim\limits_{x \to a} \frac{f(x)}{g(x)} = c > 0.
+  \]
+  Cela signifie que $f(x)$ et $g(x)$ sont asymptotiquement comparables en $a$, et que l'écart entre eux reste proportionnel à $c$.
 \end{Concept}
   \begin{table}[h]
     \begin{center}
@@ -413,11 +447,7 @@ Toutes deux $2\pi$ périodiques.
   \end{table}
 
 
-\begin{Concept}{Comportement asymptotique et c < 0}{}
-  Soit $\dfrac{\lim\limits_{x\to a}f(x)}{\lim\limits_{x\to a}g(x)} \; | \; 
-  \lim\limits_{x\to a}f(x) = c \neq 0, \pm \infty$ si c < 0, on a 
 
-\end{Concept}
   \begin{table}[h]
     \begin{center}
       \renewcommand{\arraystretch}{1.5}
@@ -451,13 +481,13 @@ Toutes deux $2\pi$ périodiques.
 \begin{Identite}{Conséquence de la continuité de deux fonctions}{}
     Si $f$ et $g$ sont continues en $a$, alors 
     \begin{enumerate}
-      \varitem{blue!40}{\textbf{1.}} $f+g$ et $fg$ sont continues en $a$ 
-      \varitem{blue!40}{\textbf{2.}} $\dfrac{f}{g}$ est $fg$ continues en $a$ si $g(a) \neq 0$
-      \varitem{blue!40}{\textbf{3.}} $f \circ g$ et $fg$ sont continues en $a$ si $f \circ g$ 
+      \varitem{blue!40}{\textbf{1}} $f+g$ et $fg$ sont continues en $a$ 
+      \varitem{blue!40}{\textbf{2}} $\dfrac{f}{g}$ est $fg$ continues en $a$ si $g(a) \neq 0$
+      \varitem{blue!40}{\textbf{3}} $f \circ g$ et $fg$ sont continues en $a$ si $f \circ g$ 
       est définie près de $a$
     \end{enumerate}
 \end{Identite}
-\columnbreak
+
 
 \section{Dérivée}
 \begin{Definitionx*}{La dérivée d'une fonction}{}
@@ -469,20 +499,21 @@ Toutes deux $2\pi$ périodiques.
 \section{Formule}
 \begin{Concept}{Règles de dérivations pour des fonctions courantes}{}
   $ \textbf{1. }   (c)^{\prime} = 1$, c une constante \;\;
-  $ \textbf{2. }   (x^r)^{\prime} = rx^{r -1}, \; \forall r \in \mathbb{R}$ \\\\
-  $ \textbf{3. }   (a^x)^{\prime} = a^xln(a)\;\;$ 
-  $ \textbf{4. }   (e^x)^{\prime} = e^x$ \;\; 
-  $ \textbf{5. }   (\ln(x))^{\prime} = \dfrac{1}{x} $ \;\; 
+  $ \textbf{2. }   (x^r)^{\prime} = rx^{r -1}, \; \forall r \in \mathbb{R}$ \\
+  $ \textbf{3. }   (a^x)^{\prime} = a^xln(a)$ \\ 
+  $ \textbf{4. }   (e^x)^{\prime} = e^x$ \\ 
+  $ \textbf{5. }   (\ln(x))^{\prime} = \dfrac{1}{x} $ \\
   $ \textbf{6. }   (\log_a(x))^{\prime} = \dfrac{1}{x\ln(a)}$ \\\\\\\\
-  $ \textbf{7. }   (\sin x)^{\prime} = \cos x$ \;\; 
-  $ \textbf{8. }   (\cos x)^{\prime} = - \sin x$ \;\;
-  $ \textbf{9. }   (\tan x)^{\prime} = -\sec^2 x$ \\\\\
-  $ \textbf{10. }   (\arctan x)^{\prime} = \dfrac{1}{x^2 +1}$ \;\;
-  $ \textbf{11. }   (\text{arcsec}x)^{\prime} = \dfrac{1}{x\sqrt{x^2 -1}}$ \;\;
-  $ \textbf{11. }   (\arcsin x)^{\prime} = \dfrac{1}{x\sqrt{1 - x^2}}$ \;\;
-  $ \textbf{11. }   (\arcsin x)^{\prime} = -\dfrac{1}{x\sqrt{1 - x^2}}$ \;\;
-
+  $ \textbf{7. }   (\sin x)^{\prime} = \cos x$ \\ 
+  $ \textbf{8. }   (\cos x)^{\prime} = - \sin x$ \\
+  $ \textbf{9. }   (\tan x)^{\prime} = -\sec^2 x$ \\\\
+  $ \textbf{10. }   (\arctan x)^{\prime} = \dfrac{1}{x^2 +1}$ \\
+  $ \textbf{11. }   (\text{arcsec}x)^{\prime} = \dfrac{1}{x\sqrt{x^2 -1}}$ \\
+  $ \textbf{11. }   (\arcsin x)^{\prime} = \dfrac{1}{x\sqrt{1 - x^2}}$ \\
+  $ \textbf{11. }   (\arcsin x)^{\prime} = -\dfrac{1}{x\sqrt{1 - x^2}}$ 
 \end{Concept}
+
+\columnbreak
 
 \section{Propriétés d'addition et de multiplication}
 \begin{Concept}{Propriétés de la dérivée}{}
@@ -537,6 +568,8 @@ Ces formes indéterminées peuvent être simplifiées en utilisant différentes 
   \[ \int_{a}^{b}f(x)dx \]
 \end{Concept}
 
+\columnbreak
+
 
 \section{Propriétés de l'intégrale}
 
@@ -556,7 +589,7 @@ $$\int_{a}^{b}f(x)dx = \int_{a}^{c}f(x)dx + \int_{c}^{b}f(x)dx $$
 $$\int_{a}^{b}cf(x)dx = c\int_{a}^{b}f(x)dx$$ 
 \\
 
-$$ \int_{a}^{b}\Bigl(f(x) + g(x)\Bigr)dx =$$ \\ 
+$$\int_{a}^{b}\Bigl(f(x) + g(x)\Bigr)dx =$$ \\ 
 $$\int_{a}^{b}f(x)dx \; +  \int_{a}^{b}g(x)dx$$
 \end{Concept}
 
