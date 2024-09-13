@@ -1,0 +1,399 @@
+\documentclass{report}
+%\usepackage[utopia]{mathdesign}
+%\usepackage{amsmath, amsthm}
+\usepackage{pgfplots}
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+%\usepackage[varbb]{newpxmath}
+%\usepackage[osf,largesc,theoremfont]{newpxtext}
+%\usepackage{coelacanth}
+%\usepackage{beraserif} % Bitstream Vera Serif font
+%\usepackage{berasans} % Bitstream Vera Sans font
+%\usepackage{beramono} % Bitstream Vera Sans Mono font
+%\usepackage{berasans}
+%\usepackage{libertine}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{crimson}
+
+
+%% Choose one of the following (if not choosing the  
+%% default, viz., Computer Modern, font family):
+%\usepackage{lmodern}
+\usepackage{bold-extra}
+%%
+%\usepackage{mathpazo}
+% \usepackage{newpxmath}
+%\usepackage{kpfonts} % Very good
+%%
+%\usepackage{mathptmx} %Very good
+%\usepackage{stix} 
+%\usepackage{txfonts} %Very good
+\usepackage{newtxtext,newtxmath} %Very good
+%%
+%\usepackage{libertine} \usepackage[libertine]{newtxmath}
+%\usepackage{libertine,libertinust1math} % added 2019/11/28
+%%
+%\usepackage{newpxtext} 
+%\usepackage{breqn} 
+\usepackage[euler-digits]{eulervm}
+%\usepackage{textcomp}
+%\usepackage{bm}
+\usepackage{contour}
+\usepackage{adjustbox}
+
+
+
+
+
+
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/preamble.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+
+
+
+
+
+
+
+
+
+
+\title{\huge{MATH1400}\\\Huge{Calcul à plusieurs variables}\\\vspace{2em}Travail Pratique 1 }
+\author{\huge{Franz Girardin}}
+\date{\today}
+
+
+   
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+
+\titleformat*{\section}{%
+    \normalsize\bfseries%
+}
+
+\titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
+
+
+    \chapter*{Exercices sur les suite numériques}
+  \section{Définition de convergence}
+  \begin{Exercice}{(Stewart 1.1.2)}{}
+      Qu'est-ce qu'une \textit{suite convergente} ? Donnez \textbf{deux exemples}. 
+      Qu'est-ce qu'une \textit{suite divergente} ? Donnez \textbf{deux} exemples   
+  \end{Exercice}
+
+  Est \textcolor{myb}{\textbf{convergente}} 
+  toute \textbf{suite} $\{a_n\}$ dont les termes $a_n$ 
+  s'approchent autant 
+  que l'on veut d'une valeur $L$ lorsque l'entier $n$ devient arbitrairement grand : 
+
+  \begin{align*}
+      \left(\lim\limits_{n\to\infty}a_n = L\right) \implies a_n \; \textcolor{myb}{\textbf{conv}}.    
+  \end{align*}
+
+  Plus formellement, soit une valeur positive arbitrairement petite $\varepsilon$, 
+  il existe toujours un entier $N(\varepsilon)$ qui représente un rang 
+  à partir duquel s'il y a un entier naturel $n > N(\varepsilon)$, \textbf{alors}
+  l'image de cet entier naturel, $a_n$ sera aussi proche que l'on veut d'une 
+  \textbf{valeur} $L$ représentant \textit{le point de convergence de la suite} :
+
+  \begin{align*}
+    \forall \varepsilon > 0 : \exists N(\varepsilon) > 0 : 
+    n > N \implies |a_n - L| < \varepsilon
+  \end{align*}
+
+    \textbf{Exemple de suites convergentes} : 
+    $\{a_n \} = \dfrac{1}{n}, \quad% 
+    \{b_n\} = \dfrac{1}{n^2}$   
+
+
+    \vspace{2em}
+    Est \textcolor{myr}{\textbf{divergente}} toute suite dont les termes $a_n$ ne 
+    convergent vers acune valeur particulière; ils s'approchent plutôt 
+    de $\pm \infty$ :
+
+      \begin{align*}
+          \left(\lim\limits_{n\to\infty}a_n = \pm \infty \right) \implies 
+          a_n \; \textcolor{myr}{\textbf{div}}.    
+      \end{align*}
+
+    Plus formellement, soit un nombre positif arbitrairement grand $M > 0$, 
+    on pourra toujours trouver une valeur $N(M) \in \mathbb{N}$ à partir duquel tous les 
+    entiers $n > M$ auront une image $a_n$ \textbf{plus grande} 
+    que nombre arbitrairement 
+    grand. Cela signifie que les termes de la suites ne s'approchent d'aucune 
+    valeur. 
+
+    \begin{align*}
+    \forall \; M > 0 : \exists N(M) \in \mathbb{N} > 0 : n > N 
+    \implies a_n > M (\textcolor{myr}{\textbf{div}}. \; \textbf{+}\infty ) 
+    \end{align*}
+
+    
+    \section{Identification des termes}
+    \begin{Exercice}{(Stewart 1.1.8)}{}
+        Donnez les \textbf{cinq premiers termes} de la suite 
+        $a_{n}=\frac{\left(-1\right)^{n}n}{n!+1}$ 
+    \end{Exercice}
+
+
+    \begin{align*}
+        a_1 = -\dfrac{1}{2}, \; a_2 = \dfrac{2}{3}, \; 
+        a_3 = -\dfrac{3}{7}, \; 
+        a_4 = \dfrac{4}{25} 
+        a_5 = -\dfrac{5}{121} 
+    \end{align*}                
+
+
+    \begin{Exercice}{(Stewart 1.1.11)}{}
+        Donnez les \textbf{cinq premiers termes} de la suite 
+        $a_n = 2, \; a_{n+1} = \dfrac{a_n}{1 + a_n}$
+    \end{Exercice}              
+
+
+    \begin{align*}
+        a_1 = \textcolor{myb}{2}, \; a_2 = \textcolor{myb}{\dfrac{2}{3}}, \; 
+        a_3 = \dfrac{2}{3} \times \dfrac{3}{5} = \textcolor{myb}{\dfrac{2}{5}}, \; 
+        a_4 = \dfrac{2}{5} \times \dfrac{5}{7}  = \textcolor{myb}{\dfrac{2}{7}}, \;
+        a_5 = \dfrac{2}{7} \times \dfrac{7}{9} = \textcolor{myb}{\dfrac{2}{9}}
+    \end{align*}    
+
+
+    \section{Trouver la règle}
+    \begin{Exercice}{(Stewart 1.1.15)}{}
+       Trouver la formule du \textbf{terme général} $a_n$ de la suite    
+       $\left\{-3, 2,-\frac43, \frac89, -\frac{16}{27},\ldots\right\}$ 
+    \end{Exercice}              
+
+
+    \begin{align*}
+        a_n = \dfrac{(-1)^n 2^{n-1}}{3^{n - 2}}
+    \end{align*}            
+
+
+    \begin{Exercice}{(Stewart 1.1.18)}{}
+    Trouver la formule du \textbf{terme général} $a_n$ de la suite    
+    $\left\{1,0,-1,0,1,0,-1,0,\cdots \right\}$
+    \end{Exercice}
+
+    \begin{align*}
+        a_n = \sin\left(\dfrac{n\pi}{2}\right)
+    \end{align*}        
+
+    \section{Estimer un somme}
+
+
+    \begin{Exercice}{(Stewart 1.1.19 - 1.1.22)}{}
+        Calculez, \textbf{à la quatrième décimale}, 
+        les dix premiers termes de la suite et 
+        utilisez-les pour tracer le graphique de la suite à la main. 
+        La suite semble-t-elle avoir une limite ? 
+        Si oui, \textbf{calculez cette limite}. 
+        Si non, expliquez pourquoi.
+    \end{Exercice}
+
+    \vspace{1em}%
+    \noindent\textbf{1.1.19}  $a_n = \dfrac{3n}{1 + 6n}$ 
+
+
+    \begin{align*}
+        a_1 = 0.4286, \; a_2 = 0.4615, \; 
+        a_3 = 0.4736, \; a_4 = 0.4800, \; 
+        a_5 = 0.4838, \;
+        \\
+        a_6 = 0.4864, \; a_7 = 0.4883, \; 
+        a_8 = 0.4998, \; a_9 =0.4909, \; 
+        a_{10} = 0.4918
+    \end{align*}    
+
+
+    \begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            title={Graphe de la suite $a_n = \dfrac{3n}{1 + 6n}$ 
+            et de la fonction $f(x) =\dfrac{3x}{1 + 6x}$ },
+            xlabel={$n$},
+            ylabel={$f(x)$},
+            grid=major,
+            xmin=1, xmax=10,
+            ymin=0.42, ymax=0.5,
+            xtick={1,2,...,10},
+            ytick={0.42, 0.43, 0.44, 0.45, 0.46, 0.47, 0.48, 0.49, 0.50},
+            legend pos=south east
+        ]
+        
+        % Plot des valeurs des dix premiers termes donnés
+        \addplot coordinates {
+            (1, 0.4286)
+            (2, 0.4615)
+            (3, 0.4736)
+            (4, 0.4800)
+            (5, 0.4838)
+            (6, 0.4864)
+            (7, 0.4883)
+            (8, 0.4898)
+            (9, 0.4909)
+            (10, 0.4918)
+        };
+        \addlegendentry{Valeurs de $a_n$}
+
+        % Tracé de la fonction a_n = 3n / (1 + 6n)
+        \addplot[domain=1:10, samples=100, thick, red] 
+        {3*x / (1 + 6*x)};
+        \addlegendentry{Fonction $f(x) = \frac{3x}{1 + 6x}$}
+
+        \end{axis}
+    \end{tikzpicture}
+
+    \end{center}
+
+
+    \section{Déterminer la convergence}
+
+    \begin{Exercice}{(Stewart 1.1.23 - 1.1.56)}{}
+    Déterminez si la suite converge ou diverge. Si elle 
+    converge, \textbf{trouvez sa limite}.       
+    \end{Exercice}      
+
+
+
+
+    \noindent\textbf{1.1.23}  $a_n = \dfrac{3 + 5n^2}{n + n^2}$  
+    \vspace{1em}
+    \noindent 
+    $\lim\limits_{n\to+\infty }a_n \implies \textcolor{red}{\dfrac{\infty }{\infty }}$. 
+
+    \begin{align*}
+        \dfrac{3 + 5n^2}{n + n^2} = 
+        \dfrac{n^2(\frac{1}{3n²} + 5)}{n^2(1+ \frac{1}{n})} = a_n \quad \text{(Simplifié)}
+    \end{align*}
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n  = 
+        \lim\limits_{n \to+\infty }\dfrac{5  + \frac{1}{n}
+        \cancelto{0}{\frac{1}{n}}}{1 + \cancelto{0}{\frac{1}{n}}}  =
+        \lim\limits_{n \to+\infty } \frac{5}{1} = \dfrac{5}{1} 
+    \end{align*}
+
+
+
+    \noindent\textbf{1.1.42}  $a_n = \dfrac{\cos^{2}n}{n}$  
+    \vspace{1em}
+
+    Nous savons que la fonction $a_n$ est bornée entre les valeurs
+    $\cos^{2}n \in [0, 1]$. Ainsi, pour tout $n \in \mathbb{N}$ 
+    nous avons les équivalences suivantes : 
+
+    \begin{align*}G
+        0 \leq cos^{2}n  \leq 1 \\ 
+        \dfrac{0}{n} \leq \dfrac{cos^{2} n}{n}  \leq \dfrac{1}{n}\\ 
+        \lim\limits_{n \to+\infty }\cancelto{0}{\dfrac{0}{n}} \leq  
+        \lim\limits_{n \to+\infty }\dfrac{cos^{2} n}{n} \leq 
+        \lim\limits_{n \to+\infty }\cancelto{0}{\dfrac{1}{n}}
+    \end{align*}
+
+    Ainsi nous savons que la limite est bornée 
+    \textbf{inférieurement et supérieurement} 
+    par zéro, lorsque $n \longrightarrow \infty$. Ainsi, nous pouvons conclure 
+    que la limite est égale à zéro et que la suite $a_n$ converge vers 
+    $L = 0$. 
+
+        
+    \vspace{1em}%
+    \noindent\textbf{1.1.44}  $a_n = \sqrt[n]{2^{1 + 3n}}$
+
+    \begin{align*}
+        a_n 
+        = \sqrt[n]{2^{1 + 3n}} 
+        = \left(2 \cdot 2^{3n} \right)^{\frac{1}{n}}
+        = 2^{\frac{1}{n}} \cdot 2^{\frac{3n}{n}} \quad \text{(Développé)} \\ 
+        \lim\limits_{n \to+\infty }a_n 
+        = 
+        \lim\limits_{n \to+\infty }  
+        = 
+        2^{\cancelto{0}{\frac{1}{n}}} \cdot 2^{3} = 8
+    \end{align*}        
+
+    \vspace{1em}
+    \noindent\textbf{1.1.46}  $a_n = 2^{-n}\cos n\pi$ 
+
+    Nous savons que la suite $\{a_n\}$ est bornée par les valeurs 
+    $-1$ et $1$ :
+    $\forall n \in \mathbb{N}, -1 \leq a_n \leq 1$. En utilisant l'identité 
+    $\cos\pi n = (-1)^n$, nous avons : 
+    \begin{align*}
+        a_n = 2^{-1}\cos\pi n  =  b_n = 2^{-1}(-1)^n 
+    \end{align*}
+    Nous pouvons ainsi évaluer la limite lorsque $n \longrightarrow 0$ :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n 
+        = 
+        \lim\limits_{n \to+\infty }b_n  
+        =
+        \lim\limits_{n \to+\infty }\cancelto{0}{\dfrac{1}{2^n}} \cdot (-1)^n  
+        = \lim\limits_{n \to+\infty } 0 \cdot (-1)^n = 0  
+    \end{align*}
+
+    
+    \noindent\textbf{1.1.52}  h$a_n = \arctan(\ln n)$ 
+
+    Nous savons que la fonction $\ln x$ tend vers $+ \infty$ lorsque 
+    $x \longrightarrow + \infty$. Et par le théorème d'association d'une 
+    fonction à une suite, nous savons que la suite analogue $b_n = 
+    \ln n$ tend également vers $+ \infty$. Nous avons alors :
+
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } a_n = 
+        \lim\limits_{n \to+\infty } \arctan\cancelto{\infty}{(\ln n)} =
+        \lim\limits_{M \to+\infty } \arctan(M) = \frac{\pi}{2} 
+    \end{align*}        
+
+    \vspace{1em}%
+
+    \noindent\textbf{1.1.52}  
+    $\left\{\frac11,\frac13,\frac12,\frac14,\frac13,\frac15,\frac14,\frac16,
+    ...\right\}$ 
+
+    \vspace{1em}
+
+
+    \noindent \textbf{1.1.56}  $\dfrac{(-3)^n}{n!}$
+
+
+    \begin{align*}
+        \lim\limits_{n\to \infty} a_n = \lim\limits_{n \to+\infty }\dfrac{(-3)^n}{n!} 
+        &= 
+        \lim\limits_{n \to+\infty } (-1)^n 3^n \dfrac{n(n+1)}{2} \\ 
+        &=
+        -\cos(n\pi)
+    \end{align*}
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
