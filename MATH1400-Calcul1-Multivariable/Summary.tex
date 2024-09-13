@@ -49,17 +49,8 @@
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
 
-\renewcommand{\ttdefault}{cmtt}
-\newcommand{\textttbf}[1]{\contour{yellow!45}{\texttt{#1}}}
-\newcommand{\varitem}[3][black]{%
-    \item[%
-        \colorbox{#2}{\textcolor{#1}{\makebox(5.5,7){#3}}}%
-    ]
-}
 
-% Allow you to do the non implication (implication barred)
-\newcommand{\notimplies}{%
-  \mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
+
 
 
 
@@ -93,48 +84,60 @@
 \begin{multicols*}{3}
     \footnotesize
 
+    \chapter{Suites numériques}
     \section{Définition d'une suite}
-        \textbf{Fonction} $\mathbb{N}^* 
+        \textbf{Fonction} $a \colon \mathbb{N}^* 
         \rightarrow \mathbb{R}$ qui accepte 
-        $n \in \mathbb{N}^*$ et engendre une \textbf{séquence ordonnées} de $a_n \in \mathbb{R}$. 
+        $n \in \mathbb{N}^*$ et engendre une \textbf{séquence ordonnée} de 
+        \textbf{réels} $a_n$. L'image de $n$ est donnée par :
+        \[%
+           n \rightarrow a(n) = a_n 
+        \]%
+        \textbf{Notations équivalentes} :    
+        \[%
+            \{a_1, a_2, a_3,\dots\} \leftrightarrow  \{ a_n \} 
+                            \leftrightarrow  \{a_n\}_{ n = 1}^{\infty }
+        \]%
+        On dit que $a_n ou \{a_n\}$ est le \textbf{terme général}; c'est la 
+        règle qui définit la suite; \textit{laformule}  qui permet de calculer 
+        n'importe quel terme de la suite en fonction de $n$. 
 
+
+    \section{Suite par récurrence}
+    Est dite \textbf{récurrente} toute suite $a_n$ dont la 
+    règle fait appel à des termes antérieurs, après avoir 
+    établit certains termes de départ. L'\textbf{ordre de récurrence}
+    dépend du nombre de termes auquel la formule du terme général 
+    fait appel.
 
     \section{Définition d'une suite arithmétique}    
-        \begin{align*}
-                &a_n \Coloneqq 
-                \begin{cases}
-                    a_1 = r  &\omit\quad\quad\quad Raison\\  
-                    a_{n} = a_{n-1} + r &\omit\hfill \quad\quad\quad Récurrence
-                \end{cases}
-                \\\\
-                &r = a_n - a_{n-1} \;\;| n \geq 2  
-                \quad\quad\quad\quad\;\;\text{Trouver $r$} \\
-                &a_n = a_1 \text{+} \left(n - 1\right)\cdot{n}  \;\;|n \geq 1  
-                \quad\quad\text{Trouver $n$\up{e} terme}
-        \end{align*}
+
+    \begin{align*}
+        &a_n \Coloneqq 
+        \begin{cases}
+            a_1 = y & \hspace{2.5em} \textbf{1\textsuperscript{er} Terme}\\  
+            a_{n} = a_{n-1} + r & \hspace{2.5em} \text{Récurrence}
+        \end{cases}
+        \\\\
+        &r = a_n - a_{n-1} \;\; \forall n \geq 2  
+        \quad\quad\quad\quad\;\;% 
+        \textbf{\hfill Raison}  
+        \\
+        &a_n = a_1 + \left(n - 1\right) \cdot r \quad \forall n \geq 1 
+        \quad 
+        \text{$n$\up{e} terme}
+    \end{align*}
+
+
     \section{Définition d'une suite géométrique}
         \begin{align*}
                 &a_n \Coloneqq 
                 \begin{cases}
-                    a_1 = r  &\omit\quad\quad Raison\\  
-                    a_{n} = a_{n-1} \cdot r &\omit\hfill 
-                    \quad\quad Récurrence
-                \end{cases}
-                \\\\ 
-                &r = \frac{a_n}{a_{n-1}} \; | \; n \geq 2
-                \quad\quad\quad\quad\;\;\text{Trouver $r$} \\ 
-                &a_n = a_1r^{n - 1} \; | \; n \geq 1
-                \text{\quad\quad\quad\; Trouver $n$\up{e} terme}
-        \end{align*}
-
-
-
-
-
-
+                    a_1 = y  &\omit\quad\quad\quad \textbf{1\textsuperscript{er} Terme} \\  a_{n} = a_{n-1} \cdot r &\omit\hfill \quad\quad Récurrence \end{cases} \\\\ &r = \frac{a_n}{a_{n-1}} \; \forall \; n \geq 2 \quad\quad\quad\quad\quad\quad\;\; \textbf{Raison} \\ &a_n = a_1r^{n - 1} \; \forall \; n \geq 1 \text{\quad\quad\quad\quad\;\; $n$\up{e} terme} \end{align*} 
         \section{Convergence d'une suite géométrique}
-        $\forall r \in \mathbb{R}$, la suite $\{r^n\}$ converge        
-        \textit{ssi} $-1 < r \leq 1$ : 
+        \noindent       
+        $\Big( -1 < r \leq 1 \Big) \implies \{r^n\} \; \textbf{\textcolor{myb}{conv}}. \; 
+        \forall r \in \mathbb{R}$
         \begin{align*}
             \lim\limits_{n\to+\infty }\{r^n\} = 
                     \begin{cases}
@@ -144,66 +147,459 @@
         \end{align*}
 
 
+    \section{Convergence d'une série géométrique}
+        \noindent$\rhd$ 
+            $\Big(|r| < 1\big) \implies  
+            \sum_{n=0}^{\infty }ar^{n} = 
+            \dfrac{a}{1 - r} $ \;\;(\textbf{\textcolor{myb}{conv}}.)  
+        \\
+        $\rhd$ 
+            $\bigl(|r| \geq 1, a \neq 0\bigr) \implies 
+            \sum_{n=0}^{\infty }ar^{n} = \infty$ 
+            (\textbf{\textcolor{myr}{div}}. )   
+
+
+    \begin{theorem}{Somme géométrique}{} Considérons la suite géométrique $\{a_n\}_{n=0}^\infty$ de raison $r\neq1$. Alors on a la formule pour la somme des $(n+1)$ \textbf{1\textsuperscript{er} termes} : \begin{align*} S_n=a_0+a_1+\cdots+a_n &=\sum_{k=0}^na_k \\ &= a_0\frac{r^{n+1}-1}{r-1} \end{align*} \end{theorem} \section{Monotonicité} Soit une suite $a_n$, on dit que la suite est : \begin{itemize} \item[$\rhd$ ] \textbf{Strictement croissante} \\ \textbf{si} $\forall n \geq 1, a_{n+1} \textcolor{myr}{>} a_n$ \item[$\rhd$ ] \textbf{Croissante} \\ \textbf{si} $\forall n \textcolor{myr}{\geq} 1, a_{n+1} \geq a_n$ \item[$\rhd$ ] \textbf{Strictement décroissante} \\ \textbf{si} $\forall n \geq 1, a_{n+1} < a_n$ \item[$\rhd$ ] \textbf{Décroissante} \\ \textbf{si} $\forall n \geq 1, a_{n+1} < a_n$ \item[$\rhd$ ] \textbf{Stationnaire} ou \textbf{constante} \\ \textbf{si}    \section{Théorème des gendarmes}{} Soient $\{a_n\}$, $\{b_n\}$ et $\{c_n\}$ des suites et $n_0 \in \mathbb{N}$ tels que \begin{itemize} \item $\lim\limits_{n\to+\infty }a_n  = \lim\limits_{n\to+\infty }c_n  = L \in \mathbb{R} \cup \{\infty \}$; \item $\forall n \geq n_0, \; a_n \leq b_n \leq c_n$ \end{itemize} \textbf{Alors}, \begin{align*} \lim\limits_{n\to+\infty}b_n  = L                   \end{align*} $\forall n \geq 1, a_{n+1} < a_n$ \item[$\rhd$ ] \textbf{Monotone} \\ \textbf{si} elle est croissante, décroissante ou constante.     \end{itemize}  \section{Définitions de bornes d'une suite} \begin{itemize} \item[$\rhd$ ] \textbf{Minorant} : \\ $\exists m \in \mathbb{R} : \forall n \in \{ a_n \}, a_n \geq m$ \item[$\rhd$ ] \textbf{Majorant} :\\  $\exists M \in \mathbb{R} : \forall n \in \{ a_n \}, a_n \leq M$ \item[$\rhd$ ] \textbf{Bornée} : \\ $\exists M \land m$ \end{itemize} \begin{theorem}{Thm des suites monotones}{} Toute suite monotone et bornée est nécessairement \textbf{convergente}.  \end{theorem}    \begin{Definitionx}{Dfn. formelle de convergence d'une suite}{} \begin{align*} \lim\limits_{n  \to\infty  }{a_n} = L \end{align*} \noindent \textbf{ssi}, $\forall\varepsilon > 0, \exists N\left( \varepsilon \right) > 0$ : \\ $n > N\left( \varepsilon \right) \implies |a_n -L| < \varepsilon$   \\\\ \textbf{Vulgarisation} \\ Soit un nombre positif $\varepsilon > 0$ aussi petit que l'on souhaite. Il est toujours possible de trouver un entier $N(\varepsilon)$ tel que, pour tous les termes de la suite dont l'indice $n$ est supérieur à $N$, c'est-à-dire $n > N(\varepsilon)$, l'image $a_n$ sera suffisamment proche de $L$. Autrement dit, la distance entre $a_n$ et $L$ sera inférieure à $\varepsilon$ et donc négligeable, ce qui signifie que la suite se rapproche indéfiniment de la limite $L$ au fur et à mesure que $n$ augmente. \end{Definitionx} \begin{Definitionx}{Définition formelle de la divergence d'une suite}{}
+      \begin{align*}
+        \lim\limits_{n \to\infty} a_n = \infty
+      \end{align*}
+      \noindent \textbf{ssi}, 
+      $\forall M > 0, \exists N\left( M \right) > 0$ :
+      \[
+      n > N\left( M \right) \implies a_n > M
+      \]
+      \textbf{Vulgarisation} \\
+      Soit un nombre positif aussi grand que l'on souhaite, \(M > 0\). Il est toujours possible 
+      de trouver un entier \(N(M)\) tel que, pour tous les termes de la suite dont 
+      l'indice \(n\) est supérieur à \(N\), c'est-à-dire \(n > N(M)\), l'image \(a_n\) 
+      sera plus grande que \(M\). Autrement dit, à partir d'un certain rang, 
+      les termes de la suite deviennent arbitrairement grands, sans jamais 
+      revenir vers des valeurs plus petites.
+    \end{Definitionx}
+
+
+    
+    \section{Propriétés limites d'une suite}
+    \begin{itemize}
+        \item[$\rhd$] \textbf{Unicité.} La limite d'une suite convergente est \textit{unique}.
         
+        \item[$\rhd$] Toute suite convergente est \textbf{bornée};  
+            toute suite non bornée est \textbf{divergente}.        
+        \item[$\rhd$] Toute suite croissante et majorée est convergente. 
+            \textbf{Exemple} : \( a_n = 1 - 1/n \). 
+        \[
+        \lim_{n \to \infty} a_n = 1.
+        \]
+        
+        \item[$\rhd$] Toute suite décroissante et minorée est convergente. \textbf{Exemple} : \( b_n = 1/n \).
+        \[
+        \lim_{n \to \infty} b_n = 0.
+        \]
+        
+        \item[$\rhd$] Toute suite monotone et bornée est convergente.
+    \end{itemize}
 
-    \section{Définition formelle de convergence d'une suite}
-      \begin{align*}
-        \lim\limits_{n \to\infty  }{a_n} = L \\
-      \end{align*}
-      \textbf{si et seulement si}, 
-      \begin{align*}
-        \forall\varepsilon > 0, \exists N\left( \varepsilon \right) > 0 : 
-        n > N\left( \varepsilon \right) \implies 
-        |a_n -L| < \varepsilon
-      \end{align*}
+    
 
-
-
-    \section{Définition formelle de divergence d'une suite}
-      \begin{align*}
-        \lim\limits_{n  \to\infty  }{a_n} = \infty
-      \end{align*}
-      \textbf{si et seulement si},  
-        \begin{align*}
-            \forall M \in \mathbb{R}, \exists N \in \mathbb{N}^{*} :
-            n > N \implies |a_n| > M 
-        \end{align*}
 
     \section{Corollaire}
     \textbf{Si} $\lim\limits_{n\to+\infty }a_n  = \infty$,  
     \textbf{alors}, 
-    $\lim\limits_{n\to+\infty }{\dfrac{1}{a_n}}  = 0$
+    \[ \lim\limits_{n\to+\infty }{\dfrac{1}{a_n}}  = 0 \]
 
-
-
-
-    \section{Attention}
+    \textcolor{red}{Attention} 
         \begin{align*}
             \lim\limits_{n\to\infty  }\frac{1}{a_n} = 0 
             \textcolor{red}{\notimplies}
             \lim\limits_{n\to+\infty }a_n  = \infty
-        \end{align*}    
-
-    \section{Lemme de convergence des suite éventuellement signées}
+        \end{align*}  
 
 
+    \section{Association d'une fonction à une suite}
+        Soit $f\left(x\right)$ une fonction admettant une limite $L$ à 
+        $\text{+}\infty$, Alors, la suite 
+        $\{a_n\} = f\left(n\right)$ admet \textit{la même limite} : 
+        \begin{align*}
+          \lim\limits_{x\to\infty  }f(x) = L \implies \lim\limits_{n\to\infty  }a_n = L
+        \end{align*}
+        De la même façon :
+        \begin{align*}
+          \lim\limits_{x\to\infty  }f(x) = \infty \implies \lim\limits_{n\to\infty  }a_n = \infty
+        \end{align*}
+        Par ailleurs, si $f\left(x\right)$ est une fonction continue en 
+        $L$ et si la suite $\{a_n\}$
+        converge vers $L$, alors la limite suivante converge vers $f\left(L\right)$ :
+        \begin{align*}
+                    \lim\limits_{n\to+\infty  }f(a_n)  = f(L) \\ 
+                    \lim\limits_{n\to+\infty  }f(\lim\limits_{n \to \infty} a_n)  
+                    = f(L)  
+        \end{align*}
+        \textbf{Exemple} :  $\lim\limits_{n \to+\infty }\sin(\pi/2)  = 
+        \sin(\lim\limits_{n \to+\infty })  \pi/2  = 0$
 
-        \begin{enumerate}
-            \item 
-                Si $\{ a_n \}$ est une suite 
-                \textbf{éventuellement positive}, 
-                alors,  
-                    $\lim\limits_{n\to+\infty }\frac{1}{a_n}  = 0 
-                    \implies 
-                    \lim\limits_{n\to+\infty }a_n  = \infty$
-            \item                                 
-                Si $\{ a_n \}$ est une suite 
-                \textbf{éventuellement négative}, 
-                alors,   
-                    $\lim\limits_{n\to+\infty }\frac{1}{a_n}  = 0 
-                    \implies 
-                    \lim\limits_{n\to+\infty }a_n  = -\infty$
-        \end{enumerate} 
+
+    \section{Théorème des gendarmes}{}
+        Soient $\{a_n\}$, $\{b_n\}$ et $\{c_n\}$ des suites et $n_0 \in \mathbb{N}$ tels 
+        que
+        \begin{itemize}
+            \item[$\blacktriangleright$ ]  $\lim\limits_{n\to+\infty }a_n  = 
+                \lim\limits_{n\to+\infty }c_n  = L 
+                \in \mathbb{R} \cup \{\infty \}$; 
+            \item[$\blacktriangleright$ ] $\forall n \geq n_0, \; a_n \leq b_n \leq c_n$ 
+        \end{itemize}
+        \textbf{Alors},
+        \begin{align*}
+            \lim\limits_{n\to+\infty}b_n  = L                   
+        \end{align*}
+
+
+    \chapter{Séries numériques}
+
+    \section{Définition d'une série}
+        $$s = a_1 + a_2 + \cdots + a_n + \cdots = \sum_{n=1}^{\infty }a_n$$
+        est une série numérique de \textbf{somme} $s$. Lorsqu'on additionne
+        une quantité \textit{finie} de termes d'une série, on obtient une \textbf{somme partielle} :
+        $$s_n = a_1 + a_2 + \cdots + a_n = \sum_{k=1}^{n }a_k $$ 
+
+    \begin{theorem}{Propriétés des séries convergentes}{}
+        On ne change pas la nature d'une série en lui enlevant ou en lui ajoutant un 
+        nombre \textbf{fini} des termes.  
+        \\\\
+        Soit $k \geq 0 \in \mathbb{N}$, les sommes suivantes ont le même comportement :
+        \[%  
+            \sum_{n=1}^{\infty }a_n = L \; (\textbf{\textcolor{myb}{conv}}.)  
+            \leftrightarrow 
+            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myb}{conv}}.  
+        \]%
+        \[%  
+            \sum_{n=1}^{\infty }a_n  = \pm \infty \;  (\textbf{\textcolor{myr}{div}}.)  
+            \leftrightarrow 
+            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myr}{div}}.  
+        \]%
+    \end{theorem}               
+
+    \section{Addition et multiplication par un scal.}
+    \begin{itemize}
+        \item[$\rhd$] Si \(\sum_{n=1}^{\infty } a_n = s\) (converge) et \(\lambda\) est un scalaire, 
+            alors la série de terme général 
+            \(\sum_{n}^{\infty }\lambda a_n\) converge et a pour somme
+        \[
+        \sum_{n=1}^{\infty } \lambda a_n = \lambda \sum_{n=1}^{\infty } a_n = \lambda s
+        \]
+        
+        \item[$\rhd$] Si \(\sum_{n=1}^{\infty} a_n = s\) (converge) et 
+            \(\sum_{n=1}^{\infty} b_n = t\) (converge), alors la série de terme général \(a_n + b_n\) 
+            converge et a pour somme : 
+        \[
+        \sum_{n=1}^{\infty} (a_n + b_n) = \sum_{n=1}^{\infty } a_n + \sum_{n=1}^{\infty } b_n = s + t
+        \]
+        \item[$\blacktriangleright$] 
+            $\sum_{n=1}^{\infty }a_nb_n \textcolor{red}{\neq} 
+            (\sum_{n=1}^{\infty }a_n)(\sum_{n=1}^{\infty}b_n)$
+        \item[$\blacktriangleright$]
+            $\sum_{n=1}^{\infty }\dfrac{a_n}{b_n} 
+            \textcolor{red}{\neq} 
+            \dfrac{\sum_{n=1}^{\infty }a_n}{\sum_{n=1}^{\infty }b_n}$
+    \end{itemize}
+
+    \begin{theorem}{Conv. du terme général}{}
+        Le terme général d'une série convergente \textbf{tend vers 0} : 
+        $$% 
+        \sum_{n=1}^{\infty }a_n = s \; (\textcolor{myb}{\textbf{conv.}}) \;\implies \lim\limits_{n\to \infty} a_n = 0 
+        $$%
+        $\blacktriangleright$ \textbf{Implique} qu'il n'est pas 
+        nécessaire d'évaluer la si lorsqu'on sait que 
+        $a_n$ \textbf{div}.   
+    \end{theorem}           
+
+
+    \begin{corollary}{Div. du terme général}{}
+        Une suite qui ne converge par à zéro engendre une série qui \textbf{diverge}.        
+        $$% 
+        \lim\limits_{n\to \infty} a_n \; \textcolor{red}{\neq} \; 0 \implies   
+        \sum_{n=1}^{\infty }a_n = \infty \; (\textcolor{red}{\textbf{div.}}) \;        $$%
+    \end{corollary}
+
+
+    \begin{note}{}{}
+       La \textbf{réciproque } est fausse. Par exemple la série 
+       \textbf{harmonique} de terme général $a_n$  : 
+
+       \begin{align*}
+            \lim\limits_{n \to+\infty }a_n = 
+            \lim\limits_{n \to+\infty } \dfrac{1}{n} 
+            \longrightarrow 0
+       \end{align*}
+       Mais on a également  : 
+       \begin{align*}
+            \sum_{n=1}^{\infty }\dfrac{1}{n} \longrightarrow 
+            + \infty (\textcolor{myr}{\textbf{div}}.  )
+       \end{align*}
+    \end{note}
+
+    \begin{theorem}{Thm. du reste}{}
+        Soient la série de terme général $a_n$, la quantité $s_n$ et le rest $R_n$, :
+        \[%
+        \sum_{n=1}^{\infty }a_n, \;\;\sum_{k=1}^{n }a_k = s_n, \; \sum_{k= n+1}^{\infty }a_k = R_n
+        \]%
+        On a l'implication suivante :
+        \begin{align*}
+            \lim\limits_{n\to\infty }R_n = 0 
+            &\implies \sum_{n=1}^{\infty }a_n = s \; (\textcolor{myb}{\textbf{conv.}})  \\
+            &\implies R_n = s - s_n 
+        \end{align*}
+        Cela signifie que, pour des valeurs suffisamment grandes de \(n\), le reste \(R_n\) devient 
+        arbitrairement petit et la somme totale \(s\) est bien approchée par la somme partielle 
+        \(s_n\).    
+    \end{theorem}   
+
+    \chapter{Série à termes positifs}
+
+    \section{Définition d'une série à termes positifs}
+    \noindent$\forall n \geq 1 a_n \geq 0 \implies \sum_{n=1}^{\infty }a_n$ à termes positifs.
+
+    \begin{theorem}{Conv. série à termes positifs}{}
+        Un conditions nécessaire et suffisante pour que la série à termes positifs 
+        $\sum_{n=1}^{\infty }a_n$ converge est que la suite des sommes partielles
+        $s_n = \sum_{k=1}^{n }a_k$ soit majorée. 
+        \\\\ 
+
+        \textbf{Sommes partielles} : La suite des sommes partielles \(s_n\) est la somme des 
+        premiers termes de la série, jusqu'au \(n\)-ième terme. Si cette somme partielle 
+        devient \textbf{majorée}, cela signifie qu'il existe une limite supérieure que les 
+        sommes ne pourront jamais dépasser, peu importe la valeur de \(n\). En d'autres 
+        termes, les termes de la série s'accumulent, mais ils le font de manière contrôlée.
+        \\\\
+        \textbf{Séries à termes positifs} : Puisque les \(a_n\) sont positifs, chaque nouveau 
+        terme \(a_n\) ajouté à la somme partielle rend la somme \(s_n\) de plus en plus 
+        grande. Si cette accumulation ne finit jamais par dépasser un certain seuil 
+        (c'est-à-dire, si elle est majorée), cela signifie que les termes \(a_n\) doivent 
+        devenir de plus en plus petits et que leur contribution totale ne fait qu'approcher 
+        un certain nombre, sans jamais devenir infinie. C'est le signe que la série 
+        \textbf{converge}.
+    \end{theorem}
+    \vspace{-2em}
+
+
+     \section{Test de comparaison}
+     Soient $\sum a_n, \sum b_n$ des séries à \textbf{termes positifs} 
+     et $n_0 \in \mathbb{R}$ :
+     \begin{itemize}
+         \item[$\rhd$ ] $\sum_{n=1}^{\infty }b_n  \; \textbf{conv.}, \; 
+                   a_n \leq b_n \; \forall n \geq n_0\implies 
+                   \sum_{n=1}^{\infty }a_n \; \textbf{conv.}$ 
+         \item[$\rhd$ ] $\sum_{n=1}^{\infty }b_n  \; \textbf{div.}, 
+                   a_n \geq b_n \forall n \geq n_0 \implies 
+                   \sum_{n=1}^{\infty }a_n \;\; \textbf{div.}$ 
+     \end{itemize}
+
+     \begin{theorem}{Forme limite du test de comparaison}{}
+        En évaluant le rapport entre deux suites, ont peut déterminer si leur série correspondente 
+        convergent ou divergent tout deux. 
+        
+        \begin{align*}
+        &\left(\lim\limits_{n \to+\infty } \dfrac{b_n}{a_n}  = L \neq 0 \right) 
+            \implies \\ &\sum_{n=1}^{\infty }a_n \; \textbf{conv.} 
+        \leftrightarrow 
+        \sum_{n=1}^{\infty }b_n \; \textbf{conv.}    
+        \end{align*}
+     \end{theorem}          
+
+
+
+
+    \begin{theorem}{Critère de Riemann}
+    Soit $\sum_{n=1}^{\infty} a_n$ une série à termes positifs. Supposons 
+    qu'il existe un réel $p > 0$ tel que 
+    \[
+    \lim_{n \to \infty} n^p a_n = l.
+    \]
+    Dans ce cas :
+    \begin{itemize}
+      \item Si $p > 1$ et $l$ est fini, alors $\sum_{n=1}^{\infty} a_n$ 
+      converge.
+      \item Si $p \leq 1$ et $l \neq 0$ (ou si $l = +\infty$), alors 
+      $\sum_{n=1}^{\infty} a_n$ diverge.
+    \end{itemize}
+    \end{theorem}
+    \textbf{Exemple} Prenons $a_n = \dfrac{n-1}{n^4+1}$. On a
+    \[
+    n^{3/2} a_n = n^{3/2} \cdot \dfrac{n-1}{n^4+1}
+    \]
+    et
+    \[
+    n^{3/2} a_n = \sqrt{n^3} \cdot \dfrac{n-1}{n^4+1} = 
+    n^3 \cdot \dfrac{n-1}{n^4+1} \cdot \dfrac{1-\dfrac{1}{n}}{1+10/n^4}.
+    \]
+    Ainsi, 
+    \[
+    \lim_{n \to \infty} n^{3/2} a_n = l = 1.
+    \]
+    On en conclut que la série $\sum_{n=1}^{\infty} \dfrac{n-1}{n^4+1}$ 
+    est convergente.
+
+
+    \section{Série de Riemann et série puissance} 
+    \vspace{-1em}
+    \begin{align*}
+        \sum_{n=1}^{\infty }\dfrac{1}{n^p} 
+        \text{ converge si } p > 1 \text{, diverge si } p \leq 1
+        \\
+        \sum_{n=1}^{\infty }n^p \text{ converge  si }
+         p > 1 
+    \end{align*}
+    La première est un \textbf{série de Riemann}; la seconde 
+    est une \textbf{série puissance}. 
+
+
+
+    \begin{theorem}{Test de l'intégrale}{}
+    Soit $f : [1, \infty [ \rightarrow  \mathbb{R}$ 
+    \textbf{continue}, \textbf{positive} et \textbf{décroissante} 
+    et $a_n : f(n) = a_n$, la somme suivante converge ou diverge avec 
+    son intégrale correspondante. 
+    \begin{align*}
+        &\sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv.}} 
+        \\
+        & \updownarrow 
+        \\
+        &\lim\limits_{a \to +\infty }\int_{x=1}^{x = a}f(x)dx = s \;\; (\textbf{conv.})    
+    \end{align*}
+    $\blacktriangleright$ Utile lorsqu'on connait \textbf{une intégrale convergente} qui est 
+    analogue à la somme qu'on veut calculer. 
+    \end{theorem}
+
+
+    \section{Approximation de la somme}
+    \textbf{Si} $f:$ \textbf{positive}, \textbf{continue} et \textbf{décroissante} 
+    après sur son domaine et soit $n \in \mathbb{N}^*, 
+    a_n = f(n), \sum_{n=1}^{\infty }a_n = s \in \mathbb{R}, 
+    R_n = s - s_n$, \textbf{alors} le reste $R_n$ est borné et peut être 
+     estimé :
+     \begin{align*}
+        \int_{n+1}^{\infty }f(x)dx \leq R_n = \sum_{k=1}^{m} a_k 
+        \leq \int_{n}^{\infty }f(x)dx
+        \\ 
+        s_n + \int_{n+1}^{\infty }f(x)dx \leq s  
+        \leq \int_{n}^{\infty }f(x)dx + s_n
+     \end{align*}
+     Si $f:$ \textbf{positive}, \textbf{continue},  \textbf{décroissante} 
+     après un certain range $N \geq 0 : [N, +\infty]$, l'inégalité tient et on a 
+    
+     \begin{align*}
+         \sum_{n=N}^{\infty} a_n = s (\textbf{\textcolor{myb}{conv}}.) \leftrightarrow    
+         \int_{n+1}^{\infty }f(x)dx  \; \textbf{conv}.   
+     \end{align*}               
+
+     \chapter{Séries alternées}
+
+     \section{Définition d'une série alternée}
+     \begin{align*}
+         s=a_1-a_2+\cdots&+(-1)^{n-1}a_n +\cdots 
+         \\
+         &=\sum_{n=1}^\infty(-1)^{n-1}a_n
+         \\
+         s=-a_1+a_2 +\cdots&+(-1)^na_n+\cdots 
+         \\
+         &=\sum_{n=1}^\infty(-1)^na_n                
+     \end{align*}               
+
+
+
+
+     \section{Test sur séries alternées}
+     Soit un \textbf{rang} $n_0 \in \mathbb{N}$ et 
+     soit une \textbf{série alternée} 
+     $\sum_{n=1}^{\infty } (-1)^nb_n$ telle que 
+     \begin{itemize}
+       \item [$\rhd$ ]  $0 \leq b_{n+1} \leq b_n \;\;(\downarrow \textbf{ et } +)$ 
+       \item [$\rhd$ ] $\lim\limits_{n\to\infty }b_n = 0$ 
+     \end{itemize}
+     \textbf{Alors}, 
+     \begin{itemize}
+        \item[$\blacktriangleright$]
+        $\sum_{n=1}^{\infty }  (-1)^nb_n \textbf{ conv. }$ vers $s \in
+    \mathbb{R} \;\; \forall m \geq n_0 $ 
+        \item[$\blacktriangleright$]
+    $0 \leq s \leq a_1$ 
+        \item[$\blacktriangleright$] 
+    $R_n = |s - s_m| \leq b_{m+1}$
+     \end{itemize}
+
+\chapter{Convergence absolue}
+    \section{Définition de convergence absolue}
+    \mbox{}\\
+     \[% 
+        \sum_{n=1}^{\infty }|a_n| \textbf{conv.} \implies 
+        \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv}.} \textcolor{myb}{\textbf{ absolument}}  
+     \]%
+      \\
+      $\rhd$  \textbf{Semi-conv}. : $\sum_{n=1}^{\infty }a_n$ \textbf{conv}. \; 
+         \textbf{et} $\sum_{n=1}^{\infty }|a_n| \; \textcolor{myr}{\textbf{div}}.$ 
+      $\blacktriangleright$  \textbf{Exemple} $\sum_{n=1}^{\infty }\frac{(-1)^n}{n}$ conv 
+          \textbf{mais} $\neg(\sum_{n=1}^{\infty }\frac{1}{n})$ conv.  
+
+    \begin{theorem}{Critère suffisant}{}
+       \textbf{Si} une série $\sum_{n=1}^{\infty }a_n$ converge \textit{absolument}, 
+       \textbf{alors} elle converge simplement.  
+    \end{theorem}
+
+    \section{Test du rapport (d'Alembert)}
+    \mbox{}\vspace{0.2em}\\
+    Soit $\lim\limits_{n \to+\infty } \Big|\frac{a_{n+1}}{a_n}  \Big| = L$ 
+    \textbf{alors} si :   
+    \begin{itemize}
+    \item [$\rhd$ ] $L = 1 \implies$ \textit{ inconclusif}  
+    \item [$\blacktriangleright$ ] $L > 1 \implies \sum_{n=1}^{\infty } a_n$ 
+      \textbf{div}.   
+    \item [$\blacktriangleright$ ] $L < 1 \implies \sum_{n=1}^{\infty } a_n$ \textbf{conv}.   
+    \end{itemize}
+
+
+    \section{Test de Cauchy}
+    \mbox{}\vspace{0.2em}
+    Soit $\lim\limits_{n \to+\infty } \sqrt[n]{\big| a_n \big|} = L$ 
+    \textbf{alors} si :   
+    \begin{itemize}
+    \item [$\rhd$ ] $L = 1 \implies$ \textit{inconclusif}  
+    \item [$\blacktriangleright$ ] $L > 1 \implies \sum_{n=1}^{\infty }a_n$ 
+      \textbf{div}.   
+    \item [$\blacktriangleright$ ] $L < 1 \implies \sum_{n=1}^{\infty }a_n$ 
+      \textbf{conv}.
+    \end{itemize}
+
+
+                                                
+
+
+
+     
+
+
+
+
+
+    
+
+       
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+  
+
+
+
 
 
  
@@ -263,78 +659,9 @@
         
 
 
-    \section{Monotonicité} 
-        Soit une suite $\{a_n \}$, on dit que la suite est :
-        \begin{itemize}
-            \item \textbf{Strictement croissant} si $\forall n \geq 1, 
-                a_{n+1} > a_n$
-            \item \textbf{Croissante} si $\forall n \geq 1, 
-                a_{n+1} \geq a_n$ 
-            \item \textbf{Strictement décroissante} si $\forall n \geq 1, 
-                a_{n+1} < a_n$ 
-            \item \textbf{Décroissante} si $\forall n \geq 1, 
-                a_{n+1} < a_n$ 
-            \item \textbf{Stationnaire} ou \textbf{constante} si 
-                $\forall n \geq 1, 
-                a_{n+1} < a_n$ 
-            \item \textbf{Monotone}  
-        \end{itemize} 
-
-
-
-    \section{Définitions de bornes d'une suite}
-       \begin{align*}
-           \textbf{Minonant } m \Coloneqq 
-           \exists m \in \mathbb{R} : \forall n \in \{ a_n \}, 
-           a_n \geq m
-       \end{align*}
-       \begin{align*}
-           \textbf{Majorant} M \Coloneqq 
-           \exists M \in \mathbb{R} : \forall n \in \{ a_n \}, 
-           a_n \leq M
-       \end{align*}
-       \begin{align*}
-           \textbf{Bornée} \Coloneqq 
-            \textit{Majorée} \land \textit{minorée}
-       \end{align*}
-       
-
-
-    \section{Théorème des suites monotones}
-        Toute suite monotone et bornée est \textbf{convergente}  
-
-
-    \section{Lemmes des suites monotones}
-        \begin{itemize}
-            \item Toute suite éventuellement croissante et majorée 
-        est également \textbf{convergente}  
-            \item Tout suite éventuellement décroissante et 
-            minorée est également \textbf{convergente}  
-        \end{itemize}
     
 
 
-    \section{Association d'une fonction à une suite}
-        Soit $f\left(x\right)$ une fonction admettant une limite $L$ à 
-        $\text{+}\infty$, Alors, la suite 
-        $\{a_n\} = f\left(n\right)$ admet la même limite : 
-        \begin{align*}
-          \lim\limits_{x\to\infty  }f(x) = L \implies \lim\limits_{n\to\infty  }a_n = L
-        \end{align*}
-        De la même façon :
-        \begin{align*}
-          \lim\limits_{x\to\infty  }f(x) = \infty \implies \lim\limits_{n\to\infty  }a_n = \infty
-        \end{align*}
-        Par ailleurs, si $f\left(x\right)$ est une fonction continue en 
-        $L$ et si la suite $\{a_n\}$
-        converge vers $L$, alors la limite suivante converge vers $f\left(L\right)$ :
-        \begin{align*}
-                    \lim\limits_{n\to+\infty  }f(a_n)  = f(L) \\ 
-                    \lim\limits_{n\to+\infty  }f(\lim\limits_{n \to \infty} a_n)  
-                    = f(L)  
-        \end{align*}
-        $\rhd$ $ \textbf{Exemple}  \lim\limits_{n \to+\infty }\sin(\pi/2)  = 
-        \sin(\lim\limits_{n \to+\infty })  \pi/2  = 0$
 
 
 
@@ -348,450 +675,310 @@
         \lim\limits_{n\to+\infty }\dfrac{c_n}{d_n} = 0$ 
 
 
-    \section{Théorème des gendarmes}{}
-        Soient $\{a_n\}$, $\{b_n\}$ et $\{c_n\}$ des suites et $n_0 \in \mathbb{N}$ tels 
-        que
-        \begin{itemize}
-            \item $\lim\limits_{n\to+\infty }a_n  = 
-                \lim\limits_{n\to+\infty }c_n  = L 
-                \in \mathbb{R} \cup \{\infty \}$; 
-            \item $\forall n \geq n_0, \; a_n \leq b_n \leq c_n$ 
-        \end{itemize}
-        \textbf{Alors},
-        \begin{align*}
-            \lim\limits_{n\to+\infty}b_n  = L                   
-        \end{align*}
 
 
 
-    \section{Corollaire}
-         \textbf{Si} $\lim\limits_{n\to+\infty }|a_n|  = 0$, 
-         \textbf{alors}      
-         $\lim\limits_{n\to+\infty }a_n  = 0$
-
-    \section{Définition d'une série numérique}
-    Somme infinie des termes d'une suite numérique 
-    correspondante $a_n$ : 
-    $\sum_{n=1}^{\infty}a_n$. 
-    \begin{itemize}
-        \item \textbf{Premiers termes} $s_n = \sum_{i=1}^{n } a_i$   
-        \item \textbf{Convergence}   
-        $\lim\limits_{n\to+\infty }s_n  = s \implies 
-        \sum_{n}^{\infty}a_n \textbf{ conv.}$
-    \end{itemize}
 
 
 
-    \section{Critère de divergence}
-        Si la série converge, la suite correspondante 
-        \textbf{converge vers 0},
-        et si la suite ne converge pas vers zéro, la série 
-            est divergente
-        \begin{itemize} 
-            \item $\sum_ {n}^{ \infty }a_n = s \; (\textbf{conv.}) 
-                \implies 
-            \lim\limits_{n\to+\infty }a_n  = 0$
-            \item
-            $\lim\limits_{n\to+\infty }a_n  \neq 0  
-            \implies 
-            \sum_{ n}^{\infty }a_n$ \textbf{ div.}  
-        \end{itemize}
 
-    \section{Attention} 
-    $\lim\limits_{n\to+\infty }a_n = 0 
-    \textcolor{red}{\notimplies} 
-    \sum_{n=1}^{\infty }a_n$ \textbf{conv}.   
+    % \section{Critère de divergence}
+    %     Si la série converge, la suite correspondante 
+    %     \textbf{converge vers 0},
+    %     et si la suite ne converge pas vers zéro, la série 
+    %         est divergente
+    %     \begin{itemize} 
+    %         \item $\sum_ {n}^{ \infty }a_n = s \; (\textbf{conv.}) 
+    %             \implies 
+    %         \lim\limits_{n\to+\infty }a_n  = 0$
+    %         \item
+    %         $\lim\limits_{n\to+\infty }a_n  \neq 0  
+    %         \implies 
+    %         \sum_{ n}^{\infty }a_n$ \textbf{ div.}  
+    %     \end{itemize}
 
 
 
-    \section{Convergence d'une série géométrique}
-    \begin{itemize}
-        \item[$\rhd$] 
-            $|r| < 1 \implies  
-            \sum_{n=0}^{\infty }ar^{n} = 
-            \dfrac{a}{1 - r} $ \;\;(\textbf{conv.})  
-        \item [$\rhd$] 
-            $(|r| \geq 1) \land (a \neq 0) \implies 
-            \sum_{n=0}^{\infty }ar^{n} = \infty$ 
-            (\textbf{div.})
-        
-    \end{itemize}
 
 
 
-    \section{Propriétés des séries}
-    \begin{itemize}
-        \item[$\blacktriangleright$]  \textbf{+} et \textbf{-} de deux séries convergentes 
-            ainsi que $c \cdot \sum_{n}^{\infty }a_n$ engendrent une série \textbf{conv}.
-        \item[$\blacktriangleright$] 
-            $\sum_{n=1}^{\infty }a_nb_n \textcolor{red}{\neq} 
-            (\sum_{n=1}^{\infty }a_n)(\sum_{n=1}^{\infty}b_n)$
-        \item[$\blacktriangleright$]
-            $\sum_{n=1}^{\infty }\dfrac{a_n}{b_n} 
-            \textcolor{red}{\neq} 
-            \dfrac{\sum_{n=1}^{\infty }a_n}{\sum_{n=1}^{\infty }b_n}$
-    \end{itemize}
-    
-    
-    \section{Test de l'intégrale}
-    Soit $f : [1, \infty [ \rightarrow  \mathbb{R}$ 
-    \textbf{continue}, \textbf{positive} et \textbf{décroissante} 
-    et $a_n : f(n) = a_n$,
-    \begin{align*}
-        \sum_{n=1}^{\infty }a_n \;\; \textbf{conv.} \;\; \leftrightarrow
-        \lim\limits_{a \to +\infty }\int_{x=1}^{x = a}f(x)dx = s \;\; (\textbf{conv.})    
-    \end{align*}
 
 
-    \section{Série de Riemann et série puissance} 
-    \begin{align*}
-        \sum_{n=1}^{\infty }\dfrac{1}{n^p} 
-        \text{ converge si } p > 1 \text{, diverge si } p \leq 1
-        \\
-        \sum_{n=1}^{\infty }n^p \text{ converge  si }
-         p > 1 
-    \end{align*}
-    La première est un \textbf{série de Riemann}; la seconde 
-    est une \textbf{série puissance}.  
 
 
     
-    \section{Estimation du reste par TI}
-    \textbf{Si} $f: \lambda, + , \downarrow [m, \infty [$ et soit $m \in \mathbb{N}^*, 
-     a_n = f(n), \sum_{n=1}^{\infty }a_n = s \in \mathbb{R}, 
-     R_m = s - s_m$, \textbf{alors} le reste $R_m$ est borné et peut être 
-     estimé :
-     \begin{align*}
-        \int_{m+1}^{\infty }f(x)dx \leq \left(R_m = \sum_{k=1}^{m} a_k\right) 
-        \leq \int_{m}^{\infty }f(x)dx
-     \end{align*}
+    
+
+
+
+ 
 
 
     
-     \section{Test de comparaison}
-     Soient $\sum a_n, \sum b_n$ des séries à \textbf{termes positifs} 
-     et $n_0 \in \mathbb{R}$ :
-     \begin{itemize}
-         \item[$\rhd$ ] $\left(\sum   b_n  \;\; \textbf{conv.}\right) \land 
-             (a_n \leq b_n \forall n \geq n_0) 
-             \implies a_n \; \textbf{conv.}$ 
-         \item[$\rhd$ ] $\left(\sum   b_n  \;\; \textbf{div.}\right) \land 
-             (a_n \geq b_n \forall n \geq n_0) 
-             \implies a_n \;\; \textbf{div.}$ 
-         \item[$\rhd$ ] $\lim\limits_{n\to\infty}\dfrac{a_n}{b_n}
-             \in \mathbb{R} \textbf{ existe } \textbf{ et } L > 0 
-             \implies 
-        \sum a_n \;\; \textbf{conv.} \;\; \leftrightarrow \;\; 
-        \sum b_n \;\; \textbf{conv.}$ 
-    \item[$\blacktriangleright$] Principalement pour Riemann \& géométriques
-     \end{itemize}
+
+
+
+    
+
 
      
 
-     \section{Test sur séries alternées}
-     Soit un \textbf{rang} $n_0 \in \mathbb{N}$ et 
-     soit une \textbf{série alternée} 
-     $\sum_{n=1}^{\infty } (-1)^nb_n$ telle que 
-     \begin{itemize}
-       \item [$\rhd$ ]  $0 \leq b_{n+1} \leq b_n \;\;(\downarrow \textbf{ et } +)$ 
-       \item [$\rhd$ ] $\lim\limits_{n\to\infty }b_n = 0$ 
-     \end{itemize}
-     \textbf{Alors}, 
-     \begin{itemize}
-         \item[$\blacktriangleright$]
-     $\sum  (-1)^nb_n \textbf{ conv. }$ vers $s \in
-     \mathbb{R} \;\; \forall 
-     m \geq n_0 $ \textbf{et}  
-        \item[$\blacktriangleright$] 
-    $|s - s_m| \leq b_{m+1}$
-     \end{itemize}
-
-  \section{Définition de convergence absolue}
-     \mbox{}\\
-     \[ \sum_{n=1}^{\infty }|a_n| \textbf{conv.} \implies \sum_{n=1}^{\infty }a_n  
-     \textbf{ conv. } \textit{absoluement} \]
-      \\
-      $\rhd$  \textbf{Semi-conv.} : $\sum_{n=1}^{\infty }a_n$ conv. 
-         \texttt{\&\&} $\neg(\sum_{n=1}^{\infty }|a_n|)$ 
-      $\blacktriangleright$  \textbf{Exemple} $\sum_{n=1}^{\infty }\frac{(-1)^n}{n}$ conv 
-          \textbf{mais} $\neg(\sum_{n=1}^{\infty }\frac{1}{n})$ conv.  
-
-  \section{Test du rapport (d'Alembert)}
-  \mbox{}\vspace{0.2em}\\
-  Soit $\lim\limits_{n \to+\infty } \Big|\frac{a_{n+1}}{a_n}  \Big| = L$ 
-  \textbf{alors} si :   
-  \begin{itemize}
-    \item [$\rhd$ ] $L = 1 \implies$ \textit{ inconclusif}  
-    \item [$\blacktriangleright$ ] $L > 1 \implies \sum_{n=1}^{\infty } a_n$ 
-      \textbf{div}.   
-    \item [$\blacktriangleright$ ] $L < 1 \implies \sum_{n=1}^{\infty } a_n$ \textbf{conv}.   
-  \end{itemize}
 
 
 
-  \section{Test de Cauchy}
-  \mbox{}\vspace{0.2em}
-  Soit $\lim\limits_{n \to+\infty } \sqrt[n]{\big| a_n \big|} = L$ 
-  \textbf{alors} si :   
-  \begin{itemize}
-    \item [$\rhd$ ] $L = 1 \implies$ \textit{inconclusif}  
-    \item [$\blacktriangleright$ ] $L > 1 \implies \sum_{n=1}^{\infty }a_n$ 
-      \textbf{div}.   
-    \item [$\blacktriangleright$ ] $L < 1 \implies \sum_{n=1}^{\infty }a_n$ 
-      \textbf{conv}.
-  \end{itemize}
-
-  \section{Défininition d'une série entière} Soit une variable 
-  $x$, les contantes $c_0, c_1, \cdots , c_n$ 
-  et $n \in \mathbb{N}$, une série 
-  est dite centrée en $a \in \mathbb{R}$ si on a :  
-  \[ \sum_{n=0}^{\infty } c_n(x-a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \cdots \]
-
-  \section{Famille de séries paramétrées par $x$} 
-  Soit l'ensemble $D$ des $x$ pour lesquels la série converge, 
-  la fonction $f : D \rightarrow  \mathbb{R}$ engendre une 
-  somme $f(x) \in \mathbb{D}$ :
-  \[ f(x) = \sum_{n=0}^{\infty } c_n(x - a)^n \]
-  \vspace{-1.5em} %vspace
-
-  \begin{table}[H]
-    \begin{center}
-      \renewcommand{\arraystretch}{2}
-      \fontfamily{flr}\selectfont
-      \footnotesize
-      \begin{tabular}{l|p{3.75cm}}
-          \arrayrulecolor{blue}\hline
-          \rowcolor{lightBlue}
-          \textcolor{myb}{Fonction} & \textcolor{myb}{Somme}
-          \\
-          \hline
-          \arrayrulecolor{black}
-          $\sin x$ & $x - \frac{x^3}{3!} +  \frac{x^5}{5!} 
-          -  \frac{x^7}{7!} + \dots $ 
-          \\
-          \hline
-          $\cos x$ & $1 - \frac{x^2}{2!} +  \frac{x^4}{4!} 
-          -  \frac{x^6}{6!} + \dots $ 
-          \\
-          \hline
-          $\dfrac{1}{1-x}$ & $\forall \; |x| <1 \textcolor{red}{\colon}  
-          1 + x + x^2 + x^3 + \dots $  
-          \\
-          \hline 
-          $e^x$ & $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} \cdots$ 
-          \\
-          \hline
-          $\ln(1 + x)$ & $\forall \; |x| < 1 \textcolor{red}{\colon} 
-          x - \frac{x^2}{2} +  \frac{x^3}{3} 
-          -  \frac{x^4}{4} + \dots $ 
-          \\
-          \hline
-          $\arctan (x)$ & $\forall \; |x| < 1 \textcolor{red}{\colon}  
-          x - \frac{x^3}{3} +  \frac{x^5}{5!} 
-          -  \frac{x^7}{7!} + \dots $ 
-          \\
-          \hline
-          $(1 + x)^k$ &           
-              $\forall \; |x| < 1 \textcolor{red}{\colon}  
-              1+ kx + \frac{k(k-1)}{2!}x^2 
-                    + \frac{k(k-1)(k-2)}{3!}x^3 
-              \cdots$
-          \\
-          \hline
-
-          \end{tabular}
-  \end{center}
-  \end{table}
-
-  \section{Rayon de convergence}
-  Soit la série $S = \sum_{n=0}^{\infty }c_n(x - a)^n$, il a 
-  \textit{trois possibilités} :   
-  \begin{itemize}
-    \item [$\rhd$ ] $S$ \textbf{conv.} \textcolor{red}{à}   
-           $x = a \implies  R = 0$  
-    \item [$\rhd$ ] $\forall \; x, \; S \textbf{ conv.} \implies  
-                 R = \infty$       
-    \item [$\rhd$ ] $\exists R > 0 \colon $ 
-        \begin{itemize}
-          \item [$\blacktriangleright$ ] $|x - a| < R \implies 
-            S \textbf{ conv.}  $ 
-          \item [$\blacktriangleright$ ] $|x - a| > R \implies 
-            S \textbf{ div.}$ 
-        \end{itemize}
-  \end{itemize}
-
-  \section{Intervale de convergence}
-  Soit $R$, le rayon de convergence d'une série 
-  $\sum_{n=1}^{\infty }c_n(x - a)^n$,  
-  l'\textbf{intervale de convergence} $I$ est donné par : 
-  \begin{itemize}
-    \item [$\rhd$ ]\textbf{Si}  $R = 0 \implies  I = a = [a, a]$
-    \item [$\rhd$ ] Si $R = \infty \implies  I = \mathbb{R} $
-    \item [$\rhd$ ] \textbf{Si} $R > 0$ \textbf{et} $R \in \mathbb{R}$    
-      \begin{itemize}
-        \item [$\blacktriangleright$ ] $I = ]a - R, a + R[$
-        \item [$\blacktriangleright$ ] $I = ]a - R, a + R]$
-        \item [$\blacktriangleright$ ] $I = [ a - R, a + R[$
-        \item [$\blacktriangleright$ ] $I = [ a - R, a + R] $
-      \end{itemize}
-  \end{itemize}
-
-  \section{Dérivation et intégration termes à termes}
-  Soit la série $S = \sum_{n=0}^{\infty }c_n(x - a)^n$ 
-  ayant un rayon de convergence $R > 0$, et $f(x) = S$ est 
-  \textbf{dérivable} sur $(a-R, a + R)$, \textbf{alors},     
-  \begin{itemize}
-    \item [$\rhd$ ] $f^{\prime}(x) = \sum_{n=1}^{\infty }na_n(x-a)^{n-1}$ 
-    \item [$\rhd$ ] $\int f(x) dx = 
-           C + \sum_{n=0}^{\infty }\frac{(x-a)^{n+1}}{n+1}$
-  \end{itemize}
-
-  \section{Expression d'une fonction en série géométrique}
-  Chaque fonction $f : (a - R, a + R) \rightarrow \mathbb{R}$ peut être 
-  approximé par une série géométrique :
-  \begin{align*}
-      f(x) &= \sum_{n=0}^{\infty }c_n(x - a)^n \\ 
-           &= c_0 + c_1(x - a) + c_2(x - a)^2 + \dots
-  \end{align*}    
-  Pour trouver les \textbf{coefficients} $c_0, c_1, \dots c_n$, on a :
-
-  \tiny{
-  
-  \begin{align*}
-    &f(a)  = \textcolor{red}{c_0}   + 
-      \cancel{c_1(a - a)} + \cancel{c_2(a - a)^2} + \cdots 
-            \cancel{c_n(a - a)^n } \\ 
-    &f^{\prime}(a) = 0 + \textcolor{red}{c_1} + 
-          \cancel{2c_2(a - a)} + \cancel{3c_3(a - a)^2} + \cdots 
-          + \cancel{nc_n(a - a)^n} \\
-    &f^{\prime\prime}(a) = 0 + 0 + \textcolor{red}{2c_2} + 
-          \cancel{6c_2(a - a)} + \cancel{12c_4(a - a)^2} + \cdots 
-          + \cancel{nc_n(a - a)^n} \\
-    &f^{\prime\prime\prime}(a) = \textcolor{red}{6(c_3)} 
-                = 3!c_3 \\
-    &f^{4}(a) = \textcolor{red}{24c_4} = 4!c_4  
-  \end{align*}  
-  }
-  \noindent
-  On peut donc exprimer les coefficients en généralisant et on 
-  obtient 
-  alors la formule de Taylor :
-  \begin{align*}
-        c_n =  \frac{f^{n}(a)}{n!} 
-  \end{align*}
-
-  Ainsi, nous avons l'expression générale : 
-  
-  \begin{align*}
-      &\sum_{n=0}^{\infty } \frac{f^{n}(a)}{n!}(x - a)^n 
-       \textbf{ Taylor}   
-      \\ 
-      &\sum_{n=0}^{\infty } \frac{f^{n}(0)}{n!}(x)^n 
-       \textbf{ McLaurin}   
-      \\
-      &f(a) + \frac{f^{\prime}(a)}{1!}(x - a) + 
-             \frac{f^{\prime\prime}(a)}{2!}(x - a)^2 + 
-             \cdots \textbf{Expression générale}  
-  \end{align*}    
-
-  \section{Polynôme de Taylor}
-  Si une $f(x)$ est \textit{infiniement dérivable}, 
-  et est représentée par une série entière 
-  \textbf{alors} cette série est la 
-  \textit{série de Taylor} de $f$.   
-  \vspace{-1em}
-
-  \begin{align*}
-    T_n(x) = f(a) &+ \frac{f^{\prime}(a)}{1!}(x - a) + 
-             \frac{f^{\prime\prime}(a)}{2!}(x - a)^2  
-             \\
-       &+      \cdots
-      \frac{f^{n}(a)}{n!}(x - a)^n 
-      \textbf{ Polynôme de Taylor}             
-  \end{align*}
-
-  \section{Reste du polynôme de Taylor}
-  Soit le reste $R_n(x) =  f(x) - T_n(x)$, si 
-  $\lim\limits_{n \to+\infty }R_n(x) = 0 
-  \;\forall \;\; |x - a| < R $, \textbf{alors}  :
-  \[ 
-        f(x) = \sum_{n=0}^{\infty } 
-        \frac{f^{n}(a)}{n!}(x - a)^n   
-    \]
-
-    Le \textbf{reste du polynôme de Taylor} ou 
-    erreur sur l'approximation de Taylor 
-    $R_n(x)$ est la différence entre la valeur 
-    réelle de la fonction $f(x)$ 
-    et l'approximation donnée par le polynôme de 
-    Taylor de degré $n$ noté $T_n(x)$
-    Si ce reste tend vers zéro pour $n$ tendant 
-    vers l'infini, pour tout $x$ dans un 
-    intervalle autour de $a$ de rayon $R$, 
-    cela signifie que le polynôme de Taylor 
-    converge vers la fonction $f(x)$. dans cet 
-    intervalle. Cela indique que l'on peut 
-    représenter $f(x)$ aussi précisément que 
-    souhaité (dans cet intervalle) en augmentant 
-    le degré $n$ du polynôme de Taylor.
 
 
-  \section{Inégalité de Taylor}
-  Soit $M, d \in \mathbb{R}$ deux 
-  \textbf{constantes positives}  
-  et $|f^{n+1}(x)| \leq M, \;\; \forall \;\; |x - a| < d$, 
-  \textbf{alors}
-  \[ 
-    |R_n(x)| \leq \frac{M}{(n+1)!}|x - a|^{n+1}, \;\; 
-        \forall \;\; |x - a | < d 
-  \]
-
-  L'\textbf{inégalité de Taylor} fournit une 
-  estimation de l'erreur (le reste $R_n(x)$)
-  commise en utilisant le polynôme de Taylor de 
-  degré $n$ pour approximer $f(x)$  
-  Si on connaît une borne supérieure 
-  $M$ pour la $(n+1)-ième $ dérivée de 
-  $f$ dans un intervalle autour de 
-  $a$, alors on peut utiliser cette borne pour 
-  estimer l'erreur maximale de l'approximation 
-  sur cet intervalle.
-
-  \section{Corollaire de l'inégalité de Taylor}
-  Soient $N, c, d \in \mathbb{R}$ des 
-  \textbf{constantes positives}   
-  et soit $a \in \mathbb{R}$. Si 
-  $\forall \;\; n > N$ et $|x - a | < d$ 
-  \textbf{et}  si on a  
-  \[ |f^{n}(x)| \leq c^n \textbf{  ou } 
-  |f^{n}(x)| \leq c \text{ (version faible) } \]
-  Cela implique (dans la cas le plus fort) que 
-
-  \begin{align*}
-      f^{n+1}(x) \leq c^{n+1}
-  \end{align*}
-  \textbf{Et par conséquent}, $f(x)$ est 
-  représentée par sa série de 
-  Taylor sur $$(a - d, a + d)$$. 
-
-  et on a alors 
-
-  \begin{align*}
-    |R_n(x)| \leq \frac{c^{n+1}}{(n+1)!} 
-          \left|x - a \right|^{n+1}
-  \end{align*}
-
-  Le \textbf{ corollaire de l'inégalité de Taylor}
-  étend l'inégalité de Taylor en considérant 
-  des conditions sur les dérivées successives de 
-  $f$. Il indique que si les dérivées de 
-  $f$ au-delà d'un certain ordre $N$ croissent 
-  d'une manière contrôlée 
-  (soit proportionnellement à $c^n$
-  ou restent sous une certaine constante 
-  $c$), alors $f(x)$ peut être approximée par 
-  sa série de Taylor dans un intervalle autour de 
-  $a$
+  % \section{Défininition d'une série entière} Soit une variable 
+  % $x$, les contantes $c_0, c_1, \cdots , c_n$ 
+  % et $n \in \mathbb{N}$, une série 
+  % est dite centrée en $a \in \mathbb{R}$ si on a :  
+  % \[ \sum_{n=0}^{\infty } c_n(x-a)^n = c_0 + c_1(x-a) + c_2(x-a)^2 + \cdots \]
+  %
+  % \section{Famille de séries paramétrées par $x$} 
+  % Soit l'ensemble $D$ des $x$ pour lesquels la série converge, 
+  % la fonction $f : D \rightarrow  \mathbb{R}$ engendre une 
+  % somme $f(x) \in \mathbb{D}$ :
+  % \[ f(x) = \sum_{n=0}^{\infty } c_n(x - a)^n \]
+  % \vspace{-1.5em} %vspace
+  %
+  % \begin{table}[H]
+  %   \begin{center}
+  %     \renewcommand{\arraystretch}{2}
+  %     \fontfamily{flr}\selectfont
+  %     \footnotesize
+  %     \begin{tabular}{l|p{3.75cm}}
+  %         \arrayrulecolor{blue}\hline
+  %         \rowcolor{lightBlue}
+  %         \textcolor{myb}{Fonction} & \textcolor{myb}{Somme}
+  %         \\
+  %         \hline
+  %         \arrayrulecolor{black}
+  %         $\sin x$ & $x - \frac{x^3}{3!} +  \frac{x^5}{5!} 
+  %         -  \frac{x^7}{7!} + \dots $ 
+  %         \\
+  %         \hline
+  %         $\cos x$ & $1 - \frac{x^2}{2!} +  \frac{x^4}{4!} 
+  %         -  \frac{x^6}{6!} + \dots $ 
+  %         \\
+  %         \hline
+  %         $\dfrac{1}{1-x}$ & $\forall \; |x| <1 \textcolor{red}{\colon}  
+  %         1 + x + x^2 + x^3 + \dots $  
+  %         \\
+  %         \hline 
+  %         $e^x$ & $1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} \cdots$ 
+  %         \\
+  %         \hline
+  %         $\ln(1 + x)$ & $\forall \; |x| < 1 \textcolor{red}{\colon} 
+  %         x - \frac{x^2}{2} +  \frac{x^3}{3} 
+  %         -  \frac{x^4}{4} + \dots $ 
+  %         \\
+  %         \hline
+  %         $\arctan (x)$ & $\forall \; |x| < 1 \textcolor{red}{\colon}  
+  %         x - \frac{x^3}{3} +  \frac{x^5}{5!} 
+  %         -  \frac{x^7}{7!} + \dots $ 
+  %         \\
+  %         \hline
+  %         $(1 + x)^k$ &           
+  %             $\forall \; |x| < 1 \textcolor{red}{\colon}  
+  %             1+ kx + \frac{k(k-1)}{2!}x^2 
+  %                   + \frac{k(k-1)(k-2)}{3!}x^3 
+  %             \cdots$
+  %         \\
+  %         \hline
+  %
+  %         \end{tabular}
+  % \end{center}
+  % \end{table}
+  %
+  % \section{Rayon de convergence}
+  % Soit la série $S = \sum_{n=0}^{\infty }c_n(x - a)^n$, il a 
+  % \textit{trois possibilités} :   
+  % \begin{itemize}
+  %   \item [$\rhd$ ] $S$ \textbf{conv.} \textcolor{red}{à}   
+  %          $x = a \implies  R = 0$  
+  %   \item [$\rhd$ ] $\forall \; x, \; S \textbf{ conv.} \implies  
+  %                R = \infty$       
+  %   \item [$\rhd$ ] $\exists R > 0 \colon $ 
+  %       \begin{itemize}
+  %         \item [$\blacktriangleright$ ] $|x - a| < R \implies 
+  %           S \textbf{ conv.}  $ 
+  %         \item [$\blacktriangleright$ ] $|x - a| > R \implies 
+  %           S \textbf{ div.}$ 
+  %       \end{itemize}
+  % \end{itemize}
+  %
+  % \section{Intervale de convergence}
+  % Soit $R$, le rayon de convergence d'une série 
+  % $\sum_{n=1}^{\infty }c_n(x - a)^n$,  
+  % l'\textbf{intervale de convergence} $I$ est donné par : 
+  % \begin{itemize}
+  %   \item [$\rhd$ ]\textbf{Si}  $R = 0 \implies  I = a = [a, a]$
+  %   \item [$\rhd$ ] Si $R = \infty \implies  I = \mathbb{R} $
+  %   \item [$\rhd$ ] \textbf{Si} $R > 0$ \textbf{et} $R \in \mathbb{R}$    
+  %     \begin{itemize}
+  %       \item [$\blacktriangleright$ ] $I = ]a - R, a + R[$
+  %       \item [$\blacktriangleright$ ] $I = ]a - R, a + R]$
+  %       \item [$\blacktriangleright$ ] $I = [ a - R, a + R[$
+  %       \item [$\blacktriangleright$ ] $I = [ a - R, a + R] $
+  %     \end{itemize}
+  % \end{itemize}
+  %
+  % \section{Dérivation et intégration termes à termes}
+  % Soit la série $S = \sum_{n=0}^{\infty }c_n(x - a)^n$ 
+  % ayant un rayon de convergence $R > 0$, et $f(x) = S$ est 
+  % \textbf{dérivable} sur $(a-R, a + R)$, \textbf{alors},     
+  % \begin{itemize}
+  %   \item [$\rhd$ ] $f^{\prime}(x) = \sum_{n=1}^{\infty }na_n(x-a)^{n-1}$ 
+  %   \item [$\rhd$ ] $\int f(x) dx = 
+  %          C + \sum_{n=0}^{\infty }\frac{(x-a)^{n+1}}{n+1}$
+  % \end{itemize}
+  %
+  % \section{Expression d'une fonction en série géométrique}
+  % Chaque fonction $f : (a - R, a + R) \rightarrow \mathbb{R}$ peut être 
+  % approximé par une série géométrique :
+  % \begin{align*}
+  %     f(x) &= \sum_{n=0}^{\infty }c_n(x - a)^n \\ 
+  %          &= c_0 + c_1(x - a) + c_2(x - a)^2 + \dots
+  % \end{align*}    
+  % Pour trouver les \textbf{coefficients} $c_0, c_1, \dots c_n$, on a :
+  %
+  % \tiny{
+  %
+  % \begin{align*}
+  %   &f(a)  = \textcolor{red}{c_0}   + 
+  %     \cancel{c_1(a - a)} + \cancel{c_2(a - a)^2} + \cdots 
+  %           \cancel{c_n(a - a)^n } \\ 
+  %   &f^{\prime}(a) = 0 + \textcolor{red}{c_1} + 
+  %         \cancel{2c_2(a - a)} + \cancel{3c_3(a - a)^2} + \cdots 
+  %         + \cancel{nc_n(a - a)^n} \\
+  %   &f^{\prime\prime}(a) = 0 + 0 + \textcolor{red}{2c_2} + 
+  %         \cancel{6c_2(a - a)} + \cancel{12c_4(a - a)^2} + \cdots 
+  %         + \cancel{nc_n(a - a)^n} \\
+  %   &f^{\prime\prime\prime}(a) = \textcolor{red}{6(c_3)} 
+  %               = 3!c_3 \\
+  %   &f^{4}(a) = \textcolor{red}{24c_4} = 4!c_4  
+  % \end{align*}  
+  % }
+  % \noindent
+  % On peut donc exprimer les coefficients en généralisant et on 
+  % obtient 
+  % alors la formule de Taylor :
+  % \begin{align*}
+  %       c_n =  \frac{f^{n}(a)}{n!} 
+  % \end{align*}
+  %
+  % Ainsi, nous avons l'expression générale : 
+  %
+  % \begin{align*}
+  %     &\sum_{n=0}^{\infty } \frac{f^{n}(a)}{n!}(x - a)^n 
+  %      \textbf{ Taylor}   
+  %     \\ 
+  %     &\sum_{n=0}^{\infty } \frac{f^{n}(0)}{n!}(x)^n 
+  %      \textbf{ McLaurin}   
+  %     \\
+  %     &f(a) + \frac{f^{\prime}(a)}{1!}(x - a) + 
+  %            \frac{f^{\prime\prime}(a)}{2!}(x - a)^2 + 
+  %            \cdots \textbf{Expression générale}  
+  % \end{align*}    
+  %
+  % \section{Polynôme de Taylor}
+  % Si une $f(x)$ est \textit{infiniement dérivable}, 
+  % et est représentée par une série entière 
+  % \textbf{alors} cette série est la 
+  % \textit{série de Taylor} de $f$.   
+  % \vspace{-1em}
+  %
+  % \begin{align*}
+  %   T_n(x) = f(a) &+ \frac{f^{\prime}(a)}{1!}(x - a) + 
+  %            \frac{f^{\prime\prime}(a)}{2!}(x - a)^2  
+  %            \\
+  %      &+      \cdots
+  %     \frac{f^{n}(a)}{n!}(x - a)^n 
+  %     \textbf{ Polynôme de Taylor}             
+  % \end{align*}
+  %
+  % \section{Reste du polynôme de Taylor}
+  % Soit le reste $R_n(x) =  f(x) - T_n(x)$, si 
+  % $\lim\limits_{n \to+\infty }R_n(x) = 0 
+  % \;\forall \;\; |x - a| < R $, \textbf{alors}  :
+  % \[ 
+  %       f(x) = \sum_{n=0}^{\infty } 
+  %       \frac{f^{n}(a)}{n!}(x - a)^n   
+  %   \]
+  %
+  %   Le \textbf{reste du polynôme de Taylor} ou 
+  %   erreur sur l'approximation de Taylor 
+  %   $R_n(x)$ est la différence entre la valeur 
+  %   réelle de la fonction $f(x)$ 
+  %   et l'approximation donnée par le polynôme de 
+  %   Taylor de degré $n$ noté $T_n(x)$
+  %   Si ce reste tend vers zéro pour $n$ tendant 
+  %   vers l'infini, pour tout $x$ dans un 
+  %   intervalle autour de $a$ de rayon $R$, 
+  %   cela signifie que le polynôme de Taylor 
+  %   converge vers la fonction $f(x)$. dans cet 
+  %   intervalle. Cela indique que l'on peut 
+  %   représenter $f(x)$ aussi précisément que 
+  %   souhaité (dans cet intervalle) en augmentant 
+  %   le degré $n$ du polynôme de Taylor.
+  %
+  %
+  % \section{Inégalité de Taylor}
+  % Soit $M, d \in \mathbb{R}$ deux 
+  % \textbf{constantes positives}  
+  % et $|f^{n+1}(x)| \leq M, \;\; \forall \;\; |x - a| < d$, 
+  % \textbf{alors}
+  % \[ 
+  %   |R_n(x)| \leq \frac{M}{(n+1)!}|x - a|^{n+1}, \;\; 
+  %       \forall \;\; |x - a | < d 
+  % \]
+  %
+  % L'\textbf{inégalité de Taylor} fournit une 
+  % estimation de l'erreur (le reste $R_n(x)$)
+  % commise en utilisant le polynôme de Taylor de 
+  % degré $n$ pour approximer $f(x)$  
+  % Si on connaît une borne supérieure 
+  % $M$ pour la $(n+1)-ième $ dérivée de 
+  % $f$ dans un intervalle autour de 
+  % $a$, alors on peut utiliser cette borne pour 
+  % estimer l'erreur maximale de l'approximation 
+  % sur cet intervalle.
+  %
+  % \section{Corollaire de l'inégalité de Taylor}
+  % Soient $N, c, d \in \mathbb{R}$ des 
+  % \textbf{constantes positives}   
+  % et soit $a \in \mathbb{R}$. Si 
+  % $\forall \;\; n > N$ et $|x - a | < d$ 
+  % \textbf{et}  si on a  
+  % \[ |f^{n}(x)| \leq c^n \textbf{  ou } 
+  % |f^{n}(x)| \leq c \text{ (version faible) } \]
+  % Cela implique (dans la cas le plus fort) que 
+  %
+  % \begin{align*}
+  %     f^{n+1}(x) \leq c^{n+1}
+  % \end{align*}
+  % \textbf{Et par conséquent}, $f(x)$ est 
+  % représentée par sa série de 
+  % Taylor sur $$(a - d, a + d)$$. 
+  %
+  % et on a alors 
+  %
+  % \begin{align*}
+  %   |R_n(x)| \leq \frac{c^{n+1}}{(n+1)!} 
+  %         \left|x - a \right|^{n+1}
+  % \end{align*}
+  %
+  % Le \textbf{ corollaire de l'inégalité de Taylor}
+  % étend l'inégalité de Taylor en considérant 
+  % des conditions sur les dérivées successives de 
+  % $f$. Il indique que si les dérivées de 
+  % $f$ au-delà d'un certain ordre $N$ croissent 
+  % d'une manière contrôlée 
+  % (soit proportionnellement à $c^n$
+  % ou restent sous une certaine constante 
+  % $c$), alors $f(x)$ peut être approximée par 
+  % sa série de Taylor dans un intervalle autour de 
+  % $a$
 
 
 
