@@ -277,7 +277,7 @@
 
     \begin{align*}
         \dfrac{3 + 5n^2}{n + n^2} = 
-        \dfrac{n^2(\frac{1}{3n²} + 5)}{n^2(1+ \frac{1}{n})} = a_n \quad \text{(Simplifié)}
+        \dfrac{n^2(\frac{1}{3n^2} + 5)}{n^2(1+ \frac{1}{n})} = a_n \quad \text{(Simplifié)}
     \end{align*}
 
     \begin{align*}
@@ -348,7 +348,7 @@
     \end{align*}
 
     
-    \noindent\textbf{1.1.52}  h$a_n = \arctan(\ln n)$ 
+    \noindent\textbf{1.1.52}  $a_n = \arctan(\ln n)$ 
 
     Nous savons que la fonction $\ln x$ tend vers $+ \infty$ lorsque 
     $x \longrightarrow + \infty$. Et par le théorème d'association d'une 
@@ -364,28 +364,256 @@
 
     \vspace{1em}%
 
-    \noindent\textbf{1.1.52}  
-    $\left\{\frac11,\frac13,\frac12,\frac14,\frac13,\frac15,\frac14,\frac16,
-    ...\right\}$ 
+    \noindent\textbf{1.1.54}  
+    $a_n = \left\{\frac11,\frac13,\frac12,\frac14,\frac13,\frac15,\frac14,\frac16,...\right\}$ 
+    
+    En observant la suite, on constate que le dénominateur pour 
+    les termes $n$ \textbf{impairs} est équivalent à $\frac{n + 1}{2}$ :
+
+    \begin{align*}      
+        \dfrac{1}{\left( \frac{\textcolor{myb}{1} + 1}{2}  \right)}
+        = \textcolor{myr}{\dfrac{1}{1}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{3} + 1}{2}  \right)}
+        = \textcolor{myr}{\dfrac{1}{2}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{5} + 1}{2}  \right)}
+        = \textcolor{myr}{\dfrac{1}{3}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{7} + 1}{2}  \right)}
+        = \textcolor{myr}{\dfrac{1}{4}}, \dots  
+    \end{align*}        
+
+    Et en observant la suite, on constate que le dénominateur pour 
+    les termes $n$ \textbf{pairs}   est équivalent à $\frac{n}{2} + 2$ :
+
+
+    \begin{align*}      
+        \dfrac{1}{\left( \frac{\textcolor{myb}{2}}{2} +2  \right)}
+        = \textcolor{myr}{\dfrac{1}{3}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{4}}{2} +2  \right)}
+        = \textcolor{myr}{\dfrac{1}{4}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{6}}{2} +2  \right)}
+        = \textcolor{myr}{\dfrac{1}{5}}, \quad  
+        \dfrac{1}{\left( \frac{\textcolor{myb}{8}}{2} +2  \right)}
+        = \textcolor{myr}{\dfrac{1}{6}}, \quad  
+    \end{align*}
+
+    On peut donc conclure que la suite obéit à la règle 
+    $a_n = \dfrac{1}{\frac{n+1}{2}}$ pour les termes \textbf{impairs} et 
+    $a_n = \dfrac{1}{\frac{n + 4}{2}}$ pour les
+    termes \textbf{pairs}. En simplifiant les fractions, on obtient :
+
+
+    \begin{align*}
+        a_n = 
+        \begin{cases}
+            \dfrac{2}{n+1} & \quad \quad n \; \text{impairs} \\ 
+            \\
+            \dfrac{2}{n+4} & \quad \quad n \; \text{pairs} \\ 
+        \end{cases}
+    \end{align*}        
+
+
+
 
     \vspace{1em}
 
 
-    \noindent \textbf{1.1.56}  $\dfrac{(-3)^n}{n!}$
+    \noindent \textbf{1.1.56}  $a_n = \dfrac{(-3)^n}{n!}$
+
+
 
 
     \begin{align*}
         \lim\limits_{n\to \infty} a_n = \lim\limits_{n \to+\infty }\dfrac{(-3)^n}{n!} 
         &= 
-        \lim\limits_{n \to+\infty } (-1)^n 3^n \dfrac{n(n+1)}{2} \\ 
+        \lim\limits_{n \to+\infty } (-1)^n  \dfrac{3^n}{n!} \\ 
         &=
-        -\cos(n\pi)
+        \lim\limits_{n\to +\infty} -\cos(n\pi)\dfrac{3^n}{n!} \\ 
+        &= 
+        -\lim\limits_{n\to +\infty} \cos(n\pi)\cancelto{0}{\dfrac{3^n}{n!}}\\ 
+        &\implies a_n \xrightarrow[n\to \infty]{} 0
+    \end{align*}
+
+
+    La partie importante ici est le rapport entre \( (-3)^n \) et \( n! \). Bien que \( 3^n \)
+    croisse exponentiellement, \( n! \) croît beaucoup plus rapidement que \( 3^n \), car 
+    \( n! \) est un produit d'entiers successifs qui croît super-exponentiellement. Cela 
+    signifie que pour des \( n \) suffisamment grands, le dénominateur \( n! \) va dominer 
+    le numérateur \( 3^n \), ce qui entraînera la limite de \( a_n \) vers 0.
+
+
+    \begin{Exercice}{(Stewart 1.1.64)}{}
+        Déterminez si la suite définie par récurrence est convergente ou divergente : 
+        \begin{align*}
+            a_1 = 1, \; a_{n+1} = 4 - a_n \; \forall n \geq 1
+        \end{align*}
+    \end{Exercice}
+
+    \noindent \textbf{1.1.64a}  Les premiers termes de la suite sont les suivantes :
+    \begin{align*}
+        a_1 = 1, \quad a_2 = 3, \quad a_3 = 1, \quad a_4 = 3, \quad a_5 = 1, \cdots
+    \end{align*}
+
+    On voit que la suite oscille entre les valeurs $1$ et $3$, en fonction du fait que $n$ est 
+    \textbf{pair} ou \textbf{impair} :                  
+
+    \begin{align*}
+        a_1 = 1, \quad a_2 = 3, \quad a_3 = &1, \quad a_4 = 3, \quad a_5 = 1, \cdots \\ \\
+                                                     &\Updownarrow \\\\
+        a_n = 
+        \begin{cases} 
+            1 & \quad \quad n \; \text{impair} \\ \\
+            3 & \quad \quad n \; \text{pair}
+        \end{cases}
     \end{align*}
     
 
+    Puisque la suite oscille entre deux valeurs, la limite $\lim\limits_{n \to+\infty }a_n$ est \textbf{indéfinie}                    et on peut conclure que la suite diverge.
+    \vspace{1em}%
+
+    \noindent \textbf{1.1.64b}
+
+    Si la valeur de $a_1$ était $a_1 = 2$, on aurait les premiers termes suivants : 
+    
+    \begin{align*}
+        a_1 = 2, \quad a_2 = 2, \quad a_3 = 2, \quad a_4 = 2, \quad \cdots \\ \\
+    \end{align*}
+
+    Ainsi, on constate qu'après le premier termes, la suite a une valeur constante $a_n = 2 \forall n > 1$. On 
+    peut donc conclure que la suite converge vers l'entier naturel 2.
 
 
+    \section{Convergence de \(a_{n+1} \)}
 
+    \begin{Exercice}{(Stewart 1.1.70a)}{}
+        Si $\{a_n \}$ converge, montrez que  
+        \begin{align*}
+            \lim\limits_{n \to+\infty }a_{n+1} = \lim\limits_{n \to+\infty } a_n  
+        \end{align*}
+    \end{Exercice}
+
+
+    \textbf{Preuve directe}. La définition de convergence d'une suite suggère que $a_n$ 
+    est \textbf{convergente} si pour toute valeur arbitrairement petite et positive, 
+    $\varepsilon > 0$, il existe un entier $N(\varepsilon)$ 
+    qui représente un seuil à partir duquel 
+    pour toute valeur $n > N(\varepsilon)$, la distance entre $a_n$ et $L$ 
+    est suffisamment petite ($|a_n - L| < \varepsilon)$. Après ce seuil $N$ 
+    les images $a_n$ de chaque $n > N$ sont suffisamment proche d'une valeur limite 
+    $L$. Autrement dit :
+
+    \begin{align*}
+        a_n \; \textbf{\textcolor{myb}{conv}.}  \implies 
+        \forall \; \varepsilon > 0 : \exists N(\varepsilon) > 0 : n > N(\varepsilon) 
+        \implies |a_n - L| < \varepsilon
+    \end{align*} 
+
+
+    \textbf{Supposons} que la suite $\{a_n\}$ converge vers $L$. Cela signifie que pour tout 
+    $\varepsilon > 0$, il existe un entier $N(\varepsilon)$ tel que pour tout $n > N(\varepsilon)$, 
+    on a $|a_n - L| < \varepsilon$. 
+
+    Maintenant, considérons la suite \(\{a_{n+1}\}\). Lorsque $n > N(\varepsilon)$, 
+    il est évident que $n+1 > N(\varepsilon)$ également. Ainsi, pour $n > N(\varepsilon)$, 
+    on a aussi :
+    \[
+    |a_{n+1} - L| < \varepsilon.
+    \]
+    Cela montre que \(\lim\limits_{n \to +\infty} a_{n+1} = L\), puisque la distance 
+    entre \(a_{n+1}\) et \(L\) devient arbitrairement petite pour des \(n\) suffisamment grands.
+
+    Ainsi, nous avons montré que si \(\lim\limits_{n \to +\infty} a_n = L\), alors 
+    \(\lim\limits_{n \to +\infty} a_{n+1} = L\).
+
+    \textbf{Conclusion} : Puisque les deux suites \(\{a_n\}\) et \(\{a_{n+1}\}\) convergent 
+    vers la même limite \(L\), nous avons :
+
+    \[
+    \boxed{\lim\limits_{n \to +\infty} a_{n+1} = \lim\limits_{n \to +\infty} a_n.}
+\]
+
+                
+
+    \begin{Exercice}{(Stewart 1.1.70b)}{}
+        Une suite $\{a_n\}$ est définie par $a_1 = 1$ et $a_{n+1} = \dfrac{1}{1+a_n}, \; \forall n\geq 1$. 
+        En supposant que $\{a_n\}$ converge, trouvez sa limite.
+    \end{Exercice}
+
+    Les premiers termes de la suite sont :
+
+    \begin{align*}
+        a_1 = 1, \quad a_2 = \dfrac{1}{2}, \quad a_3 = \dfrac{2}{3}, \quad a_4 = \dfrac{3}{5}, \quad 
+        a_5 = \dfrac58, \quad a_6 = \dfrac{8}{13}, \quad
+        a_7 = \dfrac{13}{21}, \quad a_8 = \dfrac{21}{34}, \quad
+        a_9 = \dfrac{34}{55}, \quad a_{10} = \dfrac{55}{89}
+    \end{align*}
+
+    Supponsons, comme suggère l'énoncé, que la suite $\{ a_n \}$ converge vers $L$ :
+    \begin{align*}
+        \lim\limits_{n \to+\infty } a_n = L  
+    \end{align*}            
+
+    Or, la relation de récurrence, $a_{n+1} = \dfrac{1}{1 + a_n}$. Et puisque 
+    $a_n \rightarrow L$ lorsque $n \to \infty$, la récurrence engendre l'équivalence :
+
+    \begin{align*}
+        a_{n+1} = \dfrac{1}{1 + L}
+    \end{align*}
+
+    Nous avons montré que si $a_n$ converge vers $L$, alors $a_{n+1}$ converge également vers $L$. 
+    Ona  donc : 
+
+    \begin{align*}
+        L = \dfrac{1}{1 + L} \\ 
+        L(1 + L) = 1 \\ 
+        L + L^2 = 1 \\ 
+        L^2 + L - 1 = 0
+    \end{align*}
+
+    En appliquant la formule quadratique, on obtient :
+    \begin{align*}
+        L = \dfrac{-1 \pm \sqrt{1^2 -4(1)(-1)}}{2} = \dfrac{-1\pm \sqrt{5}}{2}
+    \end{align*}
+    Cela engendre les solutions $L_1 \approx 0.618$ et $L_2 \approx -1.628$. Puisque les valeurs 
+    des termes de la suite sont positives (voir \(a_1\) à \(a_{10} \)), on peut \textbf{rejeter la solution négative}.                 
+    La limite de la suite $\{ a_n \}$ est :
+    
+    \[% 
+    \boxed{L = \dfrac{-1 + \sqrt{5}}{2}}
+    \]%
+
+    \section{Théorie sur les suites monotones}
+
+    \begin{Exercice}{(Stewart 1.1.71)}{}
+        Supposez que vous savez que est une suite décroissante
+        et que tous ses termes sont compris entre les nombres 5 et 8.
+        Expliquez pourquoi cette suite possède une limite. Que
+        pouvez-vous dire à propos de la valeur de cette limite ?
+    \end{Exercice}      
+
+    Par la propriété des suites monotones, toute suite décroissante et bornée est également convergente. 
+    Plus formellement, supposons que $\{a_n\}$ est décroissante et que toutes les valeurs de 
+    $\{a_n\}$ sont comprises entre $5$ et $8$. Sachant que $\{a_n\}$ est décroissante, nous savons également que 
+    $\forall \; n \geq 1, a_{n+1} \leq a_n$. Ainsi, chaque valeur $a_{n+1}$ est
+    au moins  égale ou plus petite que son prédécesseur $a_n$. Ainsi, lorsque $n \to infty$, 
+    valeurs de la suite s'approchent de la borne inférieure et la limite de $\{a_n \}$ 
+    est une certaine valeur $L \geq 5$. 
+
+
+    \section{Déterminer la convergence de suites monotones}
+
+    \begin{Exercice}{(Stewart 1.1.72-1.1.78)}{}
+        Déterminez si la suite est croissante, décroissante ou non monotone. Est-elle bornée ?
+    \end{Exercice}
+
+    \noindent \textbf{1.1.72} \; \( a_n = \dfrac{1}{2n + 3} \). La suite \( \{a_n \} \) est strictement décroissante; 
+    il s'agit donc d'une suite monotome. On constate que $a_n \xrightarrow[n\to \infty]{} L = 0$ 
+    Ainsi, on peut conclure que $\{ a_n\}$ est bornée inférieurement. 
+    
+    \vspace{2em}
+    \noindent \textbf{1.1.75} \; \( a_n = n(-1)^n \). La suite \( \{a_n \} \) oscille entre des valeurs 
+    positives et négatives à cause de l'exposant $(-1)^n$. Ainsi, lorsque $n\to \infty$, 
+    $a_n$ ne s'approche d'aucune valeur particulière. Ainsi, on peut conclure que 
+    $\{a_n \}$ est non bornée, divergente et non monotone. 
 
 
 
