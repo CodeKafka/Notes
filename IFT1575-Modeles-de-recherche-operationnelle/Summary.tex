@@ -1,0 +1,345 @@
+\documentclass{report}
+%\usepackage[utopia]{mathdesign}
+%\usepackage{amsmath, amsthm}
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+%\usepackage[varbb]{newpxmath}
+%\usepackage[osf,largesc,theoremfont]{newpxtext}
+%\usepackage{coelacanth}
+%\usepackage{beraserif} % Bitstream Vera Serif font
+%\usepackage{berasans} % Bitstream Vera Sans font
+%\usepackage{beramono} % Bitstream Vera Sans Mono font
+%\usepackage{berasans}
+%\usepackage{libertine}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{crimson}
+
+% NEW ------- For pointilles lines
+\usepackage{multido}
+
+%% Choose one of the following (if not choosing the  
+%% default, viz., Computer Modern, font family):
+%\usepackage{lmodern}
+\usepackage{bold-extra}
+%%
+%\usepackage{mathpazo}
+% \usepackage{newpxmath}
+%\usepackage{kpfonts} % Very good
+%%
+%\usepackage{mathptmx} %Very good
+%\usepackage{stix} 
+%\usepackage{txfonts} %Very good
+\usepackage{newtxtext,newtxmath} %Very good
+%%
+%\usepackage{libertine} \usepackage[libertine]{newtxmath}
+%\usepackage{libertine,libertinust1math} % added 2019/11/28
+%%
+%\usepackage{newpxtext} \usepackage[euler-digits]{eulervm}
+%\usepackage{textcomp}
+%\usepackage{bm}
+\usepackage{contour}
+\usepackage{adjustbox}
+
+
+
+
+
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/preamble.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+
+
+
+
+
+
+
+
+\title{\huge{IFT1575}\\\Huge{Modèles de recherche opérationnelle}\\\vspace{2em} Introduction}
+\author{\huge{Franz Girardin}}
+\date{\today}
+
+
+% NEW for point lines
+\newcommand{\Pointilles}[1]{%
+  \par\nobreak
+  \noindent\rule{0pt}{1.5\baselineskip}% Provides a larger gap between the preceding paragraph and the dots
+  \multido{}{#1}{\noindent\makebox[\linewidth]{\dotfill}\endgraf}% ... dotted lines ...
+  \bigskip% Gap between dots and next paragraph
+}
+% Define a new command for dotted lines that works in align
+\newcommand{\PointillesAlign}{%
+  \multido{}{1}{\makebox[\linewidth]{\dotfill}}
+}
+
+   
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+
+\titleformat*{\section}{%
+    \normalsize\bfseries%
+}
+
+\titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
+
+
+
+
+\begin{multicols*}{3}
+    \chapter{Modélisation}
+    \footnotesize
+\section{Définition de la prog. linéaire}
+
+    Branche de la \textit{Recherche Opérationnelle} où on utilise 
+    des \textbf{modèles} mathématiques qui font appel à 
+    des fonction \textcolor{myb}{\textbf{linéaire}} pour 
+    résoudre un problème. 
+
+    \begin{align*}
+        \texttt{prod}. \text{ vin blanc} \implies x \; (\text{litres}) \\ 
+        \texttt{prod}. \text{ vin rouge} \implies y \; (\text{litres})
+    \end{align*}
+\section{Composantes du modèle}
+    Il faut identifier \textbf{\textcolor{myb}{l'action}} sur 
+    laquelle on doit prendre une décision et la représenter 
+    par un \textbf{\textcolor{myb}{variable de décision}}. À cette 
+    variable sera associée un constante qui représente 
+    le \textbf{\textcolor{myb}{niveau}} de l'action.
+
+\section{L'objectif} 
+    S'exprime sous le forme d'une \textbf{fonction mathématique} 
+    qui représente l'intention. P. ex. \textbf{maximiser le profit}
+    correspondrait à : 
+    \[%
+        \text{Max} \; 5x + 3y 
+    \]%
+
+\section{Contraintes}
+    Elles peuvent dépendre du \textit{contexte du problèmes} 
+    ou peuvent être plus générales; p. ex. la 
+    \textbf{non-négativité} d'une entité : 
+    \begin{align*}
+    &x \leq 50  \quad\quad\quad\;\; \texttt{prod}.\text{max vin blanc} \\ 
+    &y \leq 60 \\
+    &x +  y \leq 80  \quad\quad \texttt{prod}.\text{max totale de vin} \\ 
+    &x \geq 0, y \geq 0 \quad\; \text{Non-nég.}
+    \end{align*}
+
+\section{Terminologie de base}
+ Une \textbf{solution réalisable} est un \textbf{vecteur} 
+ de valeurs $x = (x_1, x_2, \dots, x_n)$ appartenant à $X \subset \mathbb{R}^n$ tel 
+ que chaque composante $x_1, x_2, \dots, x_n$ respecte \textit{toutes les contraintes} du problème.
+ Dans ce contexte, $X$ est l'ensemble des solutions possibles, c'est-à-dire l'ensemble des points qui satisfont toutes des contraintes imposées au problème.
+ Chaque point dans $X$ est un vecteur de longueur $n$ 
+ Cet ensemble $X$ est un sous-ensemble de l'espace $\mathbb{R}^n$ 
+ qui comprends tous les vecteurs possibles où 
+ $n \in [1, n \longrightarrow \infty[$.
+
+Une solution \textbf{optimale} est une solution réalisable qui maximise (ou minimise) la fonction objectif $z(x)$, en fonction de la nature du problème (maximisation ou minimisation). Autrement dit, c'est une solution réalisable qui produit la \textit{meilleure valeur possible} pour la fonction objectif $z$.
+
+\vspace{2.5em}
+\chapter{Maximisation et minimisation}
+
+\begin{note}{}{}
+    Un modèle peut présenter une \textbf{infinité} de 
+    solution optimales. 
+\end{note}       
+
+\begin{theorem}{}{}
+    La maximisation d'un objectif $f(w)$ est équivalent à l'\textbf{opposé}
+    de la minimisation :
+
+    \begin{align*}
+        \text{Max} \; f(w) \leftrightarrow  \text{Min} -f(w)
+    \end{align*}
+\end{theorem}
+
+\begin{Preuve}{}{}
+    Considérons le problème :
+    \begin{align*}
+        \text{Max} \; f(w) \\ 
+        \text{s.a} \;\; w \in X \subset \mathbb{R}^n
+    \end{align*}
+    Soit $w_{\text{opt}}$ un point de $X$ où $f(w)$ atteint son  
+    \textbf{\textcolor{myb}{maximum}}. On a :  
+    \begin{align*}
+        f\left(w_{\text{opt}} \right) \geq &f(w) \;\; \forall w \in X \\
+                                           &\updownarrow \\ 
+        - f\left(w_{\text{opt}} \right) \leq - &f(w) \;\; \forall w \in X 
+    \end{align*}
+    Par conséquent, $-f(w_{\text{opt}})$ est la valeur minimale possible parmi 
+    tous les $-f(w)$ possibles :
+
+    \begin{align*}
+        - \text{Max} f(w) = 
+        - f\left(w_{\text{opt}}\right) = 
+        \text{Min} -f(w)
+    \end{align*}
+    Ainsi, qu'on maximise $f(w)$ ou qu'on minimise $-f(w)$, on retrouve la 
+    même solution optimale $w_{\text{opt}}$.
+\end{Preuve}
+
+
+
+
+
+
+\begin{Explication*}{}{}
+    Soit la fonction objectif $f : X \rightarrow \mathbb{R}$  
+Dans cette situation, le vecteur \( w \) joue deux rôles distincts : il est à la 
+fois l'argument de la fonction objectif \( f(w) \) et un élément soumis aux 
+contraintes. Ces deux aspects sont essentiels dans un problème de maximisation 
+en programmation linéaire ou non linéaire.
+
+\vspace{1em}%
+\textbf{1. Vecteur dans la fonction objectif :}
+La fonction objectif \( f(w) \) est la fonction que l'on cherche à maximiser. 
+Elle prend un vecteur \( w \) comme entrée, qui est un point dans l'espace 
+\( \mathbb{R}^n \). Ce vecteur \( w \) représente une solution candidate du 
+problème, et \( f(w) \) retourne un nombre réel, par exemple un profit ou une 
+performance, que l'on souhaite maximiser.
+
+\vspace{1em}%
+\textbf{2. Vecteur dans les contraintes :}
+Le vecteur \( w \) doit aussi satisfaire un ensemble de contraintes qui 
+définissent l'ensemble des solutions réalisables, noté \( X \subset \mathbb{R}^n \).
+Ces contraintes peuvent être des inégalités ou des égalités (par exemple, 
+\( g(w) \leq 0 \), \( h(w) = 0 \)), et elles définissent l'ensemble des vecteurs 
+\( w \) admissibles.
+
+\vspace{1em}%
+\textbf{Synthèse des deux rôles :}
+\begin{itemize}
+    \item \textbf{Maximisation :} On cherche à maximiser la fonction \( f(w) \), 
+    c'est-à-dire à trouver la meilleure valeur possible de \( f(w) \).
+    \item \textbf{Contraintes :} Le vecteur \( w \) doit se situer dans un 
+    ensemble admissible \( X \), défini par les contraintes du problème.
+\end{itemize}
+
+En résumé, \( w \) doit satisfaire les contraintes (ce qui garantit qu'il est 
+une solution réalisable), tout en maximisant la valeur de \( f(w) \). Le problème
+consiste à trouver le \( w \) optimal qui satisfait ces deux aspects à la fois.
+\end{Explication*}                  
+Soit le problème suivant. Un restaurateur dispose de \textbf{14} oursins, 
+\textbf{24} crevettes, \textbf{18} huîtres. Deux types d'assiètes 
+de fruit de mer sont offertes par le restaurateur :
+
+\begin{align*}
+    \textbf{8\$} \colon \text{5 oursins, 2 crevettes 1 huître}  \\
+    \textbf{6\$} \colon \text{3 oursins, 3 crevettes 3 huîtres}   
+\end{align*}
+
+L'objectif est de déterminer le \textbf{nombres d'assiètes} de chaque 
+type à préparer afin de \textit{maximiser} 
+le revenu total du restaurateur tout en 
+respectant les disponibilité de fruits de mer. 
+
+
+\section{Contraintes}
+\begin{align*}
+    5x + 3y \leq 30& \quad \text{Oursins} \\
+    2x + 3y \leq 24& \quad \text{crevettes} \\ 
+    x  + 3y \leq 18& \quad \text{Huîtres}
+    \\
+    \\ 
+    x, y \geq 0& \quad \text{Non-négativité}
+    \\ 
+    \\
+    z = 8x + 6x& \quad \text{Objectif}
+\end{align*}
+
+
+
+
+En considérant que la maximisation d'un objectif est 
+équivalente à la minimisation de l'opposé de la minimisation on a :
+
+
+\begin{align*}
+    \text{Min} \;\; -8x  -6y& \\
+    \text{s.a.}
+    \\
+    \\
+    5x + 3y \leq 30& \\
+    2x + 3y \leq 24& \\
+    x  + 3y \leq 18& 
+    \\
+    \\ 
+    x, y \geq 0& 
+    \\ 
+    \\
+    z = 8x + 6x& 
+\end{align*}
+
+
+\section{Forme standard}
+
+\begin{align*}
+    \text{Min} z = -8 -6y \\ 
+    \text{s.a.} 
+    \\
+    5x + 3y& + \textcolor{myr}{\textbf{\textit{u}}}   &= 30 \\
+    2x + 3y& \quad\quad + \textcolor{myr}{\textbf{\textit{p}}}   &= 24\\
+     x + 3y& \quad\quad\quad\quad + \textcolor{myr}{\textbf{\textit{h}}}   &= 18 \\
+     x, y&,  
+     \textcolor{myr}{\textbf{\textit{u}}}, 
+     \textcolor{myr}{\textbf{\textit{p}}},
+     \textcolor{myr}{\textbf{\textit{h}}} \geq 0
+\end{align*}
+
+\section{Choisir les variables indépendantes}
+Supposons que \
+\textcolor{myb}{\textbf{\textit{x}}} et 
+\textcolor{myb}{\textbf{\textit{y}}} sont des 
+\textcolor{myb}{\textbf{\textit{variables indépendantes}}}. Exprimons 
+les \textcolor{myr}{\textbf{\textit{variable dépendantes}}} 
+\textcolor{myr}{\textbf{\textit{u}}},
+\textcolor{myr}{\textbf{\textit{p}}},
+\textcolor{myr}{\textbf{\textit{h}}},
+\textcolor{myr}{\textbf{\textit{z}}} en fonction de 
+\textcolor{myb}{\textbf{\textit{x}}} et \textcolor{myb}{\textbf{\textit{y}}}
+
+
+\begin{align*}
+    u \quad\quad\quad\quad\quad\quad &= 30 - 5x -3y& \\
+    p \quad\quad\quad\quad  &= 24 -2x -3y& \\
+    h \quad\quad &= 18 - x -3y&
+\end{align*}
+\vspace{-2.5em}    
+\Pointilles{1}
+\vspace{-2.5em}
+\begin{align*}
+    \quad\quad\quad\;\; z = 0 -8x -6y
+\end{align*}
+En supposant que 
+\textcolor{myb}{\textbf{\textit{x}}} et 
+\textcolor{myb}{\textbf{\textit{y}}}  sont \textbf{fixés à 0}, 
+on a la \textbf{solution} : 
+
+\begin{align*}
+x = y = 0 \implies 
+\textcolor{myr}{\textbf{\textit{u}}}  = 30, 
+\textcolor{myr}{\textbf{\textit{p}}} = 24,
+\textcolor{myr}{\textbf{\textit{h}}} = 18,
+\textbf{\textit{z}} = 0  
+\end{align*}
+
+
+
+
+\end{multicols*}
+            
+\end{document}
+
