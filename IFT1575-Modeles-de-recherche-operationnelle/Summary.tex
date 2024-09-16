@@ -232,6 +232,8 @@ En résumé, \( w \) doit satisfaire les contraintes (ce qui garantit qu'il est
 une solution réalisable), tout en maximisant la valeur de \( f(w) \). Le problème
 consiste à trouver le \( w \) optimal qui satisfait ces deux aspects à la fois.
 \end{Explication*}                  
+
+\chapter{Algorithme du Simplexe}
 Soit le problème suivant. Un restaurateur dispose de \textbf{14} oursins, 
 \textbf{24} crevettes, \textbf{18} huîtres. Deux types d'assiètes 
 de fruit de mer sont offertes par le restaurateur :
@@ -492,6 +494,8 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
     \\
                     &\Downarrow
 \end{align*}
+
+\vspace{-1em}
       \[% 
           \boxed{x = 3 -1/4u -1/4y}
       \]%
@@ -506,6 +510,7 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
     \\
                     &\Downarrow
 \end{align*}
+\vspace{-1em}
       \[% 
           \boxed{p = 3 + 1/4u -3/4y}
       \]%
@@ -515,11 +520,13 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
     z \quad = -48 +8/5u &- 6/5y
     \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
     \\
-                    u  &\Downarrow \\
+                      &\Downarrow \\
     z = -48 +8/5u -6&(5 +1/12u -5/12h)
     \\
                     &\Downarrow
 \end{align*}
+
+\vspace{-1.25em}
       \[% 
     \boxed{z = -54 +3/2u -1/2h}
       \]%
