@@ -605,7 +605,7 @@
         Déterminez si la suite est croissante, décroissante ou non monotone. Est-elle bornée ?
     \end{Exercice}
 
-    \noindent \textbf{1.1.72} \; \( a_n = \dfrac{1}{2n + 3} \). La suite \( \{a_n \} \) est strictement décroissante; 
+    \noindent \textbf{1.1.73} \; \( a_n = \dfrac{1}{2n + 3} \). La suite \( \{a_n \} \) est strictement décroissante; 
     il s'agit donc d'une suite monotome. On constate que $a_n \xrightarrow[n\to \infty]{} L = 0$ 
     Ainsi, on peut conclure que $\{ a_n\}$ est bornée inférieurement. 
     
@@ -614,6 +614,158 @@
     positives et négatives à cause de l'exposant $(-1)^n$. Ainsi, lorsque $n\to \infty$, 
     $a_n$ ne s'approche d'aucune valeur particulière. Ainsi, on peut conclure que 
     $\{a_n \}$ est non bornée, divergente et non monotone. 
+
+    \begin{Exercice}{(Stewart 1.1.82)}{}
+        Montrer que la suite définie par 
+        \begin{align*}
+                a_n = 2, \quad  a_{n+1} = \dfrac{1}{3 - a_n} 
+        \end{align*}
+        satisfait à $0 < a_n \leq 2$ et qu'elle est décroissante. Désuisez que cette suite 
+        converge et trouvez sa limite
+    \end{Exercice}
+
+Soit la suite définie par :
+\[
+a_1 = 2, \quad a_{n+1} = \frac{1}{3 - a_n}.
+\]
+
+\textbf{1. Montrons que la suite \((a_n)\) est décroissante.}
+
+\vspace{1em}
+\begin{center}
+    Preuve par récurrence
+\end{center}
+
+\textbf{Description} : Nous voulons montrez $P(n)$, c'est-à-dire que 
+$0 < a_{n+1} \leq a_n \leq 2, \;\; \forall n \in \mathbb{N}$. Autrement 
+dit, nous voulons montrer que la suite est décroissante. 
+
+\vspace{1em}
+
+
+\textbf{Initialisation :} Pour \( n = 1 \), calculons \( a_n \) et \( a_{n+1} \) ; vérifions $P(1)$ :
+\[
+    a_n = a_1 = 2, \quad a_{n+1} = a_2 = \frac{1}{3 - a_1} = \frac{1}{3 - 2} = 1.
+\]
+Ainsi, on a  
+\begin{align*}
+    0 < \underbrace{a_{n+1}}_{= 1}  \leq \underbrace{a_n}_{= 2} \leq 2 
+\end{align*}
+
+
+
+
+et le \textbf{cas de base} est vérifié; $P(1)$ est vrai. Nous voulons maintenant montrer que si $P(n)$ est vrai, 
+cela implique que $P(n+1)$ est aussi vrai:
+
+\begin{align*}
+    P(n) \implies P(n+1)
+\end{align*}
+
+
+\textbf{Hérédité :} Supposons que pour un certain \( n \geq 1 \), on a \( 0 < a_{n+1} \leq a_{n} \leq 2\).
+Montrons que cela implique que \( a_{n+2} \leq a_{n+1} \), c'est-à-dire :
+
+\begin{align*}
+    &a_{n+2} \leq a_{n+1}  
+    &\text{À vérifier} 
+    \\ 
+    &\dfrac{1}{3 - a_{n+1}} \leq a_{n+1} 
+    &\text{Définition de } a_{n+2} 
+    \\ 
+    &0 < \dfrac{1}{3 - a_{n+1}} \leq a_{n+1} \leq 2  
+    &\text{Inclusion des bornes}
+\end{align*}    
+
+Ainsi, nous constatons que si l'hypothèse d'hérédité  est vraie, le terme suivant 
+$a_{n+2}$ sera toujours compris entre les bornes $0$ et $2$ tel que $0 < a_{n+2} 
+\leq a_{n+1} \leq 2$. Et un terme quelconque $n+2$ sera donc toujours plus petit que 
+son prédécesseur $n+1$. 
+
+\textbf{2. Montrons que la suite converge.}
+
+
+Puisque nous savons que la suite est monotone (décroissante) et bornée, 
+par le \textcolor{myb}{\textbf{théorème des suites bornées}}, 
+nous pouvons conclure qu'elle est également convergente. Pour trouver 
+vers quelle valeur la suite converge, on peut utiliser les expressions qui 
+définissent la suite. 
+
+\begin{align*}
+    \lim\limits_{n \to+\infty } a_{n+1} = \; &L = \dfrac{1}{3 - \cancelto{L}{a_n}}  \\
+                                             &L = \dfrac{1}{3 - L} \\ 
+    &
+    \implies L(3 - L) = 1 \\ 
+    &
+    \implies 3L -L^2 = 1 \\ 
+    & 
+    \implies L^2 -3L + 1 = 0
+\end{align*}            
+
+Les deux solutions possibles pour cette équation sont : 
+\begin{align*}
+    L = \dfrac{3 \pm \sqrt{9 -4(1)(1)}}{2(1)} = \dfrac{3 \pm \sqrt{5}}{2}
+\end{align*}
+
+
+La solution $\dfrac{3+\sqrt{5}}{2}$ engendre une valeur $\alpha \approx 2.618 > 2$ qui est supérieure à 
+notre borne supérieure $a_1 = 2$. La seule valeur possible est donc :
+
+\begin{align*}
+    \boxed{0 < L = \dfrac{3-\sqrt{5}}{2} \approx  1.882 \leq 2 }
+\end{align*}
+ 
+
+\textbf{Conclusion :} La suite \( (a_n) \) est décroissante, elle vérifie \( a_n \leq 1 \)
+pour tout \( n \geq 2 \), et elle converge vers \( L = \dfrac{3 - \sqrt{5}}{2} \).
+
+
+\begin{Exercice}{(Stewart 1.1.92a)}{}
+    Montrez que si $\lim\limits_{n \to+\infty }a_{2n} = L$ et si  
+    $\lim\limits_{n \to+\infty }a_{2n + 1} = L$, alors $\{a_n\}$ converge et
+    $\lim\limits_{n \to+\infty }a_n = L$ 
+\end{Exercice}
+
+Soit $\varepsilon > 0$. Nous devons montrer qu'il existe un entier $N \in 
+\mathbb{Z}^+$ tel que pour tout $n > N$, on ait $|a_n - L| < \varepsilon$.
+
+\textbf{Hypothèses} :
+\begin{enumerate}
+    \item $\lim\limits_{n \to +\infty} a_{2n} = L$, c'est-à-dire qu'il existe 
+    $N_1 \in \mathbb{Z}^+$ tel que pour tout $n > N_1$,
+    \[
+    |a_{2n} - L| < \varepsilon.
+    \]
+    \item $\lim\limits_{n \to +\infty} a_{2n+1} = L$, c'est-à-dire qu'il existe 
+    $N_2 \in \mathbb{Z}^+$ tel que pour tout $n > N_2$,
+    \[
+    |a_{2n+1} - L| < \varepsilon.
+    \]
+\end{enumerate}
+
+\textbf{Cas 1 : $n$ est pair} \\
+Si $n$ est pair, alors $n = 2m$ pour un certain entier $m$. On utilise la limite 
+des termes pairs :
+\[
+|a_n - L| = |a_{2m} - L| < \varepsilon, \quad \text{pour } m > N_1.
+\]
+Cela implique que pour $n = 2m$ et $n > 2N_1$, on a $|a_n - L| < \varepsilon$.
+
+\textbf{Cas 2 : $n$ est impair} \\
+Si $n$ est impair, alors $n = 2m + 1$ pour un certain entier $m$. On utilise la 
+limite des termes impairs :
+\[
+|a_n - L| = |a_{2m+1} - L| < \varepsilon, \quad \text{pour } m > N_2.
+\]
+Cela implique que pour $n = 2m + 1$ et $n > 2N_2 + 1$, on a $|a_n - L| < 
+\varepsilon$.
+
+\textbf{Conclusion} \\
+Il suffit de prendre $N = \max(2N_1, 2N_2 + 1)$. Ainsi, pour tout $n > N$, que 
+$n$ soit pair ou impair, on a $|a_n - L| < \varepsilon$. Par conséquent, 
+$\lim\limits_{n \to +\infty} a_n = L$.
+
+
 
 
 
