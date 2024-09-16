@@ -287,7 +287,7 @@ En considérant que la maximisation d'un objectif est
 \section{Forme standard}
 
 \begin{align*}
-    \text{Min} z = -8 -6y \\ 
+    \text{Min } z = -8 -6y \\ 
     \text{s.a.} 
     \\
     5x + 3y& + \textcolor{myr}{\textbf{\textit{u}}}   &= 30 \\
@@ -300,11 +300,11 @@ En considérant que la maximisation d'un objectif est
 \end{align*}
 
 \section{Choisir les variables indépendantes}
-Supposons que \
+Supposons que 
 \textcolor{myb}{\textbf{\textit{x}}} et 
 \textcolor{myb}{\textbf{\textit{y}}} sont des 
 \textcolor{myb}{\textbf{\textit{variables indépendantes}}}. Exprimons 
-les \textcolor{myr}{\textbf{\textit{variable dépendantes}}} 
+les \textcolor{myr}{\textbf{\textit{variables dépendantes}}} 
 \textcolor{myr}{\textbf{\textit{u}}},
 \textcolor{myr}{\textbf{\textit{p}}},
 \textcolor{myr}{\textbf{\textit{h}}},
@@ -329,12 +329,229 @@ En supposant que
 on a la \textbf{solution} : 
 
 \begin{align*}
-x = y = 0 \implies 
+\boxed{x = y = 0 \implies 
 \textcolor{myr}{\textbf{\textit{u}}}  = 30, 
 \textcolor{myr}{\textbf{\textit{p}}} = 24,
 \textcolor{myr}{\textbf{\textit{h}}} = 18,
-\textbf{\textit{z}} = 0  
+\textbf{\textit{z}} = 0}
 \end{align*}
+
+En observant le système, on constate qu'il possible de 
+\textbf{minimiser} $z$ en augmentant $x$ ; on considère 
+donc $x$ comme \textcolor{myb}{\textbf{\textit{variable d'entrée}}}. Soit 
+$y = 0$, on a :
+
+\begin{align*}
+    u &= 30 - 5x -3y& 
+    \implies \quad 
+    & x \leq 30/5 = \textcolor{myr}{\textbf{6}}  
+    \\
+    p &= 24 -2x -3y 
+    & \implies \quad  &  x \leq 24/2 = \textbf{12}  
+    \\
+    h &= 18 - x -3y&
+    \implies \quad & x \leq \textbf{18}  
+\end{align*}
+
+
+\section{Pivot}
+
+Le système est limité par la diminution de $x$ jusqu'à \textcolor{myr}{\textbf{6}} 
+L'équation limitante est celle qui implique $u$; on dit alors que 
+\textcolor{myr}{\textbf{\textit{u}}} est le 
+\textcolor{myr}{\textbf{\textit{variable de sortie}}}. On 
+\textbf{pivote}. La variable $u$ prend la place de $x$ en tant que
+variable indépendante;
+$\textcolor{myb}{\textbf{\textit{u}}}$ et  
+\textcolor{myb}{\textbf{\textit{y}}} sont les 
+\textcolor{myb}{\textbf{\textit{nouvelles variables indépendantes}}}.   
+
+On peut utiliser les équations du système pour extrapoler 
+$x$, $p$, et $h$ en fonction de $u$ et $y$ :
+
+
+\begin{align*}
+    u \quad = 30 - 5x &- 3y 
+    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \\
+                         &\Downarrow
+\end{align*}
+      \[% 
+          \boxed{x = \textcolor{myg}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}}}
+      \]%
+
+
+\begin{align*}
+    p \quad = 24 - 2x &- 3y
+    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \\
+                 &\Downarrow
+\end{align*}
+      \[% 
+    \boxed{p = 12 +2/5u -9/5y}
+      \]%
+
+\begin{align*}
+    h \quad = 18 - x &- 3y
+    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \\
+                     &\Downarrow
+\end{align*}
+      \[% 
+    \boxed{h = 12 +1/5u -12/5y}
+      \]%
+\begin{align*}
+    z \quad = 0 - 8x &- 6y
+    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \\
+                     &\Downarrow
+    \\
+    z \quad = 0 - 8(&\textcolor{myg}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}})
+ - 6y
+    \\ 
+                    &\Downarrow
+\end{align*}
+      \[% 
+    \boxed{z = -48 +8/5u -6/5y}
+      \]%
+
+\section{Système 2}
+\begin{align*}
+    x \quad\quad\quad\quad\quad\quad &= 6 - 1/5u -3/5y& \\
+    p \quad\quad\quad\quad  &= 12 -2/5u -9/5y& \\
+    h \quad\quad &= 12 - 1/5u -12/5y&
+\end{align*}
+\vspace{-2.5em}    
+\Pointilles{1}
+\vspace{-2.5em}
+\begin{align*}
+    \quad\quad\quad\;\; z = -48 +8/5x -6/5y
+\end{align*}
+Sachant que 
+\textcolor{myb}{\textbf{\textit{u}}} et 
+\textcolor{myb}{\textbf{\textit{y}}}  sont \textbf{fixés à 0}, 
+on a la \textbf{solution} : 
+
+\begin{align*}
+\boxed{u = y = 0 \implies 
+\textcolor{myr}{\textbf{\textit{x}}}  = 6, 
+\textcolor{myr}{\textbf{\textit{p}}} = 12,
+\textcolor{myr}{\textbf{\textit{h}}} = 12,
+\textbf{\textit{z}} = -48}
+\end{align*}
+
+En observant le système, on constate qu'il possible de 
+\textbf{minimiser} $z$ en augmentant $y$ ; on considère 
+donc $y$ comme \textcolor{myb}{\textbf{\textit{variable d'entrée}}}. Soit 
+$u = 0$, on a :
+\begin{align*}
+    x &= 6 - 1/5u -3/5y& 
+    \implies \quad 
+    & y \leq \textbf{10}  
+    \\
+    p &= 12 - 2/5u -9/5y 
+      & \implies \quad  &  y \leq \textbf{20/3}
+    \\
+    h &= 12 - 1/5u -12/5y&
+    \implies \quad & y \leq \textbf{\textcolor{myr}{5}} 
+\end{align*}
+
+\section{Pivot}
+Le système est limité par la diminution de $y$ jusqu'à \textcolor{myr}{\textbf{5}} 
+L'équation limitante est celle qui implique $h$; on dit alors que 
+\textcolor{myr}{\textbf{\textit{h}}} est le 
+\textcolor{myr}{\textbf{\textit{variable de sortie}}}. On 
+\textbf{pivote}. La variable $h$ prend la place de $u$ en tant que
+variable indépendante;
+$\textcolor{myb}{\textbf{\textit{h}}}$ et  
+\textcolor{myb}{\textbf{\textit{y}}} sont les 
+\textcolor{myb}{\textbf{\textit{nouvelles variables indépendantes}}}.   
+
+On peut utiliser les équations du système pour extrapoler 
+$x$, $p$, et $h$ en fonction de $h$ et $y$ :
+
+
+\begin{align*}
+    h \quad = 12 - 1/5u &-12/5y
+    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \\
+                 &\Downarrow
+\end{align*}
+      \[% 
+    \boxed{y = \textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}} }
+      \]%
+
+
+\begin{align*}
+    x = 6 - 1/5u &-3/5y 
+    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \\
+      &\Downarrow
+    \\ 
+    x = 6 - 1/5u -3/&5(\textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
+    \\
+                    &\Downarrow
+\end{align*}
+      \[% 
+          \boxed{x = 3 -1/4u -1/4y}
+      \]%
+
+\begin{align*}
+    p = 12 - 2/5u &-9/5y 
+    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \\
+      &\Downarrow
+    \\ 
+    p = 12 - 2/5u -9/&5(\textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
+    \\
+                    &\Downarrow
+\end{align*}
+      \[% 
+          \boxed{p = 3 + 1/4u -3/4y}
+      \]%
+
+
+\begin{align*}
+    z \quad = -48 +8/5u &- 6/5y
+    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \\
+                    u  &\Downarrow \\
+    z = -48 +8/5u -6&(5 +1/12u -5/12h)
+    \\
+                    &\Downarrow
+\end{align*}
+      \[% 
+    \boxed{z = -54 +3/2u -1/2h}
+      \]%
+
+\section{Système 3}
+\begin{align*}
+    x \quad\quad\quad\quad\quad\quad &= 3 - 1/4u -1/4h& \\
+    p \quad\quad\quad\quad  &= 3 +1/4u +3/5h& \\
+    y \quad\quad &= 5 + 1/12u -5/12h&
+\end{align*}
+\vspace{-2.5em}    
+\Pointilles{1}
+\vspace{-2.5em}
+\begin{align*}
+    \quad\quad\quad\;\; z = -54 +3/2u -1/2h
+\end{align*}
+Sachant que 
+\textcolor{myb}{\textbf{\textit{u}}} et 
+\textcolor{myb}{\textbf{\textit{h}}}  sont \textbf{fixés à 0}, 
+on a la \textbf{solution} : 
+
+\begin{align*}
+\boxed{u = h = 0 \implies 
+\textcolor{myr}{\textbf{\textit{x}}}  = 3, 
+\textcolor{myr}{\textbf{\textit{p}}} = 3,
+\textcolor{myr}{\textbf{\textit{y}}} = 5,
+\textbf{\textit{z}} = -54}
+\end{align*}
+
+Il n’est pas intéressant d’augmenter ni la valeur de $u$, ni la valeur de $h$car la valeur 
+de z augmente. Ainsi, nous sommes \textbf{à l’optimum} !
+
 
 
 
