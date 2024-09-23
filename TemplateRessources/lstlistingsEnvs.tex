@@ -1,0 +1,301 @@
+% lstlistingsEnvs.tex
+
+\usepackage{minted}
+
+
+\lstset{
+  basicstyle=\ttfamily, % Set
+  columns=fullflexible,
+  keepspaces=true,
+  language=Python % You can specify the language if you want syntax highlighting
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                 Custom lstlisting Environments
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gruvbox style for Python
+\definecolor{Pgruvbox-bg}{HTML}{282828}
+\definecolor{Pgruvbox-fg}{HTML}{ebdbb2}
+\definecolor{Pgruvbox-red}{HTML}{fb4934}
+\definecolor{Pgruvbox-green}{HTML}{b8bb26}
+\definecolor{Pgruvbox-yellow}{HTML}{fabd2f}
+\definecolor{Pgruvbox-blue}{HTML}{83a598}
+\definecolor{Pgruvbox-purple}{HTML}{d3869b}
+\definecolor{Pgruvbox-aqua}{HTML}{8ec07c}
+\definecolor{BBBlack}{rgb}{0.05, 0.06, 0.09}
+
+
+
+% JAVA LSTLISTING STYLE IN Gruvbox Colorscheme
+\definecolor{gruvbox-bg}{rgb}{0.282, 0.247, 0.204}
+\definecolor{gruvbox-fg1}{rgb}{0.949, 0.898, 0.776}
+\definecolor{gruvbox-fg2}{rgb}{0.871, 0.804, 0.671}
+\definecolor{gruvbox-red}{rgb}{0.788, 0.255, 0.259}
+\definecolor{gruvbox-green}{rgb}{0.518, 0.604, 0.239}
+\definecolor{gruvbox-yellow}{rgb}{0.914, 0.808, 0.427}
+\definecolor{gruvbox-blue}{rgb}{0.353, 0.510, 0.784}
+\definecolor{gruvbox-purple}{rgb}{0.576, 0.412, 0.659}
+\definecolor{gruvbox-aqua}{rgb}{0.459, 0.631, 0.737}
+\definecolor{gruvbox-gray}{rgb}{0.518, 0.494, 0.471}
+
+\definecolor{lst-bg}{RGB}{45, 45, 45}
+\definecolor{lst-fg}{RGB}{220, 220, 204}
+\definecolor{lst-keyword}{RGB}{215, 186, 125}
+\definecolor{lst-comment}{RGB}{117, 113, 94}
+\definecolor{lst-string}{RGB}{163, 190, 140}
+\definecolor{lst-number}{RGB}{181, 206, 168}
+\definecolor{lst-type}{RGB}{218, 142, 130}
+
+\lstdefinestyle{PythonGruvbox}{
+    language=Python,
+    identifierstyle=\color{lst-fg},
+    basicstyle=\ttfamily\color{Pgruvbox-fg},
+    keywordstyle=\color{Pgruvbox-yellow},
+    keywordstyle=[2]\color{Pgruvbox-blue},
+    stringstyle=\color{Pgruvbox-green},
+    commentstyle=\color{Pgruvbox-aqua},
+    backgroundcolor=\color{BBBlack},
+    rulecolor=\color{BBBlack},
+    showstringspaces=false,
+    keepspaces=true,
+    captionpos=b,
+    breaklines=true,
+    tabsize=4,
+    showspaces=false,
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\tiny\color{gray},
+    showtabs=false,
+    columns=fullflexible,
+    morekeywords={True,False,None},
+    morekeywords=[2]{and,as,assert,break,class,continue,def,del,elif,else,except,exec,
+    finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,print,raise,
+    return,try,while,with,yield},
+    morecomment=[s]{"""}{"""},
+    morecomment=[s]{'''}{'''},
+    morecomment=[l]{\#},
+    morestring=[b]",
+    morestring=[b]',
+    literate=
+    {0}{{\textcolor{Pgruvbox-purple}{0}}}{1}
+    {1}{{\textcolor{Pgruvbox-purple}{1}}}{1}
+    {2}{{\textcolor{Pgruvbox-purple}{2}}}{1}
+    {3}{{\textcolor{Pgruvbox-purple}{3}}}{1}
+    {4}{{\textcolor{Pgruvbox-purple}{4}}}{1}
+    {5}{{\textcolor{Pgruvbox-purple}{5}}}{1}
+    {6}{{\textcolor{Pgruvbox-purple}{6}}}{1}
+    {7}{{\textcolor{Pgruvbox-purple}{7}}}{1}
+    {8}{{\textcolor{Pgruvbox-purple}{8}}}{1}
+    {9}{{\textcolor{Pgruvbox-purple}{9}}}{1}
+}
+
+% Gruvbox style for Java
+\definecolor{gruvbox-bg}{rgb}{0.282, 0.247, 0.204}
+\definecolor{gruvbox-fg1}{rgb}{0.949, 0.898, 0.776}
+\definecolor{gruvbox-fg2}{rgb}{0.871, 0.804, 0.671}
+\definecolor{gruvbox-red}{rgb}{0.788, 0.255, 0.259}
+\definecolor{gruvbox-green}{rgb}{0.518, 0.604, 0.239}
+\definecolor{gruvbox-yellow}{rgb}{0.914, 0.808, 0.427}
+\definecolor{gruvbox-blue}{rgb}{0.353, 0.510, 0.784}
+\definecolor{gruvbox-purple}{rgb}{0.576, 0.412, 0.659}
+\definecolor{gruvbox-aqua}{rgb}{0.459, 0.631, 0.737}
+\definecolor{gruvbox-gray}{rgb}{0.518, 0.494, 0.471}
+
+\lstdefinestyle{JavaGruvbox}{
+    language=Java,
+    basicstyle=\ttfamily\color{Pgruvbox-fg},
+    keywordstyle=\color{Pgruvbox-yellow},
+    keywordstyle=[2]\color{lst-type},
+    commentstyle=\itshape\color{lst-comment},
+    stringstyle=\color{lst-string},
+    numberstyle=\color{lst-number},
+    backgroundcolor=\color{BBBlack},
+    rulecolor=\color{gruvbox-aqua},
+    showstringspaces=false,
+    keepspaces=true,
+    captionpos=b,
+    breaklines=true,
+    tabsize=4,
+    showspaces=false,
+    showtabs=false,
+    columns=fullflexible,
+    morekeywords={var},
+    morekeywords=[2]{boolean, byte, char, double, float, int, long, short, void},
+    morecomment=[s]{/}{/},
+    morecomment=[l]{//},
+    morestring=[b]",
+    morestring=[b]',
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\tiny\color{gray},
+}
+
+% Dracula style for Java
+\definecolor{draculawhite-background}{RGB}{237, 239, 252}
+\definecolor{draculawhite-comment}{RGB}{98, 114, 164}
+\definecolor{draculawhite-keyword}{RGB}{189, 147, 249}
+\definecolor{draculawhite-string}{RGB}{152, 195, 121}
+\definecolor{draculawhite-number}{RGB}{249, 189, 89}
+\definecolor{draculawhite-operator}{RGB}{248, 248, 242}
+
+\lstdefinestyle{JavaDraculaWhite}{
+    language=Java,
+    backgroundcolor=\color{draculawhite-background},
+    commentstyle=\itshape\color{draculawhite-comment},
+    keywordstyle=\color{draculawhite-keyword},
+    stringstyle=\color{draculawhite-string},
+    basicstyle=\ttfamily\footnotesize\color{black},
+    identifierstyle=\color{black},
+    keywordstyle=\color{draculawhite-keyword}\bfseries,
+    morecomment=[s][\color{draculawhite-comment}]{/**}{*/},
+    showstringspaces=false,
+    showspaces=false,
+    breaklines=true,
+    %frame=single,
+    rulecolor=\color{draculawhite-operator},
+    tabsize=2,  
+    numbers=left,
+    numbersep=4pt,
+    numberstyle=\ttfamily\tiny\color{gray}
+}
+
+% Dracula style for Python
+\definecolor{draculawhite-bg}{HTML}{FAFAFA}
+\definecolor{draculawhite-fg}{HTML}{282A36}
+\definecolor{pdraculawhite-keyword}{HTML}{BD93F9}
+\definecolor{pdraculawhite-comment}{HTML}{6272A4}
+\definecolor{draculawhite-number}{HTML}{FF79C6}
+
+\lstdefinestyle{PythonDraculaWhite}{
+    language=Python,
+    basicstyle=\ttfamily\small\color{draculawhite-fg},
+    backgroundcolor=\color{draculawhite-background},
+    keywordstyle=\color{orange}\bfseries,
+    stringstyle=\color{draculawhite-string},
+    commentstyle=\color{pdraculawhite-comment}\itshape,
+    numberstyle=\color{draculawhite-number},
+    showstringspaces=false,
+    showspaces=false,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{draculawhite-operator}, 
+    tabsize=4,
+    morekeywords={as,with,1,2,3,4, 5,6,7,8,9,True,False},
+    numbers=left,
+    numbersep=5pt,
+    numberstyle=\small\bfseries\ttfamily\color{htmlcomment},
+}
+
+% Dracula Dark style for HTML
+\definecolor{htmltag}{HTML}{ff79c6}
+\definecolor{htmlattr}{HTML}{f1fa8c}
+\definecolor{htmlvalue}{HTML}{bd93f9}
+\definecolor{htmlcomment}{HTML}{6272a4}
+\definecolor{htmltext}{HTML}{401E31}
+\definecolor{htmlbackground}{HTML}{282a36}
+\definecolor{comphtmlbackground}{HTML}{8093FF}
+
+\lstdefinestyle{HTMLDraculaDark}{
+    basicstyle=\normalsize\bfseries\ttfamily\color{htmltext},
+    commentstyle=\itshape\color{htmlcomment},
+    keywordstyle=\bfseries\color{htmltag},
+    stringstyle=\color{htmlvalue},
+    emph={DOCTYPE,html,head,body,div,span,a,script},
+    emphstyle={\color{htmltag}\bfseries},
+    sensitive=true,
+    showstringspaces=false,
+    backgroundcolor=\color{white},
+    inputencoding=utf8,
+    extendedchars=true,
+    language=HTML,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    numbers=left,
+    numbersep=10pt,
+    numberstyle=\small\bfseries\ttfamily\color{htmlcomment},
+    escapeinside={<@}{@>},
+    rulecolor=\color{htmlbackground},
+    xleftmargin=10pt,
+    frame=none, 
+    breaklines=true,
+    postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+    showlines=false,
+    moredelim=[s][\itshape\color{htmlcomment}]{<!--}{-->},
+    morekeywords={id,class,type,name,value,placeholder,checked,src,href,alt},
+    literate={é}{{\'e}}1 {è}{{\`e}}1 {ê}{{\^e}}1 {ë}{{\"e}}1 {à}{{\`a}}1 {ù}{{\`u}}1 {û}{{\^u}}1 {ç}{{\c{c}}}1 {â}{{\^a}}1 {î}{{\^i}}1 {ï}{{\"i}}1
+}
+
+
+\lstdefinestyle{Haskell}{
+  frame=none,
+  xleftmargin=2pt,
+  stepnumber=1,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\ttfamily\tiny\color[gray]{0.3},
+  belowcaptionskip=\bigskipamount,
+  captionpos=b,
+  escapeinside={*'}{'*},
+  language=haskell,
+  tabsize=2,
+  emphstyle={\bf},
+  %commentstyle=\it,
+  stringstyle=\mdseries\ttfamily,
+  showspaces=false,
+  keywordstyle=\bfseries\ttfamily,
+  columns=flexible,
+  basicstyle=\small\ttfamily,
+  showstringspaces=false,
+  morecomment=[l]\%,
+}
+
+
+
+\lstdefinestyle{CSSDraculaLight}{
+    basicstyle=\bfseries\scriptsize\ttfamily\color{htmltext},
+    commentstyle=\color{htmlcomment},
+    keywordstyle=\bfseries\color{htmlvalue},
+    stringstyle=\color{htmlvalue},
+    emph={DOCTYPE,html,head,body,div,span,a,script},
+    emphstyle={\color{htmltag}\bfseries},
+    sensitive=true,
+    showstringspaces=false,
+    backgroundcolor=\color{white},
+    inputencoding=utf8,
+    extendedchars=true, % Support extended characters
+    frame=none, 
+    %frame=tb,
+    tabsize=4,
+    breaklines=true,
+    breakatwhitespace=true,
+    numbers=left,
+    numbersep=10pt,
+    numberstyle=\small\bfseries\ttfamily\color{htmlcomment},
+    escapeinside={<@}{@>},
+    rulecolor=\color{htmlbackground},
+    xleftmargin=20pt,
+    % Add a vertical line for opening and closing tags
+    %frame=lines,
+    framesep=2pt,
+    framexleftmargin=4pt,
+    % Add a vertical line for closing tags that go through multiple lines
+    breaklines=true,
+    postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+    showlines=true,
+    % Add a rule to apply commentstyle to keywords inside comments
+    moredelim=[s][\color{htmlcomment}]{/*}{*/},
+    literate={é}{{\'e}}1
+             {è}{{\`e}}1
+             {ê}{{\^e}}1
+             {ë}{{\"e}}1
+             {à}{{\`a}}1
+             {ù}{{\`u}}1
+             {û}{{\^u}}1
+             {ç}{{\c{c}}}1
+             {â}{{\^a}}1
+             {î}{{\^i}}1
+             {ï}{{\"i}}1,
+    morekeywords={color, background, background-color, font-size, font-weight, border, border-radius, padding, margin, display, position, top, right, bottom, left, flex, grid, width, height, min-width, max-width, min-height, max-height, transition, transform, animation, keyframes, content, z-index,id,class,type,name,value,placeholder,checked,src,href,alt},
+    morestring=[s][\color{htmltag}]{:}{;},
+}

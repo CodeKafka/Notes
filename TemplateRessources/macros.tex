@@ -1,0 +1,106 @@
+%From M275 "Topology" at SJSU
+\newcommand{\id}{\mathrm{id}} % Identité
+\newcommand{\taking}[1]{\xrightarrow{#1}} % Flèche avec annotation
+\newcommand{\inv}{^{-1}} % Inverse
+
+%From M170 "Introduction to Graph Theory" at SJSU
+\DeclareMathOperator{\diam}{diam} % Diamètre
+\DeclareMathOperator{\ord}{ord} % Ordre
+\newcommand{\defeq}{\overset{\mathrm{def}}{=}} % Défini comme égal
+
+%From the USAMO .tex files
+\newcommand{\ts}{\textsuperscript} % Exposant
+\newcommand{\dg}{^\circ} % Degré
+\newcommand{\ii}{\item} % Item
+
+% % From Math 55 and Math 145 at Harvard
+% \newenvironment{subproof}[1][Proof]{%
+% \begin{proof}[#1] \renewcommand{\qedsymbol}{$\blacksquare$}}%
+% {\end{proof}}
+
+\newcommand{\liff}{\leftrightarrow} % Si et seulement si
+\newcommand{\lthen}{\rightarrow} % Implique
+\newcommand{\opname}{\operatorname} % Opérateur générique
+\newcommand{\surjto}{\twoheadrightarrow} % Flèche surjective
+\newcommand{\injto}{\hookrightarrow} % Flèche injective
+\newcommand{\On}{\mathrm{On}} % Ordinaux
+\DeclareMathOperator{\img}{im} % Image
+\DeclareMathOperator{\Img}{Im} % Image
+\DeclareMathOperator{\coker}{coker} % Cokernel
+\DeclareMathOperator{\Coker}{Coker} % Cokernel
+\DeclareMathOperator{\Ker}{Ker} % Noyau
+\DeclareMathOperator{\rank}{rank} % Rang
+\DeclareMathOperator{\Spec}{Spec} % Spectre
+\DeclareMathOperator{\Tr}{Tr} % Trace
+\DeclareMathOperator{\pr}{pr} % Projection
+\DeclareMathOperator{\ext}{ext} % Extension
+\DeclareMathOperator{\pred}{pred} % Prédécesseur
+\DeclareMathOperator{\dom}{dom} % Domaine
+\DeclareMathOperator{\ran}{ran} % Image (range)
+\DeclareMathOperator{\Hom}{Hom} % Homomorphisme
+\DeclareMathOperator{\Mor}{Mor} % Morphismes
+\DeclareMathOperator{\End}{End} % Endomorphisme
+
+\newcommand{\eps}{\epsilon} % Épsilon
+\newcommand{\veps}{\varepsilon} % Variance d'épsilon
+\newcommand{\ol}{\overline} % Ligne au-dessus
+\newcommand{\ul}{\underline} % Ligne en-dessous
+\newcommand{\wt}{\widetilde} % Tilde large
+\newcommand{\wh}{\widehat} % Chapeau large
+\newcommand{\vocab}[1]{\textbf{\color{blue} #1}} % Texte en gras et bleu
+\providecommand{\half}{\frac{1}{2}} % Fraction 1/2
+\newcommand{\dang}{\measuredangle} % Angle dirigé
+\newcommand{\ray}[1]{\overrightarrow{#1}} % Ray
+\newcommand{\seg}[1]{\overline{#1}} % Segment
+\newcommand{\arc}[1]{\wideparen{#1}} % Arc
+\DeclareMathOperator{\cis}{cis} % cis
+\DeclareMathOperator*{\lcm}{lcm} % Plus petit commun multiple
+\DeclareMathOperator*{\argmin}{arg min} % Argument du minimum
+\DeclareMathOperator*{\argmax}{arg max} % Argument du maximum
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}} % Somme cyclique
+\newcommand{\symsum}{\sum_{\mathrm{sym}}} % Somme symétrique
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}} % Produit cyclique
+\newcommand{\symprod}{\prod_{\mathrm{sym}}} % Produit symétrique
+\newcommand{\Qed}{\begin{flushright}\qed\end{flushright}} % QED aligné à droite
+\newcommand{\parinn}{\setlength{\parindent}{1cm}} % Indentation de paragraphe à 1 cm
+\newcommand{\parinf}{\setlength{\parindent}{0cm}} % Pas d'indentation de paragraphe
+% \newcommand{\norm}{\|\cdot\|} % Norme
+\newcommand{\inorm}{\norm_{\infty}} % Norme infinie
+\newcommand{\opensets}{\{V_{\alpha}\}_{\alpha\in I}} % Ensemble ouvert
+\newcommand{\oset}{V_{\alpha}} % Ensemble ouvert V
+\newcommand{\opset}[1]{V_{\alpha_{#1}}} % Ensemble ouvert V avec indice
+\newcommand{\lub}{\text{lub}} % Plus petite borne supérieure
+\newcommand{\del}[2]{\frac{\partial #1}{\partial #2}} % Dérivée partielle
+\newcommand{\Del}[3]{\frac{\partial^{#1} #2}{\partial^{#1} #3}} % Dérivée partielle d'ordre élevé
+\newcommand{\deld}[2]{\dfrac{\partial #1}{\partial #2}} % Dérivée partielle avec dfrac
+\newcommand{\Deld}[3]{\dfrac{\partial^{#1} #2}{\partial^{#1} #3}} % Dérivée partielle d'ordre élevé avec dfrac
+\newcommand{\lm}{\lambda} % Lambda
+\newcommand{\uin}{\mathbin{\rotatebox[origin=c]{90}{$\in$}}} % Appartient, tourné de 90 degrés
+\newcommand{\usubset}{\mathbin{\rotatebox[origin=c]{90}{$\subset$}}} % Sous-ensemble, tourné de 90 degrés
+\newcommand{\lt}{\left} % Gauche
+\newcommand{\rt}{\right} % Droite
+\newcommand{\bs}[1]{\boldsymbol{#1}} % Symbole en gras
+\newcommand{\exs}{\exists} % Il existe
+\newcommand{\st}{\strut} % Strut
+\newcommand{\dps}[1]{\displaystyle{#1}} % Disposition en ligne
+
+\newcommand{\sol}{\setlength{\parindent}{0cm}\textbf{\textit{Solution:}}\setlength{\parindent}{1cm} } % Solution sans indentation initiale puis rétablie
+\newcommand{\solve}[1]{\setlength{\parindent}{0cm}\textbf{\textit{Solution: }}\setlength{\parindent}{1cm}#1 \Qed}
+
+\newcommand{\entoure}[1]{\fcolorbox{black}{gray!30}{\texttt{#1}}}
+
+\renewcommand{\ttdefault}{cmtt}
+\newcommand{\textttbf}[1]{\contour{yellow!45}{\texttt{#1}}}
+\newcommand{\varitem}[3][black]{%
+    \item [%
+        \colorbox{#2}{\textcolor{#1}{\makebox(5.5,7){#3}}}%
+    ]
+}
+% Allow you to do the non implication (implication barred)
+\newcommand{\notimplies}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{=}$\hidewidth\cr$\implies$}}}}
+
+
+\newcommand*{\authorimg}[1]%
+    { \raisebox{-1\baselineskip}{\includegraphics[width=\imagesize]{#1}}}
+\newlength\imagesize 
