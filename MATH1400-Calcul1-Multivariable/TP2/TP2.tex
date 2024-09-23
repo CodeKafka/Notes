@@ -1,0 +1,811 @@
+\documentclass{report}
+%\usepackage[utopia]{mathdesign}
+%\usepackage{amsmath, amsthm}
+\usepackage{pgfplots}
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+%\usepackage[varbb]{newpxmath}
+%\usepackage[osf,largesc,theoremfont]{newpxtext}
+%\usepackage{coelacanth}
+%\usepackage{beraserif} % Bitstream Vera Serif font
+%\usepackage{berasans} % Bitstream Vera Sans font
+%\usepackage{beramono} % Bitstream Vera Sans Mono font
+%\usepackage{berasans}
+%\usepackage{libertine}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{crimson}
+
+
+%% Choose one of the following (if not choosing the  
+%% default, viz., Computer Modern, font family):
+%\usepackage{lmodern}
+\usepackage{bold-extra}
+%%
+%\usepackage{mathpazo}
+% \usepackage{newpxmath}
+%\usepackage{kpfonts} % Very good
+%%
+%\usepackage{mathptmx} %Very good
+%\usepackage{stix} 
+%\usepackage{txfonts} %Very good
+%\usepackage{newtxtext,newtxmath} %Very good
+%%
+%\usepackage{libertine} \usepackage[libertine]{newtxmath}
+%\usepackage{libertine,libertinust1math} % added 2019/11/28
+%%
+%\usepackage{newpxtext} 
+%\usepackage{breqn} 
+\usepackage[euler-digits]{eulervm}
+%\usepackage{textcomp}
+%\usepackage{bm}
+\usepackage{contour}
+\usepackage{adjustbox}
+
+
+
+
+
+
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/preamble.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+
+
+
+
+
+
+
+
+
+
+\title{\huge{MATH1400}\\\Huge{Calcul à plusieurs variables}\\\vspace{2em}Travail Pratique 2 }
+\author{\huge{Franz Girardin}}
+\date{\today}
+
+
+   
+
+\begin{document}
+
+\maketitle
+\newpage% or \cleardoublepage
+% \pdfbookmark[<level>]{<title>}{<dest>}
+\pdfbookmark[section]{\contentsname}{toc}
+\tableofcontents
+\pagebreak
+
+
+\titleformat*{\section}{%
+    \normalsize\bfseries%
+}
+
+\titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
+
+
+    \chapter*{Exercices sur la convergence de suite et séries}
+    \section{Définitions}
+    
+    \begin{Exercice}{(Stewart 1.2.2)}{}
+       Expliquez ce que signifie 
+       $\sum_{n=1}^{\infty }a_n = 5$ 
+    \end{Exercice}
+
+    Cette expression signifie que la somme ayant le terme général $a_n$ 
+    converge vers la veleur $L = 5$. Autrement dit, lorsqu'on additionne les 
+    termes de la somme $a_n$ de façon \textbf{indéfinie}, on obtient la 
+    somme $5$.
+
+
+    \begin{Exercice}{(Stewart 1.2.4)}{}
+        Calculez la somme de la série $\sum_{n=1}^{\infty }a_n$ dont les 
+        les sommes partielles sont données :
+        \begin{align*}
+                S_n = \dfrac{n^2 - 1}{4^n +1} 
+        \end{align*}
+    \end{Exercice}
+
+    Soit la somme parielle $S_n$, nous pouvons calculer la série comme suit :
+
+
+    \begin{align*}
+        S = 
+        \lim\limits_{n \to+\infty } S_n  = 
+        \lim\limits_{n \to+\infty }\dfrac{n^2 - 1}{4^n +1} 
+        = 
+        \lim\limits_{n \to+\infty }  
+        \dfrac{1 -  \cancelto{0}{1}}{\frac{4^n}{n^2} + \cancelto{0}{1}} 
+        = 
+        \lim\limits_{n \to+\infty } 
+        \dfrac{n^2}{4^n} 
+    \end{align*}
+    Puisque la quantité $4^n$ croît plus rapidement que $n^2$, nous avons 
+
+    \begin{align*}
+        \left[ n^2 \ll 4^n \right] \implies 
+        \lim\limits_{ \to+\infty }S_n = \dfrac{n^2}{4^n} \longrightarrow 0 = S 
+    \end{align*}
+
+    Ainsi, nous avons 
+
+    \begin{align*}
+        \boxed{
+            \lim\limits_{n \to+\infty }S_n = S = \sum_{n=1}^{\infty }a_n = 
+            \textcolor{red}{0} 
+        }
+    \end{align*}
+
+
+    \begin{Exercice}{(Stewart 1.2.16)}{}
+        Expliquez la différence entre
+    \end{Exercice}
+
+    \noindent
+    \textbf{a)} 
+    \begin{align*}    
+        \sum_{i=1}^{n}a_i \quad 
+        \text{et} \quad%
+        \sum_{j=1}^{n}a_j
+    \end{align*}
+
+    Les deux sommes représentent la même somme. La différente entre elles 
+    est uniquement la variable de sommation. Or, puisque les variables de 
+    sommation $i$ et $j$ sont considéré comme des variables muettes, le nom 
+    de la variable n'affecte pas le résultat de la somme. 
+
+
+
+    \vspace{1em}
+    \textbf{b)}
+    \begin{align*}
+        \sum_{i=1}^{\infty }a_i 
+        \quad%
+        \text{et}
+        \quad%
+        \sum_{i=1}^{\infty }a_j
+    \end{align*}
+
+    Les sommes sont \textbf{différentes}. La première somme implique l'addition de termes 
+    $a_i$ sur un intervalle de sommation de $i = 1$ à l'infini. Or, pour la seconde 
+    somme la variable de sommation $j$ n'affecte pas les termes $a_j$ de la somme. 
+    \textbf{Ainsi}, la somme constante par rapport à $i$.   
+
+
+    \section{Convergence de série géométrique}
+    \begin{Exercice}{(Stewart 1.2.20)}{}
+        Déterminez si la série géométrique converge ou diverge. Si elle converge, 
+        trouvez sa somme. 
+    \end{Exercice}
+
+    
+    \noindent
+    \textbf{20.} 
+    \begin{align*}
+            \sum_{n=1}^{\infty }a_n = 2 + 0.5 + 0.125 + 0.03125 + \cdots 
+    \end{align*}
+
+    La série géométrique suit la règle $a_1 = 2$ et $a_n = a_1r^{n-1} \forall n \geq 1$.
+    \textbf{Donc}, nous avons :
+    \begin{align*}
+        \left[ a_2 = a_1r^{n-1}  \right] \implies 
+        \left[ 0.5 = 2 + r^{1} \right] \implies 
+        \textcolor{myb}{r =  -\frac{3}{2}} 
+    \end{align*}
+
+    \textbf{Ainsi}, nous avons :
+    
+    \begin{align*}
+        \sum_{n=1}^{\infty }a_n = \sum_{n=1}^{\infty } 2r^{-3/2}
+    \end{align*}
+
+    Puisque la raison $r = -3/2$ de la somme est hors de l'intervalle de convergence 
+    d'une suite géométrique, nous pouvons conclure que la somme \textcolor{myr}{\textbf{div}}.
+
+    \begin{align*}
+        \boxed{
+        \left[ r = -3/2 \notin ]-1, 1] \right] \implies \sum_{n=1}^{\infty }a_n 
+        \;\; \textcolor{myr}{\textbf{div}} 
+    }
+    \end{align*}
+
+    \section{Convergence de série}
+    \begin{Exercice}{(Stewart 17-26)}{}
+        Déterminez si la série géométrique converge ou diverge.
+        Si elle converge, trouvez sa somme
+    \end{Exercice}
+
+
+    \noindent \textbf{24.}                    
+
+    \begin{align*}
+         \sum\limits_{n=1}^{\infty } \dfrac{3^{n+1}}{(-2)^n}
+    \end{align*}
+
+    Consirérons la minupulation suivante :
+
+    \begin{align*}
+         \sum\limits_{n=1}^{\infty } \dfrac{3^{n+1}}{(-2)^n} = 
+         (-1)^n \dfrac{3^{n+1}}{2^n}
+    \end{align*}
+
+    Selon le \textbf{théorème de convergence du terme général}, une 
+    une condition nécessaire à la convergence d'une série est que 
+    la limite du terme général $a_n$ de celle-ci tende vers $0$. 
+    \textbf{Ainsi}, nous avons : 
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n = 
+        \lim\limits_{n\to+\infty } (-1)^n \dfrac{3^{n+1}}{2^n} = 
+        \lim\limits_{n\to+\infty } 3(-1)^n \dfrac{3^n}{2^n} =
+        \lim\limits_{n\to+\infty } 3(-1)^n \left(\dfrac{3}{2} \right)^n
+        \textcolor{red}{\neq} \; 0  
+    \end{align*}
+
+    Ainsi, puisque la limite du terme général $a_n$ ne tend pas vers $0$, 
+    nous pouvons conclure que la suite est \textcolor{myr}{\textbf{div}}. 
+
+
+    \vspace{1em}
+
+    \noindent\textbf{25}.  
+    \begin{align*}
+        \sum_{n=1}^{\infty }\dfrac{e^{2n}}{6^{n-1}}
+    \end{align*}
+
+    Considérons la limite du terme général $a_n$ :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n = 
+        \lim\limits_{n \to+\infty } \dfrac{e^{2n}}{6^{n-1}} = 
+        \lim\limits_{n \to+\infty } \dfrac{6e^{2n}}{6^{n}}  = 
+        6 \left[\lim\limits_{n \to+\infty } 
+        \left(\dfrac{e^{2}}{6}\right)^n \right]
+        \longrightarrow + \infty \textcolor{red}{\neq} \; 0  
+    \end{align*}
+
+    Puisque la limite du terme général \textbf{tend vers l'infini}, 
+    nous pouvons conclure que la suite 
+    $\sum_{n=1}^{\infty }a_n$ \textcolor{myr}{\textbf{div}}.    
+
+
+
+    \noindent\textbf{26}.  
+
+
+    \begin{align*}
+        \sum_{n=1}^{\infty }\dfrac{6 - 2^{2n -1}}{3^n} = 
+        \sum_{n=1}^{\infty }
+        \left[% 
+        \frac{6}{3^n}  
+        - 
+        \dfrac{2^{2n -1}}{3^n}
+        \right]%
+    \end{align*}
+
+    Évaluons le terme général $a_n$ de la suite, sachant que 
+    $a_n = b_n  + c_n$ où $b_n = \sum_{n=1}^{\infty }\dfrac{6}{3^n}$ 
+    et $c_n = \sum_{n=1}^{\infty }\dfrac{2^{2n -1}}{3^n}$ 
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n = 
+        \lim\limits_{n \to+\infty }b_n  
+        + 
+        \lim\limits_{n \to+\infty }c_n 
+        = 
+        \cancelto{0}{
+        \left[ 
+            \lim\limits_{n\to+\infty }\sum_{n=1}^{\infty }\frac{6}{3^n} 
+        \right]}
+        +
+        \dfrac{1}{2}
+        \lim\limits_{n \to+\infty} \dfrac{2^{2n}}{3^n}
+        = \textcolor{red}{0} +   
+        \frac{1}{2} 
+        \lim\limits_{n \to+\infty} \left(\dfrac{4}{3}\right)^n 
+    \end{align*}                    
+
+
+    La seconde suite est une \textbf{suite géométrique} de raison 
+    $r  = \frac{4}{3} \geq 1$. Ce suite divergente. \textbf{Ainsi}, puisque 
+    la somme $\sum_{n=1}^{\infty }a_n$ se décompose en une suite 
+    d'une somme $\sum_{n=1}^{\infty }b_n + c_n$ et la limite 
+    du terme général 
+    $b_n + c_n = a_n$ tend vers l'infini, on peut conclure que la 
+    sommme $\sum_{n=1}^{\infty }a_n$ \textcolor{myr}{\textbf{div}}. 
+
+    \begin{Exercice}{(Stewart 27 - 42)}{}
+        Déterminez si la série converge ou diverge. Si elle converge, trouvez 
+        la somme.
+    \end{Exercice}
+
+    \vspace{1em}
+    \noindent
+    \textbf{27.}  
+
+    \begin{align*}
+        \dfrac{1}{3} + \frac{1}{6} + \frac{1}{9} + \frac{1}{12} + \frac{1}{15} + \cdots    
+    \end{align*}
+
+    Nous avons la somme : 
+    
+
+    \begin{align*}
+        \dfrac{1}{3} + \frac{1}{6} + \frac{1}{9} + \frac{1}{12} + \frac{1}{15} + \cdots    
+        = 
+        \sum_{n=1}^{\infty }\dfrac{1}{3^n} = \sum_{n=1}^{\infty }3^{-n}
+    \end{align*}
+
+    Il s'agit d'une suite géométrique de raison $r =  -1$, par la critère de convergence 
+    d'une suite géométrique, on peut conclure que la somme \textcolor{myr}{\textbf{div}} :
+
+    \begin{align*}
+        \boxed{
+        r = -1 \notin ]-1, 1] \implies \sum_{n=1}^{\infty }ar^n \textcolor{myr}{\textbf{div}} 
+    }
+    \end{align*}                                                                                                                                                                                                                                                                                                                                                                                                                        
+
+
+    \begin{Exercice}{(Stewart 1.2.27 - 1.2.42)}{}
+        Déterminez si la série converge ou diverge. SI elle converge, trouvez sa somme
+    \end{Exercice}
+    
+    
+    \noindent
+    \textbf{28.} 
+    $\sum_{n=1}^{\infty }a_n = \dfrac{1}{3} + \dfrac{2}{9} + \dfrac{1}{27} + 
+    \dfrac{2}{81} + \dfrac{1}{243} + \dfrac{2}{729} + \cdots$
+
+    \vspace{1em}
+    Nous pouvons déduire le terme général $a_n$ de la somme : 
+
+    \begin{align*}
+        \sum_{n=1}^{\infty }a_n = 
+        \sum_{n=1}^{\infty }\dfrac{3 - (-1)^n}{2} \cdot \frac{1}{3^n}  
+    \end{align*}            
+
+    Il s'agit donc d'une \textbf{suite géométrique} de raison \boxed{$r = 1/3 < 1$}.
+    \textbf{Ainsi}, on peut conclure que la série \textcolor{myb}{\textbf{conv}}. 
+
+
+
+    \section{Comparaison de séries}
+
+    \begin{Exercice}{(Stewart 1.3.2)}{}
+        Supposez que $f$ est une fonction continue, positive et décroissante 
+        pour $x \geq 1$ et que $a_n = f(n)$. À l'aide d'un figure, classez les trois 
+        quantités suivantes dans l'ordre croissant.
+
+        \begin{align*}
+            \int_{1}^{6}f(x)dx \quad 
+            \sum_{i=1}^{5 }a_i \quad 
+            \sum_{i=2}^{6 }a_i
+        \end{align*}
+    \end{Exercice}
+
+    Selon le \textbf{théorème du reste}, nous avons :   
+
+    \begin{align*}
+        \int_{n+1}^{\infty }f(x)dx  \leq 
+        \sum_{n=1}^{\infty }a_n = R_n \leq 
+        \int_{n=1}^{\infty }f(x)dx 
+        \\
+    \end{align*}
+
+     Supposons que $f$ est une fonction continue, positive et décroissante pour 
+    $x \geq 1$, et que $a_n = f(n)$. Nous devons classer les trois quantités 
+    suivantes dans l'ordre croissant :
+
+    \[
+    \int_{1}^{6} f(x) dx, \quad \sum_{i=1}^{5} a_i, \quad \sum_{i=2}^{6} a_i
+    \]
+
+    La somme $\sum_{i=1}^{5} a_i$ additionne les valeurs de $f(x)$ pour 
+    $i = 1$ à $i = 5$. Comme $f$ est \textbf{décroissante}, chaque terme $a_i$ est plus 
+    grand que $a_{i+1}$.
+    \vspace{1em}
+
+    La somme $\sum_{i=2}^{6} a_i$ additionne les valeurs de $f(x)$ pour 
+    $i = 2$ à $i = 6$, \textbf{en excluant} $a_1$, qui est le plus grand terme. Donc, 
+    $\sum_{i=1}^{5} a_i > \sum_{i=2}^{6} a_i$.
+    \vspace{1em}
+
+    L'intégrale $\int_{1}^{6} f(x) dx$ représente \textbf{l'aire sous la courbe }   
+    de $f(x)$ entre $x = 1$ et $x = 6$. Cette aire se situe entre les deux 
+    sommes discrètes, car l'intégrale correspond à la somme d'une infinité 
+    de petites contributions situées entre les rectangles formés par les 
+    sommes discrètes.
+
+    \noindent
+    Ainsi, nous avons :
+
+    \[
+        \boxed{\sum_{i=2}^{6} a_i < \int_{1}^{6} f(x) dx < \sum_{i=1}^{5} a_i}
+    \]
+
+        \begin{center}
+        \begin{tikzpicture}[xscale=1, yscale=0.6]
+            % Axes
+            \draw[->] (0,0) -- (8,0) node[right] {$x$};
+            \draw[->] (0,0) -- (0,6) node[above] {$y$};
+
+
+
+            \filldraw[fill=orange!30, draw=black] (1,0) rectangle (2,5/1);
+            \filldraw[fill=orange!30, draw=black] (2,0) rectangle (3,5/2);
+            \filldraw[fill=orange!30, draw=black] (3,0) rectangle (4,5/3);
+            \filldraw[fill=orange!30, draw=black] (4,0) rectangle (5,5/4);
+            \filldraw[fill=orange!30, draw=black] (5,0) rectangle (6,5/5);
+
+
+
+            % Blocs avec bordures noires
+            \filldraw[fill=red!30, draw=black] (1,0) rectangle (2,5/2);
+            \filldraw[fill=red!30, draw=black] (2,0) rectangle (3,5/3);
+            \filldraw[fill=red!30, draw=black] (3,0) rectangle (4,5/4);
+            \filldraw[fill=red!30, draw=black] (4,0) rectangle (5,5/5);
+            \filldraw[fill=red!30, draw=black] (5,0) rectangle (6,5/6);
+
+
+            % Courbe par-dessus
+
+            \draw[] (1,0) -- (1,5);
+            \draw[thick, myr, domain=0.7:8.2] plot (\x, {5/\x}) node[above] {};
+
+            \node at (2, 5.5) {\textcolor{myr}{$y =f(x)$}};
+
+            \node at (3.5, 3.75) {\textcolor{red!70}{$S_1 = 
+                \sum_{i = 1}^{6 }a_i$}};
+            % Étiquettes
+            \node at (4.5, 2.75) {\textcolor{orange!70}{$S_2 = 
+                \sum_{i = 1}^{5 }a_i$}};
+
+
+            \node at (1.5, 2.) {\textcolor{red}{$i_{1}$}};
+            \node at (2.5, 1.25) {\textcolor{red}{$i_{3}$}};
+            \node at (3.5, 0.75) {\textcolor{red}{$i_{3}$}};
+            \node at (4.5, 0.5) {\textcolor{red}{$i_{4}$}};
+            \node at (5.5, 0.3) {\textcolor{red}{$i_{5}$}};
+
+
+
+
+            % Points de référence
+            \node[below] at (1,0) {$1$};
+            \node[below] at (2,0) {$2$};
+            \node[below] at (6,0) {$6$};
+        \end{tikzpicture}
+        \end{center}
+
+
+    \begin{Exercice}{(Stewart 1.3.8)}{}
+       Utilisez le test de l'intégrale pour déterminer si la série converge 
+       ou diverge. 
+
+       \begin{align*}
+            \sum_{n=1}^{\infty }n^2e^{-n^3}
+       \end{align*}
+   \end{Exercice}
+
+
+    \noindent
+    Le \textbf{test de l'intégrale} consiste à évaluer l'intégrale correspondante pour 
+    une fonction continue positive et décroissante associée au terme général 
+    de la série. Considérons la fonction :
+    \[
+    f(x) = x^2 e^{-x^3}
+    \]
+
+    Nous devons évaluer l'intégrale impropre suivante :
+
+    \[
+    \int_{1}^{\infty} x^2 e^{-x^3} \, dx
+    \]
+
+    Pour résoudre cette intégrale, nous effectuons le \textbf{changement de variable }   
+    \( u = x^3 \), ce qui donne \( du = 3x^2 dx \), ou encore :
+
+    \[
+    dx = \frac{du}{3x^2}
+    \]
+
+    Ainsi, l'intégrale devient :
+
+    \[
+    \int_{1}^{\infty} x^2 e^{-x^3} \, dx = \int_{1}^{\infty} \frac{e^{-u}}{3} \, du
+    \]
+
+    Cette dernière intégrale est une intégrale exponentielle classique :
+
+    \[
+    \frac{1}{3} \int_{1}^{\infty} e^{-u} \, du
+    \]
+
+    La primitive de \( e^{-u} \) est \( -e^{-u} \), donc nous avons :
+
+    \[
+    \frac{1}{3} \left[ -e^{-u} \right]_{1}^{\infty} 
+    = \frac{1}{3} \left( 0 + e^{-1} \right) = \frac{e^{-1}}{3}
+    \]
+
+    L'intégrale converge donc, ce qui implique que la série \(\sum_{n=1}^{\infty} n^2 e^{-n^3}\) 
+    converge par le test de l'intégrale. 
+
+
+    \begin{Exercice}{(Stewart 1.3.9-1.3.26)}{}
+        Déterminez si la série converge ou diverge
+    \end{Exercice}
+
+    \vspace{1em}
+    \section{Utilisation du critère de Riemann}
+    \noindent
+    \textbf{14.} $\sum_{n=1}^{\infty }a_n = 
+    1 + \dfrac{1}{2\sqrt{2}} + \dfrac{1}{3\sqrt{3}} + \dfrac{1}{4\sqrt{4}} + \dfrac{1}{5\sqrt{5}} + \cdots$ 
+
+    \vspace{1em}
+    Nous pouvons déduire le terme général $a_n$ de la suite et réécrire la somme comme suit :
+
+    \begin{align*}
+        \sum_{n=1}^{\infty }a_n = \dfrac{1}{n\sqrt{n}} = \sum_{n=1}^{\infty }\dfrac{1}{n^{3/2}} 
+    \end{align*}
+
+    Puisqu'il s'agit d'une \textbf{série à termes positifs}, nous pouvons appliquer le critère de Riemann. 
+    \textbf{Ainsi}, nous avons :
+    \begin{align*}
+        \lim\limits_{n\to \infty}n^pa_n = \lim\limits_{n \to+\infty }n^{3/2}\dfrac{1}{n^{3/2}} = l = 1  
+    \end{align*}
+
+    Puisque la quantité $p$ est telle que $p > 1$, par \textbf{le critère de Riemann}, la série \textcolor{myb}{\textbf{conv}}. 
+
+    \vspace{1em}
+    \noindent 
+    \textbf{20.} $\sum_{n=3}^{\infty }\dfrac{3n - 4}{n^2 -2n}$
+
+    \vspace{1em}
+    Puisqu'il s'agit d'une \textbf{série à termes positifs}, nous pouvons appliquer le 
+    critère de Riemann. 
+    \textbf{Considérons} la fraction polynômiale donnée 
+    par le terme général :
+    $$a_n = \dfrac{q}{r} = \frac{3n -4}{n^2 -2n} $$  
+    \textbf{Considérons} le degré le plus faible de cette 
+    fraction polynômiale, soit $\deg(q) = 1 = p$. Multiplions la fraction par 
+    $n^p = n^1$.
+    \textbf{Ainsi}, nous avons :
+    \begin{align*}
+        n a_n = n \cdot \frac{3n -4}{n^2 -2} = \frac{3n^2 -4n}{n^2 -2}  
+    \end{align*}
+
+    Nous pouvons maintenant évaluer la limite :
+    \begin{align*}
+        \lim\limits_{n \to+\infty }n^pa_n = 
+        \lim\limits_{n \to+\infty }\frac{3n^2 -4n}{n^2 -2}  
+        \equiv
+        \lim\limits_{n \to+\infty } \dfrac{3 - \frac{4}{n} }{1 - \frac{2}{n}} 
+        \longrightarrow 3
+    \end{align*}
+
+    Ainsi, nous avons $p = 1 \leq 1$ et $l = 3 \; \textcolor{red}{ \neq } \; 0 $.
+    Par le \textbf{critère de Riemann}, nous pouvons conclure que la série 
+    \textcolor{myr}{\textbf{div}}.
+
+
+    \begin{Exercice}{(Stewart 1.3.28)}{}
+        Expliquez pourquoi on ne peut pas utiliser le test de l'intégrale pour
+        déterminer si la série converge. 
+        \begin{align*}
+            \sum_{n=1}^{\infty }\dfrac{\cos^2n}{1 + n^2}
+        \end{align*}
+    \end{Exercice}
+
+    Le test de l'intégral peut s'appliquer sur une fonction 
+    $f : [1, \infty] \rightarrow \mathbb{R}$ \textbf{positive} 
+    \textbf{croissante} et \textbf{continue}. Or, si l'une de ces conditions n'est pas 
+    respectée, on ne peut appliquer le test. La suite  
+    $\sum_{n=1}^{\infty }a_n$ est associée à la fonction $f(x)$ correspondante :
+    \begin{align*}
+        \left[ a_n = \dfrac{\cos^2n}{1 + n^2}  \right]
+        \implies f(x) = \dfrac{\cos^2x}{1 + x^2}
+    \end{align*}            
+
+    Or, le numérateur de la fonction est $2\pi$ périodique ; 
+    la fonction n'est donc pas monotone. Ainsi, nous ne pouvonsa lui appliquer 
+    le test de l'intégrale. 
+
+
+
+    \section{Convergence de série alternées}
+    \begin{Exercice}{(Stewart 1.4.7)}{}
+        Déterminez si la série converge ou diverge.
+    \end{Exercice}
+
+    \noindent
+    \textbf{7.} $\sum_{n=1}^{\infty }(-1)^n \dfrac{3n - 1}{2n + 1}$
+
+    Appliquons le critère de convergence nécessaire pour le terme général. 
+    Soit une série $\sum_{n=1}^{\infty }a_n$, une condition nécessaire pour que 
+    cette série converge est que la limite du terme général tende vers 0. 
+    Nous avons : 
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }a_n  =  
+        \lim\limits_{n \to+\infty } \dfrac{3n - 1}{2n + 1} \equiv
+        \lim\limits_{n \to+\infty }  
+        \dfrac{3 - \cancelto{0}{\frac{1}{n}}}{2 + \cancelto{0}{\frac{1}{n}}}
+        \longrightarrow \dfrac{3}{2} \; \textcolor{red}{\neq} \; 0 
+    \end{align*}        
+
+    \textbf{Ainsi}, par le \textbf{critère de divergence du terme général},
+    nous pouvons conclure que la série \textcolor{myr}{\textbf{div}}.   
+    
+    \begin{align*}
+        \boxed{
+        \left[  \lim\limits_{n \to+\infty }a_n \neq 0  \right]
+        \implies \sum_{n=1}^{\infty }a_n \longrightarrow \infty \; 
+        (\textcolor{myr}{\textbf{div}} )
+    }
+    \end{align*}
+
+    \vspace{1em}% 
+    \noindent
+    \textbf{10.} $\sum_{n=1}^{\infty }(-1)^n\dfrac{\sqrt{n}}{2n +3}$   
+
+    La somme ressemble à une \textbf{série alternée} sur laquelle on peut
+    appliquer le critère de convergence des série alternées. 
+    Vérifions la \textbf{limite du terme général}  $a_n$ : 
+
+    \begin{align*}
+        \lim\limits_{n\to \infty}a_n =  
+        \lim\limits_{n \to+\infty } (-1)^n\dfrac{\sqrt{n}}{2n +3} \equiv
+        \lim\limits_{n \to +\infty }
+        (-1)^n \cdot \frac{1}{2n^{1/2} + 
+        \cancelto{0}{\frac{3}{n^{1/2}} }}
+        \longrightarrow  \textcolor{myb}{\textbf{0}}  
+    \end{align*}
+
+    Ainsi, nous savons que la limite du terme général tend vers 0. 
+    Considérons la la fonction $f : [N, \infty] \rightarrow \mathbb{R}$
+    telle que $f(n) = b_n$. Calculons la dérivée :
+
+    \begin{align*}
+        \dfrac{d}{dx}f(x) = \dfrac{d}{dx}
+        \left[ \dfrac{(n)^{1/2}}{2n +3}\right]
+        =
+        \dfrac{\left( n^{1/2}\right)^{\prime}(2n +3) 
+        - (2n + 3)^{\prime}n^{1/2}}{(2n + 3)^2} 
+        = 
+        \dfrac{(2n+3)\cdot 1/2n^{-1/2} -1/2(n^{1/2})}{(2n +3)^2} 
+        = 
+        \dfrac{\dfrac{(2 + 3)}{n^{1/2}} - \dfrac{n^{1/2}}{2}}{(2n +3)^2} 
+    \end{align*}
+
+
+    Puisque la différence du numérateur est négative 
+    $\forall n \in \mathbb{N}$, la fraction polynômiale engendre 
+    une quantité négative. Ainsi, la dérivée est négative, ce 
+    qui implique que la fonction est \textbf{décroissante}.   
+    \textbf{Ainsi}, la suite $a_{n+1}$ est décroissante et majorée 
+    par $a_n$ et puisque le terme général $a_n$ tend vers 
+    0 lorsque $n \longrightarrow \infty$, par 
+    \textbf{le critère des série alternées}, nous pouvons conclure 
+    que la série \textcolor{myb}{\textbf{conv}}. 
+
+    \begin{align*}
+        \boxed{ 
+        \left[
+        \lim\limits_{n \to+\infty }b_n = 0 
+        \; 
+        \textbf{et}
+        \; 
+        f(n) = b_n, f^{\prime}(x) \leq 0, \forall \;\; n \geq N 
+    \right] 
+    \implies \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv}} 
+    }
+    \end{align*}
+
+
+    \section{Convergence absolue}
+
+    \begin{Exercice}{(Stewart 1.5.4)}{}
+       Déterminez si la série est \textbf{absoluement convergente}, 
+       simplement convergente ou divergente. 
+    \end{Exercice}
+
+    \vspace{1em} 
+    \noindent % 
+    \textbf{4.} $\sum_{n=1}^{\infty }\dfrac{(-1)^n}{n^3 + 1}$ 
+
+    Considérons la valeur absolue du terme général $|a_n|$ :
+
+    \begin{align*}
+        \sum_{n=1}^{\infty }|a_n| = 
+        \sum_{n=1}^{\infty }\left|\dfrac{(-1)^n}{n^3 +1}\right|
+        = 
+        \dfrac{1}{n^3 + 1}, \; \forall \;\; n \geq 0 
+    \end{align*}
+
+
+    \begin{align*}
+        \sum_{n=1}^{\infty }| a_n | \approx 
+        \sum_{n=1}^{\infty }\dfrac{1}{n^3} =
+        \sum_{n=1}^{\infty }n^p, p = 3
+    \end{align*}
+
+    Il s'agit d'une \textbf{série de Riemann} avec $p = 3 > 1$. 
+    Par la \textbf{définition d'une série de Riemann}, nous pouvons 
+    conclure que la somme converge \textbf{absoluement}. puisque cette 
+    somme est plus grande que la somme originale, par le test 
+    de comparaison, nous pouvons conclure que la somme originale 
+    diverge. 
+
+    \begin{align*}
+        \boxed{
+        \sum_{n=1}^{\infty }|a_n| \approx 
+        \left[
+        \sum_{n=1}^{\infty } \dfrac{1}{n^3} \;\;
+        (\textcolor{myb}{\textbf{conv}}, \; \textbf{Riemann}) 
+        \right]
+        \geq 
+        \textcolor{myb}{
+            \sum_{n=1}^{\infty } \dfrac{1}{n^3 + 1}
+        }  
+    }
+    \end{align*}            
+
+
+    \vspace{1em}
+    \noindent %
+    \textbf{10.} $\sum_{n=1}^{\infty }\dfrac{(-3)^n}{(2n + 1)!}$ 
+
+    Évaluons la somme par le test de Cauchy :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }\sqrt[n]{|a_n|} =  
+        \lim\limits_{n \to+\infty } 
+        \sqrt[n]{\left|\dfrac{(-3)^n}{(2n + 1)!}\right|} 
+        = 
+        \lim\limits_{n \to+\infty } 
+        \frac{3}{\sqrt[n]{(2n+1)}(2n)!} 
+        \longrightarrow \textcolor{myb}{\textbf{0}} 
+    \end{align*} 
+
+    Par le critère de \textbf{Cauchy}, nous pouvons conclure que 
+    la somme \textcolor{myb}{\textbf{conv}}. 
+
+    \begin{align*}
+    \boxed{
+        \left[ 
+        \lim\limits_{n \to+\infty } \sqrt[n]{|a_n|} = 0 < 1 
+    \right] 
+    \implies 
+    \sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv}} 
+    }
+    \end{align*}
+
+
+    \vspace{1em}
+    \noindent 
+    \textbf{26.} $\sum_{n=1}^{\infty }\dfrac{(-2)^n}{n^n}$  
+
+
+    Évaluons la somme par le test de Cauchy :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty }\sqrt[n]{|a_n|} 
+        = 
+        \lim\limits_{n \to+\infty } 
+        \sqrt[n]{ \left| \dfrac{(-2)^n}{n^n} \right| } = 
+        \lim\limits_{n \to+\infty } 
+        \dfrac{2}{n} 
+        \longrightarrow \textcolor{myb}{\textbf{0}} < 1  
+    \end{align*}
+
+    Par le critère de \textbf{Cauchy}, nous pouvons conclure que 
+    la somme \textcolor{myb}{\textbf{conv}}. 
+
+
+
+
+\end{document}
