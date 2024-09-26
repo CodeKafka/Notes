@@ -617,7 +617,7 @@
 
 
     \section{Convergence de série alternées}
-    \begin{Exercice}{(Stewart 1.4.7)}{}
+    \begin{Exercice}{(Stewart 1.4.7 et 1.4.10)}{}
         Déterminez si la série converge ou diverge.
     \end{Exercice}
 
@@ -745,7 +745,7 @@
         \sum_{n=1}^{\infty }|a_n| \approx 
         \left[
         \sum_{n=1}^{\infty } \dfrac{1}{n^3} \;\;
-        (\textcolor{myb}{\textbf{conv}}, \; \textbf{Riemann}) 
+        (\textcolor{myb}{\textbf{conv}}., \; \textbf{Riemann}) 
         \right]
         \geq 
         \textcolor{myb}{
@@ -780,7 +780,7 @@
         \lim\limits_{n \to+\infty } \sqrt[n]{|a_n|} = 0 < 1 
     \right] 
     \implies 
-    \sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv}} 
+    \sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv}}.
     }
     \end{align*}
 
@@ -804,6 +804,194 @@
 
     Par le critère de \textbf{Cauchy}, nous pouvons conclure que 
     la somme \textcolor{myb}{\textbf{conv}}. 
+
+    \begin{Exercice}{(Stewart 1.5.10)}{}
+        Utilisez le terst du rapport pour déterminer si la série est convergente ou 
+        divergente.
+    \end{Exercice}
+
+    \vspace{1em} 
+    \noindent
+    \textbf{10.} $\sum_{n=1}^{\infty }\dfrac{(-3)^n}{(2n + 1)!}$
+
+    Évaluons la limite du rapport :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } \left|\dfrac{a_{n+1}}{a_n}\right|  =  
+        \lim\limits_{n \to+\infty } 
+        \left|
+        \dfrac{(-3)^{n+1}}{(2n + 2)(2n +1)!} \cdot \frac{(2n +1)!}{(-3)^n} 
+        \right|
+        = 
+        \lim\limits_{n \to+\infty }  
+        \left|
+        \frac{(-3)^1}{(2n + 2)} 
+        \right|
+        \longrightarrow 0 < 1 
+    \end{align*}
+
+    Ainsi, par le test du rapport, nous pouvons conclure que la série \textbf{converge}. 
+
+    \begin{align*}
+        \boxed{
+        \lim\limits_{n \to+\infty }\frac{a_{n+1}}{a_n}  = 0 < 1 
+        \implies \sum_{n=1}^{\infty }\dfrac{(-3)^n}{(2n + 1)!} \;\; \textcolor{myb}{\textbf{conv}}. 
+    }
+    \end{align*}    
+    
+    \begin{Exercice}{(Stewart 1.5.25 - 1.5.30)}{}
+        Utilisez le critère de convergence de Cauchy pour déterminer si la  
+        série est convergente ou divergente.
+    \end{Exercice}
+
+    \vspace{1em}%
+    
+    \noindent
+    \textbf{26.} $\sum_{n=1}^{\infty }\dfrac{(-2)^n}{n^n}$  
+
+    Selon \textbf{Cauchy}, nous avons : 
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } \sqrt[n]{|a_n|} = 
+        \lim\limits_{n \to+\infty } \sqrt[n]{\left|\dfrac{(-2)^n}{n^n}\right|} =
+        \lim\limits_{n \to+\infty } \frac{2}{n} \longrightarrow 0 < 1  
+    \end{align*}
+
+    Ainsi, par le test de Cauchy, nous pouvons conclure que la série est \textcolor{myb}{\textbf{conv}}. 
+
+    \begin{align*}
+        \boxed{
+        \left[\lim\limits_{n \to+\infty } \sqrt[n]{\left| \dfrac{(-2)^n}{n^n} \right|} = 0 < 1 \right] 
+        \implies 
+        \sum_{n=1}^{\infty } \sqrt[n]{\dfrac{(-2)^n}{n^n}} \;\; \textcolor{myb}{\textbf{conv}}. 
+    }
+    \end{align*}
+
+    \vspace{1em}
+    \noindent
+    \textbf{28.}  $\sum_{n=1}^{\infty }\left(  \dfrac{-2n}{n+1} \right)^{5n}$ 
+
+    \vspace{1em}
+    Selon \textbf{Cauchy}, nous avons : 
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } \sqrt[n]{\left| a_n \right|} = 
+        \lim\limits_{n \to+\infty }  \sqrt[n]{\left| \left(  \dfrac{-2n}{n+1} \right)^{5n} \right|} = 
+        2^5 \lim\limits_{n \to+\infty } \dfrac{n^5}{(n + 1)^5} \longrightarrow 2^5 \cdot 1 > 1
+    \end{align*}
+
+    Ainsi, par le test de Cauchy, nous pouvons conclure que la série \textcolor{myr}{\textbf{div}}. 
+
+
+    \begin{align*}
+        \boxed{
+        \left[ \lim\limits_{n \to+\infty } \sqrt[n]{\left| \left(  \dfrac{-2n}{n+1} \right)^{5n} \right|}  
+        \longrightarrow 2^5 > 1 \right]
+        \implies \sum_{n=1}^{\infty }\left(  \dfrac{-2n}{n+1} \right)^{5n} \;\; \textcolor{myr}{\textbf{div}}.
+    }
+    \end{align*}
+
+ \begin{Exercice}{(Stewart 1.5.31 - 1.5.38)}{}
+        Utilisez le test approprié pour déterminer si la  
+        série est convergente ou divergente.
+    \end{Exercice}
+
+
+    \vspace{1em}
+    \noindent 
+    \textbf{31.} $\sum_{n=2}^{\infty }\dfrac{(-1)^n}{\ln n}$   
+
+    On a un série alternée de la forme $a_n = (-1)^n b_n  = (-1)^n \dfrac{1}{\ln n}$.
+    Ainsi, nous pouvons appliquer le test des \textbf{séries alternées} :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } b_n = \lim\limits_{n \to+\infty } \dfrac{1}{\ln n} \longrightarrow 0 
+    \end{align*}
+
+    Ainsi, par le test des séries alternées, nous pouvons conclure que la série \textcolor{myb}{\textbf{conv}}.    
+
+
+    \begin{align*}
+        \boxed{
+        \left[ a_n = (-1)^n b_n, \;\; \lim\limits_{n \to+\infty } b_n = 0 \right] 
+        \implies \sum_{n=2}^{\infty }a_n = 
+        \sum_{n=1}^{\infty }  \frac{(-1)^n}{\ln n } \;\; \textcolor{myb}{\textbf{conv}}.  
+    }
+    \end{align*}
+
+
+
+    \vspace{1em}
+    \noindent 
+    \textbf{37.} $\sum_{n=1}^{\infty }\left( 1 + \dfrac{1}{n}  \right)^{n^2}$
+
+    Appliquons le critère de divergence en évaluant le limite du terme général de la série :
+
+    \begin{align*}
+        \lim\limits_{n \to+\infty } a_n = 
+        \lim\limits_{n \to+\infty } \left( 1 + \cancelto{0}{\frac{1}{n}} \right)^{n^2}   
+        \longrightarrow 1^{\infty} = 1
+    \end{align*}
+    Puisque le terme général $a_n$ de la série approche la valeur $L = 1 \neq 0$, nous pouvons 
+    conclure que la somme \textcolor{myr}{\textbf{div}}. 
+
+    \begin{align*}
+        \boxed{
+        \left[ \lim\limits_{n \to+\infty } a_n = 1 \neq 0  \right] 
+        \implies
+        \sum_{n=1}^{\infty } \left( 1 + \dfrac{1}{n}  \right)^{n^2} \;\; \textcolor{myr}{\textbf{div}}. 
+    }
+    \end{align*}                
+
+
+    \begin{Exercice}{(Stewart 1.5.40)}{}
+        On définit les termes d'une série par les équatons de récurrence  
+        \begin{align*}
+            a_1 = 2 \quad a_{n+1} = \dfrac{5n + 1}{4n + 3}a_n.
+        \end{align*}
+        Déterminez si $\sum_{n=1}^{\infty }a_n$ converge ou diverge.
+    \end{Exercice}
+    Nous souhaitons déterminer si la série 
+    \[
+    \sum_{n=1}^{\infty} a_n
+    \] 
+    converge ou diverge.
+    À partir de la relation de récurrence, nous obtenons que
+    \[
+    a_{n+1} = \frac{5n + 1}{4n + 3} a_n.
+    \]
+    Lorsque $n \to \infty$, le terme de ratio 
+    \[
+    \frac{5n + 1}{4n + 3}
+    \]
+    tend vers 
+    \[
+    \frac{5}{4} > 1.
+    \]
+    Ainsi, chaque terme $a_{n+1}$ est environ $\frac{5}{4}$ fois plus grand que $a_n$ 
+    lorsque $n$ devient grand.
+    Le comportement de $a_n$ est donné par :
+    \[
+    a_n = a_1 \prod_{k=1}^{n-1} \frac{5k + 1}{4k + 3}.
+    \]
+    Comme $\frac{5k + 1}{4k + 3} \to \frac{5}{4}$ lorsque $k \to \infty$, le produit 
+    tend à croître de manière exponentielle. Plus précisément, $a_n$ croît comme une 
+    suite géométrique de raison $\frac{5}{4}$.
+    Puisque $a_n$ ne tend pas vers 0 mais diverge vers l'infini, la série 
+    \[
+    \sum_{n=1}^{\infty} a_n
+    \]
+    diverge selon le critère de divergence (ou critère de nœud).
+
+    \[
+    \boxed{\text{La série diverge.}}
+\]
+    
+
+
+        
+
+
 
 
 
