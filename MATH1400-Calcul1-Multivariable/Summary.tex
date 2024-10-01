@@ -22,6 +22,8 @@
 %\usepackage{lmodern}
 \usepackage{bold-extra}
 \usepackage{pgfplots}
+\usepackage{pgfplots}
+\usepgfplotslibrary{external}
 %%
 %\usepackage{mathpazo}
 % \usepackage{newpxmath}
@@ -535,7 +537,9 @@
             alors la série de terme général 
             \(\sum_{n=1}^{\infty }\lambda a_n\) converge et a pour somme :
         \[
+            \boxed{ 
         \sum_{n=1}^{\infty } \lambda a_n = \lambda \sum_{n=1}^{\infty } a_n = \lambda s
+        }
         \]
         
         \item[$\rhd$] Si \(\sum_{n=1}^{\infty} a_n = s\) (\textcolor{myb}{\textbf{conv}}.) et 
@@ -614,7 +618,14 @@
 
 
     \section{Définition d'une série à termes positifs}
-    \noindent$\forall n \geq 1 a_n \geq 0 \implies \sum_{n=1}^{\infty }a_n$ à termes positifs.
+    Il s'agit d'une série dont tous les termes $a_{n+1}$ sont au moins aussi grands 
+    que  leurs prédecessaur $a_n$ : 
+    \begin{align*}
+        \left[ \forall n \geq 1 a_n \geq 0 \right] \implies \sum_{n=1}^{\infty }a_n 
+     \textbf{à termes positifs}.
+    \end{align*}
+    
+                
 
     \section{Théorème de conv. des séries à termes positfs}
     Une condition \textbf{nécessaire et suffisante} pour que la série à termes positifs 
@@ -745,6 +756,14 @@ la série $\sum_{n=1}^\infty a_n$ converge.
 
 La série $\displaystyle \sum_{n=1}^\infty \frac{n - 1}{n^4 + 1}$ converge
 d’après le critère de Riemann.
+
+
+
+    \section{Astuce pour le critère de Riemann}
+    Soit $k$ et $l$, les valeurs de l'exposant de plus petit degré et du plus grand 
+    degré du polynôme, il suffit de choisir $m$ tel que $m + k = l$.  
+    Dans l'\textcolor{myb}{\textbf{exemple}} précédent, nous avions                 
+    $k = 1$, $l = 4$ et $m = l - k  = 3$ et $n^m = n^3$.  
 
     \section{Série de Riemann et série puissance} 
     \vspace{-1em}
@@ -906,45 +925,61 @@ d’après le critère de Riemann.
      \section{Test sur séries alternées}
      Soit un \textbf{rang} $N \in \mathbb{N}$ et 
      soit une \textbf{série alternée} 
-     $\sum_{n=1}^{\infty } (-1)^nb_n$ telle que 
+     $\sum_{n=1}^{\infty } (-1)^nb_n$ telle que :
      \begin{itemize}
        \item [$\rhd$ ]  $b_n$ \textbf{décroissante}  et \textbf{positive} \\
            $\Bigl(f(n) = b_n, f^{\prime}(x) \leq 0, \; \forall \;\; x > N\Bigr)$
        \item [$\rhd$ ] $\lim\limits_{n\to\infty }b_n = 0$ 
      \end{itemize}
+     
      \textbf{Alors}, 
-     \begin{itemize}
-        \item[$\blacktriangleright$]
-        $\sum_{n=1}^{\infty }  (-1)^nb_n \textbf{ conv. }$ vers $s \in
+
+    \noindent
+    $\blacktriangleright$
+    $\sum_{n=1}^{\infty }  (-1)n \; \textcolor{myb}{\textbf{conv}}$ vers $s \in
     \mathbb{R} \;\; \forall m \geq N $ 
-        \item[$\blacktriangleright$]
+
+     \begin{itemize}
+    \item[$\blacktriangleright$]
     $0 \leq s \leq b_1$ 
         \item[$\blacktriangleright$] 
     $R_n = |s - s_n | \leq b_{n+1}$
      \end{itemize}
-\vspace{-4em}
+\vspace{-3.5em}
 \chapter{Convergence absolue}
     \section{Définition de convergence absolue}
     \vspace{-2em}
      \[% 
-        \sum_{n=1}^{\infty }|a_n| \textbf{conv.} \implies 
+        \sum_{n=1}^{\infty }|a_n| \; \textcolor{myb}{\textbf{conv}}.  \implies 
         \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv}.} 
         \textcolor{myb}{\textbf{ absolument}}  
      \]%
     \\
-    $\rhd$  \textbf{Semi-conv}. : $\sum_{n=1}^{\infty }a_n$ \textbf{conv}. \; 
-        \textbf{et} $\sum_{n=1}^{\infty }|a_n| \; \textcolor{myr}{\textbf{div}}.$ 
+    \resizebox{1\linewidth}{!}{
+    $\rhd$ 
+    \textbf{Semi-conv}. : 
+    $\sum_{n=1}^{\infty }a_n$ \; \textcolor{myb}{\textbf{conv}}.  \; 
+    \textbf{et} $\sum_{n=1}^{\infty }|a_n| \; \textcolor{myr}{\textbf{div}}.$} 
      
     \vspace{1em}
     \noindent 
     \underline{\textbf{Exemple}} 
+    \vspace{1em}\\
+    La \textbf{série harmonique} \textcolor{myb}{\textbf{alternée}} converge 
+    vers $\ln(2)$, mais la \textbf{série harmonique} 
+    \textcolor{myr}{\textbf{simple}} est \textcolor{myr}{\textbf{divergente}} :  
 
 
     \noindent 
-    $\sum_{n=1}^{\infty }\dfrac{(-1)^n}{n}$ conv 
-          \textbf{mais} $\neg(\sum_{n=1}^{\infty }\dfrac{1}{n})$ conv.  
-
-    
+    \begin{align*}
+    \resizebox{1\linewidth}{!}{$
+    \sum_{n=1}^{\infty }\dfrac{(-1)^n}{n} \; 
+    \textcolor{myb}{\textbf{conv}}. \;\;  \textbf{mais} 
+          \sum_{n=1}^{\infty }\left|\dfrac{(-1)^n}{n} \right| = 
+          \sum_{n=1}^{\infty }\dfrac{1}{n} \;
+          \textcolor{myr}{\textbf{div}}.  
+    $}          
+    \end{align*}
     \section{Théorème de convergence absolue}
     \textbf{Si} une série $\sum_{n=1}^{\infty }a_n$ converge \textit{absolument}, 
        \textbf{alors} elle converge simplement.  
@@ -1040,7 +1075,7 @@ d’après le critère de Riemann.
         Soit deux polynomes,
         $\lim\limits_{n\to \infty } \dfrac{p(n)}{q(n)}$, 
         et 
-        $k = \min\bigl(deg(p), deg(q)\bigr)$
+        $k = \min\bigl(\deg(p), \deg(q)\bigr)$
         \textbf{Alors},   
         \[ \lim\limits_{n\to \infty } \dfrac{p(n)}{q(n)} =
         \lim\limits_{n\to+\infty}\dfrac{p(n)/{n^k}}{q(n)/n^{k}} \]
@@ -1113,15 +1148,14 @@ d’après le critère de Riemann.
     La somme $s_n(x)$ est donc la somme qu'on obtient lorsqu'on 
     ajoute une infinité de termes $u_n(x)$ :
  
-    \scalebox{0.8}{\parbox{1\linewidth}{
     \begin{align*}
+    \boxed{
         \sum\limits_{k=1}^{\infty }u_n(x) = 
         \lim\limits_{n \to+\infty } 
         \sum\limits_{k=1}^{n}u_k(x) =  
         \lim\limits_{n \to +\infty } s_n(x) 
+    }
     \end{align*}
-    }}
-
 
     \vspace{-2em}
     \section{Définition d'une série entière}
@@ -1130,8 +1164,12 @@ d’après le critère de Riemann.
     une \textbf{série entière} est une \textit{série de fonction}     
     de la forme 
     \begin{align*}
+    \resizebox{1\linewidth}{!}{$ 
+    \boxed{
         c_0 + c_1x + c_2x^2 + \cdots + c_nx^n + \cdots = 
         \sum\limits_{k=1}^{\infty }  c_nx^n  
+    }
+$}
     \end{align*} 
 
     Lorsqu'elle est \textbf{centrée en} $a$, une série entière prend la forme : 
@@ -1158,7 +1196,8 @@ d’après le critère de Riemann.
                 \textcolor{myb}{\textbf{conv.}}  à $x = a$ 
             \\
             $\rhd$  $R = +\infty \implies S \;$ 
-            \textbf{conv}. \; $\forall x \in \mathbb{R}$  
+            \textcolor{myb}{\textbf{conv}}. 
+            \; $\forall x \in \mathbb{R}$  
             \\ \\
             $\blacktriangleright$ 
             $\exists R > 0 : |x - a| < R \implies  S \; \textbf{\textcolor{myb}{conv}}.$
@@ -1192,7 +1231,8 @@ d’après le critère de Riemann.
         \end{align*}    
 
 
-    \begin{theorem}{}{}
+
+    \section{Théorème des série de fonctions}
         Si une fonction \( f(x) \) peut se mettre sous la forme d'une série entière 
         au voisinage de \( a \) :
         \begin{align*}
@@ -1200,18 +1240,18 @@ d’après le critère de Riemann.
             c_0 + c1(x - a) +  \cdots + c_n (x - a)^n + \cdots (*)
         $}
         \end{align*}
-        \textbf{Alors}, le coefficient \( c_n \) est donné par : 
+        \textbf{Alors}, le \textcolor{myb}{\textbf{coefficient }} 
+        \( c_n \) est donné par : 
         \begin{align*}
             c_n = \dfrac{1}{n!}f^{n}(a) 
         \end{align*}
         et la fonction \( f(x) \) peut s'écrire sous la forme d'une 
-        série de Taylor : 
+        \textcolor{myb}{\textbf{série de Taylor }}: 
         \begin{align*}
             \resizebox{\linewidth}{!}{ $
             f(x) = \sum_{n= 0}^{\infty }\dfrac{1}{n!}f^{n}(a)(x - a)^n, \; |x - a| < R 
         $}
         \end{align*}
-    \end{theorem}                               
 
     \section{Polynôme de Taylor}
     Si \( f(x) \) peut se mettre sous la forme d'une \textbf{série entière} au voisinage de 
@@ -1225,7 +1265,43 @@ d’après le critère de Riemann.
 
     $$\int_{n=1}^{\infty }f(x)dx$$
 
+     \section{Théorème de l'inégalité de Taylor}
 
+     S'il existe une quantité $M$ telle que 
+     $\left| f^{n+1}(x) \leq M(x) \right|$ pour 
+     $|x - a| < R$, c.-à-d. \textbf{si}  
+     $f^{n+1}(x)$ est bornée sur l'intervalle 
+     $]a - R, a + R[$, \textbf{alors}, on a : 
+
+     \begin{align*}
+         \resizebox{1\linewidth}{!}{$ 
+         |R_n(x)| \leq \dfrac{M(x)}{(n + 1)}|x - a|^{n+1}, 
+         \forall \; x \in ]a - R, a + R
+    $}
+     \end{align*}               
+
+     \chapter{Fonctions plusieurs variables}
+
+
+     \section{Kamel p.4}
+     $\mathbb{R}^2$ est équivalent à l'ensemble des réels qui comprends 
+     les couples $(x, y)$
+
+
+     Les équations de la forme : 
+     \begin{align*}
+            x^2 + y^2 = z^2
+     \end{align*}
+
+     Sont représenté graphiquement par un cercle de rayon $z$.  
+     Lorsqu'on cherche le \textbf{domaine}, il est possible de  
+     simplifier.
+
+
+     \begin{EExample}{}{}
+         $\sqrt{x^2 + y^2 - 9}$ a un domaine dans $\mathbb{R}^2$ pour 
+         toutes valeur à l'extérieur du cercle de rayon $r = 3$ 
+     \end{EExample}
 
 
     %
@@ -1609,5 +1685,12 @@ d’après le critère de Riemann.
 
 
     
+
+
+
 \end{Preuve}
+
+
+
+
 \end{document}
