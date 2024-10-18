@@ -4,6 +4,7 @@
 
 
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\usepackage{nicefrac, xfrac}
 %\usepackage[varbb]{newpxmath}
 %\usepackage[osf,largesc,theoremfont]{newpxtext}
 %\usepackage{coelacanth}
@@ -59,7 +60,7 @@
 
 
 
-\title{\huge{IFT1575}\\\Huge{Modèles de recherche opérationnelle}\\\vspace{2em} Introduction}
+\title{\huge{IFT-1575}\\\Huge{Modèles de recherche opérationnelle}\\\vspace{2em} Introduction}
 \author{\huge{Franz Girardin}}
 \date{\today}
 
@@ -94,6 +95,7 @@
 
 \titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
 
+\titleformat{\subsection}[block]{\small\bfseries}{}{0pt}{}
 
 
 
@@ -355,6 +357,12 @@ $y = 0$, on a :
     \implies \quad & x \leq \textbf{18}  
 \end{align*}
 
+\textbf{Explication} : Soit $u = 30 - 5x -3\cancelto{0}{y}$, on sait que pour respecter 
+la contrainte de non négativité, la quantité $u = 30 -5x \geq$. Cela se simplifie par 
+\begin{align*}
+    x \leq 6
+\end{align*}
+
 
 \section{Pivot}
 
@@ -559,11 +567,1666 @@ on a la \textbf{solution} :
 Il n’est pas intéressant d’augmenter ni la valeur de $u$, ni la valeur de $h$car la valeur 
 de z augmente. Ainsi, nous sommes \textbf{à l’optimum} !
 
-
-
-
-
 \end{multicols*}
+
+\section{Résumé de l'algorithme}
+
+\noindent 
+$\blacktriangleright$ \textbf{Compter} le nombre d'équations. Un système 
+en \textit{forme standard} de $N$ équations nécessaite une 
+\textcolor{myb}{\textbf{variables d'équart}} par équation, pour un total de 
+$N$ variable d'équart. 
+
+\begin{note}{}{}
+    Si le système sous sa forme standard possède $n$ variables inconnues, ce système 
+    doit avoir \textit{au minimum} $n$ équations pour pouvoir trouver une 
+    \textcolor{myb}{\textbf{solution unique}}. Autrement, le sytème pourrait 
+    admettre \textbf{une infinité de solutions}.   
+\end{note}
+
+
+\noindent 
+$\blacktriangleright$ \textbf{Exprimer} les \textcolor{myb}{\textbf{variables d'équart}} 
+$u, p, h$, etc. et l'objectif $\textcolor{myr}{z}$ en fonction des des 
+\textbf{variables fixées à zéro}, c'est-à-dire les variables inconnues 
+$x_1, x_2, \cdots,  x_n$.  
+
+\noindent 
+$\blacktriangleright$ \textbf{Identifier} la variable dont l'$\uparrow$ réduit le plus 
+$z$; cette variable minimise l'objectif et est donc la 
+\textcolor{myb}{\textbf{variable d'entrée}} $x_e$.
+
+\noindent
+$\rhd$ Soit la variable $x_e$, trouver la variable $x_s$ qui limite le plus l'augmentation 
+de $x_e$. Il s'agit de la \textcolor{myr}{\textbf{variable de sortie}} $x_s$. 
+
+
+\noindent 
+$\blacktriangleright$ \textbf{Fixer} $x_s$ à zéro. La variable de sortie $x_s$ 
+prend la place de la variable d'entrée $x_e$. Exprimer $x_e$ et les autres variables 
+$x_1, x_2, \cdots, x_n$, ainsi que l'objectif $z$ en fonction de $x_s$. 
+
+
+\noindent 
+$\blacktriangleright$ \textbf{Évaluer} le nouveau système d'équation obtenu. 
+
+\noindent 
+$\rhd$ \textbf{Si l'augmentation } 
+\textcolor{myr}{\textbf{d'aucune}} variable dans la fonction  objectif n'entraîne une  
+diminution de l'objectif, on a la \textbf{solution optimale}. L'algorithme est terminé.  
+
+\noindent 
+$\rhd$ Si l'augmentation \textcolor{myr}{\textbf{d'au moins une}} variable entraîne  
+la diminution de l'objectif, la solution n'est pas optiomale et il faut poursuivre avec 
+\textbf{une autre itération} de l'algorithme.       
+\pagebreak 
+
+
+
+\begin{multicols*}{2}
+
+\chapter{Représentation forme tableau }
+
+\section{Forme standard}
+
+Soit le sytème suivant sous la forme standard, nous allons 
+utiliser la représentation sous forme de tableau pour appliquer
+l'algorithme du simplexe. 
+
+\begin{align*}
+    \text{Min } z = -8 -6y \\ 
+    \text{s.a.} 
+    \\
+    5x + 3y& + \textcolor{myr}{\textbf{\textit{u}}}   &= 30 \\
+    2x + 3y& \quad\quad + \textcolor{myr}{\textbf{\textit{p}}}   &= 24\\
+     x + 3y& \quad\quad\quad\quad + \textcolor{myr}{\textbf{\textit{h}}}   &= 18 \\
+     x, y&,  
+     \textcolor{myr}{\textbf{\textit{u}}}, 
+     \textcolor{myr}{\textbf{\textit{p}}},
+     \textcolor{myr}{\textbf{\textit{h}}} \geq 0
+\end{align*}
+
+
+        \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        \rowcolor{myr!40}
+                        $\textcolor{myr}{u} 
+                        $     & 5
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{p} $     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                                & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{État initial de la forme \texttt{STD}}
+        \end{table}         
+Le tableau doit avoir la même allure que la forme standard ; 
+il doit être possible d'identifier une \textbf{variable} par 
+ligne du tableau. \textbf{Par exemple}, Le ligne surlignée en rouge engendre  
+l'équation : 
+\begin{align*}
+        5x  + 3y + u = 30
+\end{align*}
+
+Dans ce contexte, on sait que $u$ est une \textbf{variable dépendante} (v.d.)  
+et le terme de droite qui lui est associé (t.d.) est $30$. 
+
+
+
+Tout comme durant la résolution algébrique, on constate que si $u, p$ et $h$ sont 
+des \textbf{variables dépendantes} et que $x$ et $y$ sont des 
+variables indépendantes \textbf{fixées à zéro}, la solution associée à ce système 
+est : 
+\begin{align*}
+    \boxed{\left[ x, y = 0 \right] \implies u = 30, p = 24, h = 18, z = 0} 
+\end{align*}
+
+\section{Choix de la variable d'entrée}
+
+        \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{myr}{u} 
+                        $     & 5
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{p} $     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & \cellcolor{myr!40}-8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{Variable d'entrée choisie}
+        \end{table}         
+ On choisit la variable dont l'augmentation rend l'objectif $z$ 
+plus petit et négatif ; il sagit de \textcolor{myr}{\textbf{$x$ }} qui 
+est la \textcolor{myb}{\textbf{variable d'entrée}}.
+
+
+\section{Choix de la variable de sortie}
+Soit une ligne du tableau $l$, et la variable d'entrée 
+$x_e$, pour trouver la variable dépendante 
+\textbf{limite davantage l'augmentation} de la 
+\textcolor{myb}{\textbf{variable d'entrée}}, il suffit d'utiliser la formule  : 
+
+
+\begin{align*}
+    \boxed{\text{lim } = \text{t.d.}(l) \; \div \; x_e(l)}
+\end{align*}
+
+
+\noindent
+\textbf{Exemple} 
+\begin{align*}
+    &\text{lim}(\textcolor{myr}{\textbf{u}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{u}} )} \div 
+    x(\textcolor{myr}{\textbf{u}} ) = 30 \div 5 = \textcolor{myr}{6}
+    \\
+    &\text{lim}(\textcolor{myr}{\textbf{p}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{p}} )} \div 
+    x(\textcolor{myr}{\textbf{p}} ) = 24 \div 2 = 12 
+    \\
+    &\text{lim}(\textcolor{myr}{\textbf{h}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{h}} )} \div 
+    x(\textcolor{myr}{\textbf{h}} ) = 18 \div 1 = 12 
+\end{align*}
+
+Dans ce cas-ci, $\textcolor{myr}{\boldsymbol{u}}$ limite davantage l'augementation de 
+$\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc la variable de sortie.
+
+\section{Pivot}
+
+        \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $\textcolor{myb}{\boldsymbol{x}}$
+                             & $y$ & $\textcolor{myr}{\boldsymbol{u}}$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{myr}{\boldsymbol{u}} 
+                        $     & \cellcolor{myg!40} $\textcolor{myg}{\boldsymbol{5}}$ 
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{p} $     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{Coefficient pivot}
+        \end{table}
+
+    Le coefficient à l'intersection de la colonne de la variable d'entrée 
+    ($\textcolor{myb}{\boldsymbol{x}}$) et de la rangée de la variable de sortie 
+    ($\textcolor{myr}{\boldsymbol{u}}$) est le \textcolor{myg}{\textit{coefficient pivot}}. 
+    Le \textbf{pivot} est l'action par laquelle on modifie le tableau pour que la variable 
+    d'entrée prenne la place de la variable de sortie. 
+
+
+        \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{myb}{\boldsymbol{x}} 
+                        $     & $\textcolor{myg}{\boldsymbol{5}}$ 
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{p} $     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{État suite au pivot}
+        \end{table}
+    Pour que $x$ soit \textcolor{myr}{variable dépendante } à la place de u dans la première ligne, il faut un 
+    coefficient de 1 sous $x$ dans la première ligne et des coefficients de 0 dans les autres 
+    lignes. Cela revient à diviser la ligne de la variable de sortie par le coefficient du pivot.
+
+        \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{myg}{\boldsymbol{x}} 
+                        $     & $\textcolor{myg}{\boldsymbol{1}}$ 
+                              & $\textcolor{myg}{\boldsymbol{\nicefrac{3}{5}}}$
+                                & $\textcolor{myg}{\boldsymbol{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{myg}{\boldsymbol{\nicefrac{30}{5}}}$
+                        \\
+                        $\textcolor{myr}{p} $     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{Division par le cofficient du pivot}
+        \end{table}
+
+        Pour exprimer chaque variable dépendante en terme de la variable d'entrée ($x$)
+        par le coefficient $c_e$ sous la colonne de la variable d'entrée. 
+
+
+        \noindent 
+        \textbf{Exemple} 
+        \begin{align*}
+            \boxed{\textcolor{myg}{x = 6 - \nicefrac{3}{5}y  - \nicefrac{1}{5}u } }
+        \end{align*}
+
+
+    \begin{align*}
+        &p = 24 - 2x -3y \\ &\leftrightarrow p = 24 - 2(\textcolor{myg}{6 - \nicefrac{3}{5}y  - \nicefrac{1}{5}u}) - 3y \\
+        &\leftrightarrow p = 24 - 2(\textcolor{myg}{6 - \nicefrac{3}{5}y  - \nicefrac{1}{5}u}) 
+        \; \textcolor{myp}{ + \; 2x } \; \textcolor{myr}{- \;2x} - 3y \\
+        &\leftrightarrow \textcolor{myr}{2x}   
+        +3y + p + 2(\textcolor{myg}{6}  ) 
+        -2(\nicefrac{3}{5}y  + \nicefrac{1}{5}u) \textcolor{myp}{-2x} = 24 \\
+        &\leftrightarrow \textcolor{myr}{2x}   
+        +3y + p   
+        -2(\textcolor{myp}{x} + \nicefrac{3}{5}y  + \nicefrac{1}{5}u) = 24  -2(\textcolor{myg}{6}) 
+    \end{align*}
+        Soit $ligne(p) : 2x + 3y + p = 24$ 
+        et $ligne(x) : x + \nicefrac{3}{5} + \nicefrac{1}{5} = 6$, 
+        Cela revient à effectuer $ligne(p) \; - \; 2 \; \times \; ligne(x)$. On obtient alors 
+        le tableau suivant 
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{myg}{\boldsymbol{x}} 
+                        $     & $\textcolor{myg}{\boldsymbol{1}}$ 
+                              & $\textcolor{myg}{\boldsymbol{\nicefrac{3}{5}}}$
+                                & $\textcolor{myg}{\boldsymbol{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{myg}{\boldsymbol{6}}$
+                        \\
+                        $\textcolor{myg}{\boldsymbol{p}} $     
+                                & $\textcolor{myg}{\boldsymbol{0}}$             
+                                & $\textcolor{myg}{\boldsymbol{\nicefrac{9}{5}}}$
+                                & $\textcolor{myg}{\boldsymbol{-\nicefrac{2}{5}}}$ & 
+                                1 & & & $\textcolor{myg}{\boldsymbol{12}}$
+
+                        \\
+                        $\textcolor{myr}{h} $     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{$ligne(p) \; - \; 2 \; \times \; ligne(x)$}
+        \end{table}
+
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{black}{{x}} 
+                        $     & $\textcolor{black}{{1}}$ 
+                              & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{black}{{6}}$
+                        \\
+                        $\textcolor{black}{{p}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                               & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                               & & & $\textcolor{black}{{12}}$
+
+                        \\
+                    $\textcolor{black}{{h}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{12}{5}}}$
+                                & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
+                                & 1 & & $\textcolor{black}{{12}}$
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{-z}$ 
+                               & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{$ligne(h) \; - \; 1 \; \times \; ligne(x)$}
+        \end{table}
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{black}{{x}} 
+                        $     & $\textcolor{black}{{1}}$ 
+                              & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{black}{{6}}$
+                        \\
+                        $\textcolor{black}{{p}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                               & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                               & & & $\textcolor{black}{{12}}$
+
+                        \\
+                    $\textcolor{black}{{h}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{12}{5}}}$
+                                & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
+                                & 1 & & $\textcolor{black}{{12}}$
+                        \\ 
+                        \hline
+                        $\textcolor{black}{{-z}}$ 
+                                &  $\textcolor{black}{{0}}$
+                                & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                & 
+                                & 
+                                & 1 & $\textcolor{black}{{48}}$ 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \caption{$ligne(-z) \; + \; 8 \; \times \; ligne(x)$}
+        \end{table}
+
+
+        Nous avons complété \textbf{une itération} de l'algorithme.
+        On obtien alors la solution suivante :
+        \begin{align*}
+            \boxed{\left[y, u = 0 \right] \implies x = 6, p = 12, h = 12, z = -48}
+        \end{align*}
+
+        \section{Choix de la variable d'entrée}
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{black}{{x}} 
+                        $     & $\textcolor{black}{{1}}$ 
+                              & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{black}{{6}}$
+                        \\
+                        $\textcolor{black}{{p}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                               & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                               & & & $\textcolor{black}{{12}}$
+
+                        \\
+                    $\textcolor{black}{{h}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{12}{5}}}$
+                                & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
+                                & 1 & & $\textcolor{black}{{12}}$
+                        \\ 
+                        \hline
+                        $\textcolor{black}{{-z}}$ 
+                                &  $\textcolor{black}{{0}}$
+                                & \cellcolor{myr!40}$\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                & 
+                                & 
+                                & 1 & $\textcolor{black}{{48}}$ 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \end{table}
+
+La variable de sortie est donc $y$
+\section{Choix de la variable de sortie}
+\textbf{Démonstration} 
+\begin{align*}
+    &\text{lim}(\textcolor{myr}{\textbf{x}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{x}} )} \div 
+    y(\textcolor{myr}{\textbf{x}} ) = 6  \div \nicefrac{3}{5} = 10
+    \\
+    &\text{lim}(\textcolor{myr}{\textbf{p}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{p}} )} \div 
+    y(\textcolor{myr}{\textbf{p}} ) = 12 \div \nicefrac{9}{5} = \nicefrac{20}{3}
+    \\
+    &\text{lim}(\textcolor{myr}{\textbf{h}} ) = 
+    \text{t.d.(\textcolor{myr}{\textbf{h}} )} \div 
+    y(\textcolor{myr}{\textbf{h}} ) = 18 \div \nicefrac{12}{5} = \textcolor{myr}{5} 
+\end{align*}
+
+    La variable de sortie est donc $h$, puisqu'après 
+    $y \leq 5$, $h$ devient négatif, ce qui viole la contrainte de \textbf{non-négativité}. 
+
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{black}{{x}} 
+                        $     & $\textcolor{black}{{1}}$ 
+                              & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{black}{{6}}$
+                        \\
+                        $\textcolor{black}{{p}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                               & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                               & & & $\textcolor{black}{{12}}$
+
+                        \\
+                    $\textcolor{black}{{h}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & \cellcolor{myg!40}$\textcolor{myg}{{\nicefrac{12}{5}}}$
+                                & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
+                                & 1 & & $\textcolor{black}{{12}}$
+                        \\ 
+                        \hline
+                        $\textcolor{black}{{-z}}$ 
+                                &  $\textcolor{black}{{0}}$
+                                & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                & 
+                                & 
+                                & 1 & $\textcolor{black}{{48}}$ 
+                        \\
+                        \hline 
+                        \end{tabular}
+                \end{center}
+                \caption{Coefficient de pivot}
+        \end{table}
+
+
+
+    Puisque le pivot est $\textcolor{myg}{\boldsymbol{\nicefrac{12}{5}}}$, 
+    on divise $ligne(h)$ par cette même valeur pour que $y$ soit variable 
+    dépendante à $ligne(h)$. 
+
+    \begin{table}[H]
+                    \begin{center}
+                        \renewcommand{\arraystretch}{1.5}
+                        \fontfamily{flr}\selectfont
+                        \footnotesize
+                            \begin{tabular}{|l|l l l l l |l|l|}
+                            \arrayrulecolor{blue}
+                            \hline
+                            v.d. & $x$
+                                 & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                            \\
+                            \hline
+                            \arrayrulecolor{black}
+                            $\textcolor{black}{{x}} 
+                            $     & $\textcolor{black}{{1}}$ 
+                                  & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                    & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                    & 
+                                    & &  &  $\textcolor{black}{{6}}$
+                            \\
+                            $\textcolor{black}{{p}} $     
+                                    & $\textcolor{black}{{0}}$  
+                                    & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                                   & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                                   & & & $\textcolor{black}{{12}}$
+
+                            \\
+
+                        \rowcolor{myg!40}
+                        \cellcolor{myr!40}
+                        $\textcolor{myr}{{y}} $ 
+                                    & $\textcolor{myg}{{0}}$  
+                                    & $\textcolor{myg}{{1}}$
+                                    & $\textcolor{myg}{{-\nicefrac{1}{12}}}$ &  
+                                    & $\textcolor{myg}{\nicefrac{5}{12}}$ & & $\textcolor{myg}{5}$
+                            \\ 
+                            \hline
+                            $\textcolor{black}{{-z}}$ 
+                                    &  $\textcolor{black}{{0}}$
+                                    & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                    & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                    & 
+                                    & 
+                                    & 1 & $\textcolor{black}{{48}}$ 
+                            \\
+                            \hline 
+                            \end{tabular}
+                    \end{center}
+                    \caption{$ligne(h) \div \nicefrac{12}{5}$}
+            \end{table}
+
+            On soustrait maintenant $ligne(h)$ à $ligne(p)$ et $ligne(x)$ 
+            de façon à avoir un coefficient de 0 sous $y$. 
+    \begin{table}[H]
+                        \begin{center}
+                            \renewcommand{\arraystretch}{1.5}
+                            \fontfamily{flr}\selectfont
+                            \footnotesize
+                                \begin{tabular}{|l|l l l l l |l|l|}
+                                \arrayrulecolor{blue}
+                                \hline
+                                v.d. & $x$
+                                     & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                                \\
+                                \hline
+                                \arrayrulecolor{black}
+                                $\textcolor{black}{{x}} 
+                                $     & $\textcolor{black}{{1}}$ 
+                                      & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                        & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                        & 
+                                        & &  &  $\textcolor{black}{{6}}$
+                                \\
+                                \rowcolor{myg!40}
+                            $\textcolor{myg}{\boldsymbol{p}} $     
+                                        & $\textcolor{myg}{\boldsymbol{0}}$  
+                                        & $\textcolor{myg}{\boldsymbol{0}}$
+                                        & $\textcolor{myg}{{\boldsymbol{-\nicefrac{1}{4}}}}$ 
+                                        & $\textcolor{myg}{\boldsymbol{1}}$
+                                        & $\textcolor{myg}{\boldsymbol{\nicefrac{-3}{4}}}$      
+                                        & & $\textcolor{myg}{\boldsymbol{3}}$
+
+                                \\
+
+                            \rowcolor{myg!40}
+                            $\textcolor{myg}{{y}} $ 
+                                        & $\textcolor{myg}{{0}}$  
+                                        & $\textcolor{myg}{{1}}$
+                                        & $\textcolor{myg}{{-\nicefrac{1}{12}}}$ &  
+                                        & $\textcolor{myg}{\nicefrac{5}{12}}$ & & $\textcolor{myg}{5}$
+                                \\ 
+                                \hline
+                                $\textcolor{black}{{-z}}$ 
+                                        &  $\textcolor{black}{{0}}$
+                                        & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                        & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                        & 
+                                        & 
+                                        & 1 & $\textcolor{black}{{48}}$ 
+                                \\
+                                \hline 
+                                \end{tabular}
+                        \end{center}
+                        \caption{$ligne(p) \; -  \; \nicefrac{9}{5} \; ligne(h) $}
+                \end{table}
+
+
+    \begin{table}[H]
+                        \begin{center}
+                            \renewcommand{\arraystretch}{1.5}
+                            \fontfamily{flr}\selectfont
+                            \footnotesize
+                                \begin{tabular}{|l|l l l l l |l|l|}
+                                \arrayrulecolor{blue}
+                                \hline
+                                v.d. & $x$
+                                     & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                                \\
+                                \hline
+                                \arrayrulecolor{black}
+                                \rowcolor{myg!40}
+                            $\textcolor{myg}{\boldsymbol{x}} $     
+                                        & $\textcolor{myg}{\boldsymbol{1}}$  
+                                        & $\textcolor{myg}{\boldsymbol{0}}$
+                                        & $\textcolor{myg}{{\boldsymbol{\nicefrac{1}{4}}}}$ 
+                                        & $\textcolor{myg}{\boldsymbol{0}}$
+                                        & $\textcolor{myg}{\boldsymbol{\nicefrac{-1}{4}}}$      
+                                        & & $\textcolor{myg}{\boldsymbol{3}}$
+                                \\
+                                \rowcolor{myg!40}
+                            $\textcolor{myg}{\boldsymbol{p}} $     
+                                        & $\textcolor{myg}{\boldsymbol{0}}$  
+                                        & $\textcolor{myg}{\boldsymbol{0}}$
+                                        & $\textcolor{myg}{{\boldsymbol{-\nicefrac{1}{4}}}}$ 
+                                        & $\textcolor{myg}{\boldsymbol{1}}$
+                                        & $\textcolor{myg}{\boldsymbol{\nicefrac{-3}{4}}}$      
+                                        & & $\textcolor{myg}{\boldsymbol{3}}$
+
+                                \\
+
+                            \rowcolor{myg!40}
+                            $\textcolor{myg}{{y}} $ 
+                                        & $\textcolor{myg}{{0}}$  
+                                        & $\textcolor{myg}{{1}}$
+                                        & $\textcolor{myg}{{-\nicefrac{1}{12}}}$ &  
+                                        & $\textcolor{myg}{\nicefrac{5}{12}}$ & & $\textcolor{myg}{5}$
+                                \\ 
+                                \hline
+                                $\textcolor{black}{{-z}}$ 
+                                        &  $\textcolor{black}{{0}}$
+                                        & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                        & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                        & 
+                                        & 
+                                        & 1 & $\textcolor{black}{{48}}$ 
+                                \\
+                                \hline 
+                                \end{tabular}
+                        \end{center}
+                        \caption{$ligne(x) \; -  \; \nicefrac{3}{5} \; ligne(h) $}
+                \end{table}
+
+
+    \begin{table}[H]
+                            \begin{center}
+                                \renewcommand{\arraystretch}{1.5}
+                                \fontfamily{flr}\selectfont
+                                \footnotesize
+                                    \begin{tabular}{|l|l l l l l |l|l|}
+                                    \arrayrulecolor{blue}
+                                    \hline
+                                    v.d. & $x$
+                                         & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                                    \\
+                                    \hline
+                                    \arrayrulecolor{black}
+                                    \rowcolor{myg!40}
+                                $\textcolor{myg}{\boldsymbol{x}} $     
+                                            & $\textcolor{myg}{\boldsymbol{1}}$  
+                                            & $\textcolor{myg}{\boldsymbol{0}}$
+                                            & $\textcolor{myg}{{\boldsymbol{\nicefrac{1}{4}}}}$ 
+                                            & $\textcolor{myg}{\boldsymbol{0}}$
+                                            & $\textcolor{myg}{\boldsymbol{\nicefrac{-1}{4}}}$      
+                                            & & $\textcolor{myg}{\boldsymbol{3}}$
+                                    \\
+                                    \rowcolor{myg!40}
+                                $\textcolor{myg}{\boldsymbol{p}} $     
+                                            & $\textcolor{myg}{\boldsymbol{0}}$  
+                                            & $\textcolor{myg}{\boldsymbol{0}}$
+                                            & $\textcolor{myg}{{\boldsymbol{-\nicefrac{1}{4}}}}$ 
+                                            & $\textcolor{myg}{\boldsymbol{1}}$
+                                            & $\textcolor{myg}{\boldsymbol{\nicefrac{-3}{4}}}$      
+                                            & & $\textcolor{myg}{\boldsymbol{3}}$
+
+                                    \\
+                                \rowcolor{myg!40}
+                                $\textcolor{myg}{{y}} $ 
+                                            & $\textcolor{myg}{{0}}$  
+                                            & $\textcolor{myg}{{1}}$
+                                            & $\textcolor{myg}{{-\nicefrac{1}{12}}}$ &  
+                                            & $\textcolor{myg}{\nicefrac{5}{12}}$ & & $\textcolor{myg}{5}$
+                                    \\ 
+                                    \hline
+                                    \rowcolor{myg!40}
+                                $\textcolor{myg}{\boldsymbol{-z}} $     
+                                            & $\textcolor{myg}{\boldsymbol{0}}$  
+                                            & $\textcolor{myg}{\boldsymbol{0}}$
+                                            & $\textcolor{myg}{{\boldsymbol{\nicefrac{3}{2}}}}$ 
+                                            & $\textcolor{myg}{\boldsymbol{0}}$
+                                            & $\textcolor{myg}{\boldsymbol{\nicefrac{1}{2}}}$      
+                                            & $\textcolor{myg}{\boldsymbol{1}}$
+                                            & $\textcolor{myg}{\boldsymbol{54}}$
+                                    \\
+                                    \hline 
+                                    \end{tabular}
+                            \end{center}
+                            \caption{$ligne(-z) \; -  \; \nicefrac{6}{5} \; ligne(h) $}
+                    \end{table}
+
+    Nous avons complété \textbf{une seconde itération} de l'algorithme.         
+    Le système est associé à la solution :
+
+    \begin{align*}
+        \boxed{\left[u, h = 0 \right] \implies x = 3, p = 3, y = 5, z = -54}
+    \end{align*}
+
+    Il n’est pas intéressant d’augmenter ni la valeur de $u$, 
+    ni la valeur de $h$ car la valeur de $z$ augmente. 
+    Ainsi, nous sommes à l’optimum.
+
+
+    \section{Concept de solutions de base}
+    Soit un système de $m$ équations et de $n$ variables, l'algorithme 
+    du simplexes considère les solutions où $n - m$ variables sont 
+    fixées à zéro 
+    et sont donc des \textbf{variables indépantes}. 
+    Ces solutions sont appeleés 
+    \textbf{solutions de bases}. 
+    Avec $n$ variables et $n - m$ \textit{variables fixées à zéro}, il y a  
+    le nombre suivant de solutions de bases possibles :
+    \begin{align*}
+        \boxed{{n \choose n - m} = \dfrac{n!}{(n - m )! m!}}
+    \end{align*}
+
+    
+    \noindent
+    \textbf{Exemple} 
+    Soit un système de $n = 5$ variables et $m = 3$ équations, 
+    il y aura le nombre suivant de solutions de base possibles :
+     
+    \begin{align*}
+            {5 \choose 2} = \dfrac{5!}{2! \times 3!} = \dfrac{5 \times 4 \times 3!}{2! \times 3!} = \dfrac{20}{2} = 10 
+    \end{align*}
+\end{multicols*} 
+
+
+
+\section{Résumé de l'algorithme en forme tableau}
+
+\noindent 
+    $\blacktriangleright$  \textbf{Organiser} les équations présentées sous 
+    la \textit{forme standard} en un tableau. La 1\up{ere} colonne 
+    contient \entoure{v.d.}, puis, dans chaque rangée subséquente 
+    de cette colonne, chacune des variable dépendante et, finalement, 
+    l'objectif négatif $-z$. La \textbf{dernière colonne} contient 
+    \entoure{t.d.} puis, dans chacune des rangées subséquentes de cette 
+    colonne, les termes de droite des équations correspondantes. 
+
+
+    \noindent 
+    $\blacktriangleright$
+    \textbf{Choisir} la variable d'entrée $\boldsymbol{x_e}$
+    ; il s'agit de la variables
+    dépendante dont l'augmentation minimise davantage l'objectif. 
+
+    \begin{align*}
+        \boxed{
+        x_e = x : -z \underset{x \to \infty}{\longrightarrow} -\infty
+        }
+    \end{align*}                    
+
+
+    \noindent
+    $\blacktriangleright$ 
+    \textbf{Choisir} la variable de sortie 
+    $\boldsymbol{x_s}$. Il s'agit de la variable 
+    qui limite davantage l'augmentation de la variable de sortie, 
+    puisqu'elle atteint 0 plus tôt que toutes les autres variable 
+    lorsque $x_e$ augmente. 
+
+    \noindent
+    $\blacktriangleright$ 
+    \textbf{Identifier} le coefficient pivot. Il s'agit du 
+    coefficient qui se trouve à l'intersection de la colonne de 
+    la variable d'entrée et la rangée de la variable de sortie. 
+
+
+    \noindent
+    $\blacktriangleright$ 
+    \textbf{Diviser} la rangée de la variable de sortie par 
+    le coefficient du pivot.
+
+
+    \noindent
+    $\blacktriangleright$ 
+    \textbf{Soustraire} chacune des autres rangées par un facteur 
+    $f \times ligne(x_s)$, de manière à obtenir 0 dans la colonne 
+    de la variable de sortie (la même colonne que le coefficient pivot). 
+
+\begin{multicols*}{2}
+
+\chapter{Résolution Graphique}
+
+
+\section{Représentation graphique selon l'équation}
+
+Considérons le système d'équation suivant sous 
+la forme standard :
+\begin{align*}
+    \text{Min} -z =  \;\; -8x  -6y& \\
+    \text{s.a.}
+    \\
+    \\
+    5x + 3y \leq 30& \\
+    2x + 3y \leq 24& \\
+    x  + 3y \leq 18& 
+    \\
+    \\ 
+    x, y \geq 0& 
+\end{align*}
+
+
+Nous pouvons choisir chacune des équations  pour 
+la représenter par une courbe. Soit l'équation suivante, nous avons la 
+droite correspondante :
+
+\begin{align*}
+            5x + 3y = 30 
+\end{align*}                    
+
+
+
+
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.35]
+    % Axe des x et des y
+    \draw[->] (-1,0) -- (18,0) node[right] {$x$};
+    \draw[->] (0,-1) -- (0,12.5) node[above] {$y$};
+    
+    % Tracer la droite 5x + 3y = 30 en rouge
+    \draw[red, thick] (0,10) -- (6,0) 
+     node at (3, 11) {$5x + 3y = 30$};
+        
+    % Tracer la droite x + 3y = 18
+    \draw[myg, thick] (0,18/3) -- (18,0) 
+     node at (6.5, 6) {$x + 3y = 18$};
+
+
+
+    % Tracer la droite 2x + 3y = 24 en bleu
+    \draw[blue, thick] (0,8) -- (12,0) 
+    node at (4.5,8.5) {$2x + 3y = 24$};
+    
+    
+    % Hachures pour la région de la solution
+    \fill[red!20,opacity=0.6] (0,10) -- (6,0) -- (0,0) -- cycle;
+    \fill[blue!20,opacity=0.6] (0,8) -- (12,0) -- (0,0) -- cycle;
+    \fill[myg!20,opacity=0.6] (0,18/3) -- (18,0) -- (0,0) -- cycle;
+
+
+    
+    % Ajouter des labels
+\end{tikzpicture}
+\end{center}
+    Puisque l'équation contient une inégalité, nous savons que l'ensemble des 
+    points qui satisfont la contrainte se trouve nécessairement sous la 
+    courbe.
+
+
+\begin{center}
+\begin{tikzpicture}[scale=0.35]
+    % Axe des x et des y
+    \draw[->] (-1,0) -- (18,0) node[right] {$x$};
+    \draw[->] (0,-1) -- (0,12.5) node[above] {$y$};
+    
+    % Tracer la droite 5x + 3y = 30 en rouge
+    \draw[red, thick] (0,10) -- (6,0) 
+     node at (3, 11) {$5x + 3y = 30$};
+        
+    % Tracer la droite x + 3y = 18
+    \draw[myg, thick] (0,18/3) -- (18,0) 
+     node at (6.5, 6) {$x + 3y = 18$};
+
+
+
+    % Tracer la droite 2x + 3y = 24 en bleu
+    \draw[blue, thick] (0,8) -- (12,0) 
+    node at (4.5,8.5) {$2x + 3y = 24$};
+    
+    
+    % Hachures pour la région de la solution
+    \fill[red!20,opacity=0.6] (0,10) -- (6,0) -- (0,0) -- cycle;
+    \fill[blue!20,opacity=0.6] (0,8) -- (12,0) -- (0,0) -- cycle;
+    \fill[myg!20,opacity=0.6] (0,18/3) -- (18,0) -- (0,0) -- cycle;
+
+
+ % Tracer les lignes d'intersection plus épaisses
+    \draw[myp!70!blue, ultra thick] (0,6) -- (3,5); % Intersection rouge-bleu
+    \draw[myp!70!blue, ultra thick] (3,5) -- (6,0); % Intersection rouge-bleu
+    \draw[myp!70!blue, ultra thick] (6,0) -- (0,0); % Intersection rouge-bleu
+    \draw[myp!70!blue, ultra thick] (0,0) -- (0,6); % Intersection rouge-bleu
+
+    % Hachures pour la région de solution commune, avec une couleur plus foncée
+    \fill[red!50!blue!50!myg!50, opacity=0.8] (0,6) -- (3,5) -- (6,0) -- (0,0) -- cycle;
+    
+    % Ajouter des labels
+\end{tikzpicture}
+\end{center}
+
+
+    Les solutions possibles se trouvent donc dans la zone délimitée par 
+    les courbes. La solution 
+    \textbf{optimale} est se trouve au sommet de polygôme 
+    définissant la zone.  
+
+    pour la solution optimale $\hat{x} : (a, b) \in \mathbb{R}^2$ 
+    nous avons : 
+
+
+    \begin{align*}
+        \hat{x} \in \Bigl\{ (0,6), \; (3,5), \;  (6, 0), \; (0, 0)\Bigr\}
+    \end{align*}
+
+
+    Selon les options possibles, la solution optimale est donc 
+    $\hat{x} = (3, 5)$ et on a  
+
+    \begin{align*}
+        \boxed{-z = -8(3) - 6(5) = -24 - 30 = -54}
+    \end{align*}
+
+
+    Selon la théorie vue précedemment, nous savons 
+    que le nombre de solutions de bases 
+    différentes dans l'espace est donné par :
+
+    \begin{align*}
+        {5 \choose 3} = 
+        \dfrac{5!}{3! \cdot 2!} 
+        = \textcolor{myr}{10}  
+    \end{align*}
+
+    Or, le polyptote ne contient que 
+    $\boldsymbol{4}$ \textit{coins} et donc               $\boldsymbol{4}$ soolution optimales. Cela est 
+    dû au fait que l'algorithme du simplexe ne peut 
+    visiter que 4 solutions de base 
+    \textbf{réalisables}. Les solutions restantes 
+    sont des solutions de bases 
+    \textbf{non réalisables}. 
+
+    \chapter{Simplexe en formulation générale}
+
+
+
+    \section{Définitions et forme standard}
+    Soit un système de programmation linéaire qui comprend 
+    $\textcolor{myr}{\boldsymbol{n}}$ \textbf{variables} 
+    et $\textcolor{myr}{\boldsymbol{m}}$ \textbf{contraintes} et 
+    $n \geq m$, nous avons les entités suivantes :
+
+    \begin{align*}
+        &\boldsymbol{x_j} \Coloneqq \textit{variables de décision} \\   
+        &\boldsymbol{c_j} \Coloneqq \textit{coeff. de } \boldsymbol{x_j}  \textit{ dans l'objectif}  \\  
+        &\boldsymbol{a_{ij}} \Coloneqq \textit{coeff. de } \boldsymbol{x_j} \textit{ dans la contrainte } \boldsymbol{i} \\  
+        &\boldsymbol{b_i} \Coloneqq \textit{terme de droite dans la contrainte } \boldsymbol{i}
+    \end{align*}
+
+    Les \textbf{variables de décisions} sont donc $x_j, j = 1, 2, \cdots n$ et chacune 
+    d'elle est 
+    présente dans une colonne $\boldsymbol{j}$ du tableau. Il y a 
+    $\boldsymbol{m}$ (ou $\boldsymbol{i}$) rangées d'équations 
+    dans le tableau, excluant la rangée de l'objectif. 
+
+
+
+    \begin{align*}
+        &\text{Min } \quad z = c_1x_1 + c_2x_2 + \cdots c_nx_n \\ 
+        &\text{s.a.}   \\\\ 
+        &a_{11}x_1 + a{12}x_2 + \cdots a_{1n}x_n = b_1 \\
+        &a_{21}x_1 + a{22}x_2 + \cdots a_{2n}x_n = b_2 \\
+        &\quad\quad\quad\quad\quad \cdots\cdots  \\ 
+        &a_{m1}x_1 + a{m2}x_2 + \cdots a_{mn}x_n = b_m \\
+        &x_1, x_2, \cdots, x_n \geq 0 
+     \end{align*}
+
+     Cela revient à la simplification suivante :
+
+     \begin{align*}
+        &\text{Min } z = \sum_{j=1}^{n }c_jx_j, \; \textbf{s}.\textbf{a}.  
+        \sum_{n=j}^{n }a_{ij} = b_i, i = 1, \cdots,  m \\ 
+        &x_j \geq 0, j = 1, \cdots, n 
+     \end{align*} 
+
+
+\section{Représentation tableau de la forme générale}
+
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \fontfamily{flr}\selectfont
+    \footnotesize
+    \resizebox{1\linewidth}{!}{
+    \begin{tabular}{|l|*{12}{c}|c|c|}
+    \arrayrulecolor{blue}\hline
+    v.d. & $x_1$ & $x_2$ & $\cdots$ & $x_r$ & $\cdots$ & $x_m$ &
+    $x_{m+1}$ & $\cdots$ & $x_s$ & $\cdots$ & $x_n$ & $-z$ & & t.d. \\
+    \hline\arrayrulecolor{black}
+    $x_1$ & $1$ & & & & & & $\overline{a}_{1,m+1}$ & $\cdots$ &
+    $\overline{a}_{1s}$ & $\cdots$ & $\overline{a}_{1n}$ & & & $\overline{b}_1$ \\
+    $x_2$ & & $1$ & & & & & $\overline{a}_{2,m+1}$ & $\cdots$ &
+    $\overline{a}_{2s}$ & $\cdots$ & $\overline{a}_{2n}$ & & & $\overline{b}_2$ \\
+    $\vdots$ & & & $\ddots$ & & & & & $\ddots$ & & $\ddots$ & & & & $\vdots$ \\
+    $x_r$ & & & & $1$ & & & $\overline{a}_{r,m+1}$ & $\cdots$ &
+    $\overline{a}_{rs}$ & $\cdots$ & $\overline{a}_{rn}$ & & & $\overline{b}_r$ \\
+    $\vdots$ & & & & & $\ddots$ & & $\ddots$ & $\ddots$ & & $\ddots$ &
+    $\overline{a}_{1n}$ & & & $\vdots$ \\
+    $x_m$ & & & & & & $1$ & $\overline{a}_{m,m+1}$ & $\cdots$ &
+    $\overline{a}_{ms}$ & $\cdots$ & $\overline{a}_{mn}$ & & & $\overline{b}_m$ \\
+    \hline
+    $-z$ & & & & & & & $\overline{c}_{m+1}$ & $\cdots$ &
+    $\overline{c}_{s}$ & $\cdots$ & $\overline{c}_{n}$ & $1$ & & $\overline{z}$ \\
+    \hline
+    \end{tabular}}
+\end{table}
+
+La solution associée est :
+\begin{align*}
+    &x_1 = \overline{b}_1,\quad x_2 = \overline{b}_2,\quad \dots,\quad
+    x_m = \overline{b}_m, \\
+    &x_{m+1} = x_{m+2} = \dots = x_n = 0,\quad z = \overline{z}
+\end{align*}
+
+\section{Choix de la variable d'entrée}
+
+La variable d'entrée $x_j$ est celle qui minimise $c_j x_j$ dans l'objectif $z$.
+Si tous les coefficients $\overline{c}_j \geq 0$, l'algorithme se termine car l'objectif
+ne peut plus être amélioré.
+
+\subsection{Scénario 1 : Tous les $\overline{c}_j x_j$ sont positifs}
+\begin{align*}
+    \left[ \forall j,\ \overline{c}_j x_j \geq 0 \right] \implies
+    z \longrightarrow \infty
+\end{align*}
+
+\subsection{Scénario 2 : Au moins un $\overline{c}_j x_j$ est négatif}
+
+Si $\overline{c}_j < 0$ pour au moins un $j$, la variable d'entrée $x_s$ est choisie telle que :
+\begin{align*}
+    \overline{c}_s = \min\left\{ \overline{c}_j : j = 1, \dots, n \right\}
+\end{align*}
+
+Pour chaque ligne, on a :
+\begin{align*}
+    x_i = \overline{b}_i - \overline{a}_{is} x_s,\quad i = 1, \dots, m
+\end{align*}
+
+\section{Augmentation de la variable d'entrée}
+
+\subsection{Scénario 1 : Tous les $\overline{a}_{is}$ sont négatifs}
+
+Si $\overline{a}_{is} < 0$ pour tout $i$, l'augmentation de $x_s$ entraîne une augmentation
+des $x_i$, rendant le problème non borné inférieurement.
+
+\subsection{Scénario 2 : Au moins un $\overline{a}_{is}$ est positif}
+
+Si $\overline{a}_{is} > 0$ pour au moins un $i$, $x_s$ est limité par :
+\begin{align*}
+    x_r = \min\left\{ \dfrac{\overline{b}_i}{\overline{a}_{is}} :
+    \overline{a}_{is} > 0 \right\}
+\end{align*}
+La variable $x_r$ correspondante devient la variable de sortie.
+
+\section{Pivot}
+
+Le pivot échange la variable d'entrée $x_s$ avec la variable de sortie $x_r$. La ligne pivot
+(ligne $r$) est divisée par le coefficient de pivot $\overline{a}_{rs}$, puis les autres
+lignes sont ajustées pour obtenir des zéros dans la colonne $x_s$.
+
+\subsection{Division de la ligne pivot}
+
+Les nouveaux coefficients de la ligne pivot sont :
+\begin{align*}
+    \overline{\tilde{a}}_{rj} = \dfrac{\overline{a}_{rj}}{\overline{a}_{rs}},\quad
+    j = 1, \dots, n
+\end{align*}
+et
+\begin{align*}
+    \overline{\tilde{b}}_r = \dfrac{\overline{b}_r}{\overline{a}_{rs}}
+\end{align*}
+
+\subsection{Mise à jour des autres lignes}
+
+Pour chaque ligne $\boldsymbol{\textcolor{myr}{i}} \neq r$, on ajuste :
+\begin{align*}
+    \overline{\tilde{a}}_{\boldsymbol{\textcolor{myr}{i} }j} = 
+    \overline{\tilde{a}}_{\boldsymbol{\textcolor{myr}{i} }j} -  
+    \overline{a}_{is} \times \overline{\tilde{a}}_{rj} \quad
+    \forall i \neq r, \; j = 1, \dots, n
+\end{align*}
+et
+\begin{align*}
+    \overline{\tilde{b}}_{\boldsymbol{\textcolor{myr}{i} }} = 
+    \overline{b}_{\boldsymbol{\textcolor{myr}{i} }} 
+    - \overline{a}_{is} \; \times \;  \overline{\tilde{b}}_r
+\end{align*}
+
+Pour la fonction objectif :
+\begin{align*}
+    \overline{\tilde{c}}_{j} = 
+    \overline{c}_{j} 
+    - \overline{c}_{s} \; \times \; \overline{\tilde{a}}_{rj} 
+\end{align*}
+et
+\begin{align*}
+    -\overline{\tilde{z}} = -\overline{z} - \overline{c}_s  \; \times \;
+    \overline{\tilde{b}}_{rj}
+\end{align*}
+
+\section{Exemple}
+
+Considérons le problème du restaurateur :
+
+
+\begin{alignat*}{7}
+    \text{Min } z \quad & = \quad & -8x & {} - {} & 6y & & & & & & \\
+    \text{s.a.} \quad
+                        &        & 5x & {} + {} & 3y & {} + {} & \textcolor{myr}{\textbf{\textit{u}}} & & &= & 30 \\
+    &        & 2x & {} + {} & 3y & {} + {} & & \textcolor{myr}{\textbf{\textit{p}}}  & & = & 24 \\
+    &        &  x & {} + {} & 3y & {} + {} & & &\textcolor{myr}{\textbf{\textit{h}}} &  = & 18 \\
+    &        &  x,\ y,\ \textcolor{myr}{\textbf{\textit{u}}},\ \textcolor{myr}{\textbf{\textit{p}}},\ \textcolor{myr}{\textbf{\textit{h}}}  \geq & 0 
+\end{alignat*}
+
+
+En remplaçant les variables par $x_1$, $x_2$, $x_3$, $x_4$, $x_5$ :
+
+\begin{alignat*}{7}
+    \text{Min } z \quad & = \quad & -8x_1 & {} - {} & 6x_2 & & & & & & \\
+    \text{s.a.} \quad
+                        &        & 5x_1 & {} + {} & 3x_2 & {} + {} & \textcolor{myr}{\boldsymbol{x_3}} & & &= & 30 \\
+                        &        & 2x_1 & {} + {} & 3x_2 & {} + {} & & \textcolor{myr}{\boldsymbol{x_4}}  & & = & 24 \\
+                        &        &  x_1 & {} + {} & 3x_2 & {} + {} & & &\textcolor{myr}{\boldsymbol{x_5}} &  = & 18 \\
+    &        &  x_1,\ x_2,\ \textcolor{myr}{\boldsymbol{x_3}},\ \textcolor{myr}{\boldsymbol{x_4}},\ 
+    \textcolor{myr}{\boldsymbol{x_5}}  \geq & 0 
+\end{alignat*}
+
+Le tableau initial du simplexe est :
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \fontfamily{flr}\selectfont
+    \footnotesize
+    \begin{tabular}{|l|c c c c c|c|c|}
+    \arrayrulecolor{blue}\hline
+    v.d. & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $-z$ & t.d. \\
+    \hline\arrayrulecolor{black}
+    $x_3$ & $5$ & $3$ & $1$ & $$ & $$ & $$ & $30$ \\
+    $x_4$ & $2$ & $3$ & $$ & $1$ & $$ & $$ & $24$ \\
+    $x_5$ & $1$ & $3$ & $$ & $$ & $1$ & $$ & $18$ \\
+    \hline
+    $-z$ & $-8$ & $-6$ & $$ & $$ & $$ & $1$ & $$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Étape 1 : Choix de la variable d'entrée}
+On voit que $\overline{c_j} < 0$ pour au moins un $j$. On a alors :
+\begin{align*}
+    \resizebox{1\linewidth}{!}{$ 
+    \overline{c}_s = \min\Bigl\{\overline{c}_j : j = 1, \dots, n \Bigr\} 
+    = \min\Bigl\{\overline{c}_1, \overline{c}_2 \Bigr\} 
+    = \min\Bigl\{\boldsymbol{-8}, -6 \Bigr\}  = \boldsymbol{-8} 
+$}
+\end{align*}                
+On identifie que $\overline{c}_1 = -8$ est le plus négatif, donc $x_1$ est la variable
+d'entrée.
+
+\subsection{Étape 2 : Détermination de la variable de sortie}
+On fait face au \textbf{scénario 2}  : au moins un 
+$a_{is}$ est positif. Dans ce cas-ci, $a_{is} = a_{i1}$; on fait 
+référence aux coefficients sous la colonne de la variable d'entrée $x_1$ 
+et donc $ s = 1$. 
+\vspace{1em}\\
+\indent On calcule les rapports pour déterminer la variable de sortie :
+
+\begin{align*}
+    \resizebox{1\linewidth}{!}{$ 
+    \left[ x_r = \min \Bigl\{ \dfrac{\overline{b}_i}{\overline{a}_{is}} : \overline{a}_{is} > 0 \Bigr\} \right]
+    \implies 
+    x_r = \min \Bigl\{ \frac{30}{5} = \boldsymbol{6}, \; \frac{24}{2} = 12, \; \frac{18}{1} = 18   \Bigr\} 
+$}
+\end{align*}
+Le minimum est $\boldsymbol{6}$, donc $x_r = x_3$ est la variable de sortie.
+
+\subsection{Étape 3 : Pivot}
+
+On divise la ligne de $x_3$ par le coefficient pivot $5$, donc on a applique la 
+formule 
+\begin{align*}
+    \left[ \forall j, \;
+        \overline{\tilde{a}}_{rj} = \overline{a}_{rj} -  
+    \overline{a}_{is} \times \dfrac{\overline{a}_{rj}}{\overline{a}_{rs}} \right]  
+    \implies 
+    \forall j, \;
+        \overline{\tilde{a}}_{3j} = \overline{\tilde{a}}_{3j} -  
+        \overline{a}_{is} \times \dfrac{\overline{a}_{3j}}{\overline{a}_{3s}}, 
+\end{align*}                
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \fontfamily{flr}\selectfont
+    \footnotesize
+    \begin{tabular}{|l|c c c c c|c|c|}
+    \arrayrulecolor{blue}\hline
+    v.d. & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $-z$ & t.d. \\
+    \hline\arrayrulecolor{black}
+     $x_1$ & $1$ & $\nicefrac{3}{5}$ & $\nicefrac{1}{5}$ & & & & $6$ \\
+    $x_4$ & $2$ & $3$ & $$ & $1$ & $$ & $$ & $24$ \\
+    $x_5$ & $1$ & $3$ & $$ & $$ & $1$ & $$ & $18$ \\
+    \hline
+    $-z$ & $-8$ & $-6$ & $$ & $$ & $$ & $1$ & $$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+Durant le pivot, la variable d'entrée $x_1$ prend la place de la variable de sortie 
+$x_3$. 
+
+
+\begin{table}[H]
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \fontfamily{flr}\selectfont
+    \footnotesize
+    \begin{tabular}{|l|c c c c c|c|c|}
+    \arrayrulecolor{blue}\hline
+    v.d. & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $-z$ & t.d. \\
+    \hline\arrayrulecolor{black}
+    $\boldsymbol{\textcolor{myr}{x_1}}$  & $1$ & $\nicefrac{3}{5}$ & $\nicefrac{1}{5}$ & $$ & $$ & $$ & $6$ \\    
+    $x_4$ & $2$ & $3$ & $$ & $1$ & $$ & $$ & $24$ \\
+    $x_5$ & $1$ & $3$ & $$ & $$ & $1$ & $$ & $18$ \\
+    \hline
+    $-z$ & $-8$ & $-6$ & $$ & $$ & $$ & $1$ & $$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+\subsection{Mise à jour des autres lignes}
+
+Pour chaque ligne $i \neq r = x_3 (\text{nouvellement } x_1$, on ajuste :
+\begin{align*}
+    \forall (\boldsymbol{\textcolor{myr}{i}}, \boldsymbol{\textcolor{myr}{j}}), \; 
+    \left[ 
+        \overline{\tilde{a}}_{\boldsymbol{\textcolor{myr}{i}\textcolor{myr}{j}}} = 
+    \overline{a}_{\boldsymbol{\textcolor{myr}{i}\textcolor{myr}{j}}} -  
+    \overline{a}_{is} \times \overline{\tilde{a}}_{rj} \quad
+    \right]
+    \implies 
+\end{align*}
+\vspace{-3em} 
+
+\begin{align*}
+    &\overline{\tilde{a}}_{41} = 2 - 2 \times 1 = 0, \\
+    &\overline{\tilde{a}}_{42} = 3 - 2 \times \dfrac{3}{5} = \dfrac{9}{5} \\ 
+    &\overline{\tilde{a}}_{43} = 0 - 2 \times \dfrac{1}{5} = -\dfrac{2}{5} \\ 
+    &\overline{\tilde{a}}_{44} = 1 - 2 \times 0  = 1 \\ 
+    &\overline{\tilde{a}}_{45} = 0 - 2 \times 0 = 0 \\
+    &\overline{\tilde{a}}_{51} = 1 - 1 \times 1 = 0, \\
+    &\overline{\tilde{a}}_{52} = 3 - 1 \times \dfrac{3}{5} = \dfrac{12}{5} \\ 
+    &\overline{\tilde{a}}_{53} = 0 - 1 \times \dfrac{1}{5} = -\dfrac{1}{5} \\ 
+    &\overline{\tilde{a}}_{54} = 0 - 1 \times 0  = 0 \\ 
+    &\overline{\tilde{a}}_{55} = 1 - 1 \times 0 = 1 
+\end{align*}                    
+et
+\begin{align*}
+    \left[ \overline{\tilde{b}}_i = \overline{b}_i - \overline{a}_{is} \overline{\tilde{b}}_r \right] 
+    \implies
+\end{align*}
+\vspace{-3em} %
+
+\begin{align*}
+    &\overline{\tilde{b}}_4 = 24 - 2 \times 6 =  12  \\
+    &\overline{\tilde{b}}_5 = 18 - 2 \times 6 =  6  \\
+\end{align*}
+et 
+\begin{align*}
+    \left[ \overline{\tilde{c}}_{j} = 
+    \overline{c}_{j} 
+- \overline{c}_{s} \; \times \; \overline{\tilde{a}}_{rj}  \right] 
+\implies
+\end{align*}
+\vspace{-3em}% 
+
+\begin{align*}
+    &\overline{\tilde{c}}_1 = -8  - (-8)\times 1 = 0 , \\ 
+    &\overline{\tilde{c}}_2 = -6  - (-8)\times \dfrac{3}{5} = -\dfrac{6}{5} , \\ 
+    &\overline{\tilde{c}}_3 = 0  - (-8)\times \dfrac{3}{5} = \dfrac{8}{5} , \\ 
+\end{align*}
+
+et 
+
+\begin{align*}
+    \left[ -\overline{\tilde{z}} = -\overline{z} - \overline{c}_s  \; \times \;
+    \overline{\tilde{b}}_{rj} \right] 
+    \implies
+    -\overline{\tilde{z}} = 1 - (-8) \times 6 = 48
+\end{align*}
+
+
+Selon les résultats présentés, on optient alors le tableau suivant :
+
+\begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        $\textcolor{black}{{x}} 
+                        $     & $\textcolor{black}{{1}}$ 
+                              & $\textcolor{black}{{\nicefrac{3}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{1}{5}}}$
+                                & 
+                                & &  &  $\textcolor{black}{{6}}$
+                        \\
+                        $\textcolor{black}{{p}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{9}{5}}}$
+                               & $\textcolor{black}{{-\nicefrac{2}{5}}}$ & 1 
+                               & & & $\textcolor{black}{{12}}$
+
+                        \\
+                    $\textcolor{black}{{h}} $     
+                                & $\textcolor{black}{{0}}$  
+                                & $\textcolor{black}{{\nicefrac{12}{5}}}$
+                                & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
+                                & 1 & & $\textcolor{black}{{12}}$
+                        \\ 
+                        \hline
+                        $\textcolor{black}{{-z}}$ 
+                                &  $\textcolor{black}{{0}}$
+                                & $\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                & $\textcolor{black}{{\nicefrac{8}{5}}}$
+                                & 
+                                & 
+                                & 1 & $\textcolor{black}{{48}}$ 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \end{table}
+
+    \pagebreak
+    \chapter{Algorithme du Simplexe Analyse}
+
+    \section{Définitions}
+
+    Soit $x, y \in \mathbb{R}^n$, nous avons les quantités suivantes :
+
+    \begin{align*}
+        &\text{Produit scalaire } : \quad  x^{T}y = y^Yx = \sum_{j=1}^{n }x_jy_j \\ 
+        &\text{Vecteur} : \quad
+        \begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix} \;
+    \end{align*}            
+
+
+    \begin{note}{}{}
+        Un ensemble de vecteur $x^1, \dots, x^k \in \mathbb{R}^n$ 
+        est dit \textbf{linéairement dépendant} s'il existe  
+        $k$ scalaires $\lambda_{1}, \lambda_{2}, \dots \lambda_{k} 
+        \in \mathbb{R}$ \textit{non nul} tel que :  
+        \begin{align*}
+            \lambda_{1}x^1 + \lambda_{2}x^2  + 
+            \cdots 
+            + \lambda_{k}x^k = 
+        \begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix}  = 0
+        \end{align*}
+    \end{note}  
+
+    Soit une matrice $A$ : 
+        \begin{align*}
+                        \begin{pmatrix} 
+            a_{11} &  \cdots & a_{1n}  \\ 
+            \vdots &  \ldots & \ldots \\ 
+            a_{m1} &  \cdots & a_{mn}
+            \end{pmatrix}
+        \end{align*}
+
+    \textbf{alors},  on dit que l'élément $a_{ij}$ est à
+    \textbf{l'intersection} \texttt{ligne } $i$, \texttt{col. } $j$      
+    de la matrice.  Une \textbf{matrice carrée} est une 
+    matrice $A_{m \times n}$ où $m = n$ et un vecteur de dimension $n$ 
+    peut être vue comme une matrice de dimension $n \times 1$. 
+    La \textbf{matrice identité} $I$ est 
+    une \textbf{matrice carrée} telle qu'on a : 
+
+    \begin{align*}
+        \boxed{\forall a_{ij} \in A_{m \times n} = I, \; 
+        \left[  i = j \right] \implies a_{ij} = 1,  \; \textbf{et}  
+        \left[ i \neq j \right] a_{ij} = 0 
+    }
+    \end{align*}
+
+
+    
+    \end{multicols*} 
+
+
+
+
+        
+
+        
             
+
+
 \end{document}
 
