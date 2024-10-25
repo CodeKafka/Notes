@@ -42,6 +42,7 @@
 %\usepackage{bm}
 \usepackage{contour}
 \usepackage{adjustbox}
+\usepackage{nicematrix}
 
 
 
@@ -99,29 +100,27 @@
 
 
 
-\begin{multicols*}{3}
+\begin{multicols*}{2}
     \chapter{Modélisation}
     \footnotesize
 \section{Définition de la prog. linéaire}
 
     Branche de la \textit{Recherche Opérationnelle} où on utilise 
     des \textbf{modèles} mathématiques qui font appel à 
-    des fonction \textcolor{myb}{\textbf{linéaire}} pour 
-    résoudre un problème. 
+    des fonctions \textcolor{myb}{\textbf{linéaires}} pour 
+    résoudre un problème. Par fonction linéaire, on entend 
+    des fonctions qui n'impliquent que des variables de 
+    \textbf{degré} \( \boldsymbol 1 \).
 
-    \begin{align*}
-        \texttt{prod}. \text{ vin blanc} \implies x \; (\text{litres}) \\ 
-        \texttt{prod}. \text{ vin rouge} \implies y \; (\text{litres})
-    \end{align*}
 \section{Composantes du modèle}
-    Il faut identifier \textbf{\textcolor{myb}{l'action}} sur 
+    Il faut identifier \textbf{\textcolor{black}{l'action}} sur 
     laquelle on doit prendre une décision et la représenter 
-    par un \textbf{\textcolor{myb}{variable de décision}}. À cette 
+    par une \textbf{\textcolor{black}{variable de décision}}. À cette 
     variable sera associée un constante qui représente 
-    le \textbf{\textcolor{myb}{niveau}} de l'action.
+    le \textbf{\textcolor{black}{niveau}} de l'action.
 
 \section{L'objectif} 
-    S'exprime sous le forme d'une \textbf{fonction mathématique} 
+    S'exprime sous la forme d'une \textbf{fonction mathématique} 
     qui représente l'intention. P. ex. \textbf{maximiser le profit}
     correspondrait à : 
     \[%
@@ -129,127 +128,102 @@
     \]%
 
 \section{Contraintes}
-    Elles peuvent dépendre du \textit{contexte du problèmes} 
-    ou peuvent être plus générales; p. ex. la 
-    \textbf{non-négativité} d'une entité : 
+    Elles peuvent dépendre du \textbf{contexte du problèmes} 
+    ou peuvent être plus générales. P. ex. la 
+    \textbf{non-négativité} d'une variable est une contraintes générale
+    applicable à certains problème : 
     \begin{align*}
-    &x \leq 50  \quad\quad\quad\;\; \texttt{prod}.\text{max vin blanc} \\ 
+    &x \leq 50  \quad\quad\quad\;\; \text{Production maximale de vin blanc } (\text{litres}) \\ 
     &y \leq 60 \\
-    &x +  y \leq 80  \quad\quad \texttt{prod}.\text{max totale de vin} \\ 
-    &x \geq 0, y \geq 0 \quad\; \text{Non-nég.}
+    &x +  y \leq 80  \quad\quad \text{Production maximale \textbf{totale} de vin   }\\ 
+    &x \geq 0, y \geq 0 \quad\; \text{Non négativité}
     \end{align*}
 
 \section{Terminologie de base}
- Une \textbf{solution réalisable} est un \textbf{vecteur} 
- de valeurs $x = (x_1, x_2, \dots, x_n)$ appartenant à $X \subset \mathbb{R}^n$ tel 
- que chaque composante $x_1, x_2, \dots, x_n$ respecte \textit{toutes les contraintes} du problème.
- Dans ce contexte, $X$ est l'ensemble des solutions possibles, c'est-à-dire l'ensemble des points qui satisfont toutes des contraintes imposées au problème.
- Chaque point dans $X$ est un vecteur de longueur $n$ 
- Cet ensemble $X$ est un sous-ensemble de l'espace $\mathbb{R}^n$ 
- qui comprends tous les vecteurs possibles où 
- $n \in [1, n \longrightarrow \infty[$.
+ Une \textbf{solution réalisable} est un \textbf{vecteur} :
+ de valeurs  
+    \begin{align*}
+        \vec{x} = \langle x_1, x_2, \dots, x_n\rangle
+    \end{align*}
+ appartenant à $X \subset \mathbb{R}^n$ tel 
+ que chaque composante $x_1, x_2, \dots, x_n$ respecte \textbf{toutes les contraintes} du problème.
+ On peut conceptualiser 
+ $X$ comme étant un ensemble composé de vecteurs lignes où  chaque vecteur ligne 
+ est une solution réalisable :
+ \begin{align*}
+     X^n \subset R^n : \vec{x} = \langle x_1, x_2, \dots, x_n \rangle  \in X^n \implies 
+     f(\vec{x}) = f_{\text{réalisable}}
+ \end{align*}
 
-Une solution \textbf{optimale} est une solution réalisable qui maximise (ou minimise) la fonction objectif $z(x)$, en fonction de la nature du problème (maximisation ou minimisation). Autrement dit, c'est une solution réalisable qui produit la \textit{meilleure valeur possible} pour la fonction objectif $z$.
 
-\vspace{2.5em}
-\chapter{Maximisation et minimisation}
+Une \textcolor{myb}{solution optimale} est une solution réalisable qui maximise ou minimise 
+la fonction objectif $z(x)$. Autrement dit, c'est une solution réalisable qui produit la 
+\textbf{meilleure valeur possible} pour la fonction objectif.
 
 \begin{note}{}{}
     Un modèle peut présenter une \textbf{infinité} de 
     solution optimales. 
-\end{note}       
+\end{note} 
 
-\begin{theorem}{}{}
+\chapter{Maximisation et minimisation}
+
+
+\section{Théorème de maximisation}
     La maximisation d'un objectif $f(w)$ est équivalent à l'\textbf{opposé}
     de la minimisation :
 
     \begin{align*}
         \text{Max} \; f(w) \leftrightarrow  \text{Min} -f(w)
     \end{align*}
-\end{theorem}
 
-\begin{Preuve}{}{}
+    \section{Preuve}
     Considérons le problème :
     \begin{align*}
-        \text{Max} \; f(w) \\ 
-        \text{s.a} \;\; w \in X \subset \mathbb{R}^n
+        &\text{Max} \; f(w) \\ 
+        &\text{s.a.} \\
+        & \quad\quad\quad\; w \in X \subset \mathbb{R}^n
     \end{align*}
-    Soit $w_{\text{opt}}$ un point de $X$ où $f(w)$ atteint son  
+    Soit $w_{\text{opt.}}$ un point de $X$ où $f(w)$ atteint son  
     \textbf{\textcolor{myb}{maximum}}. On a :  
     \begin{align*}
-        f\left(w_{\text{opt}} \right) \geq &f(w) \;\; \forall w \in X \\
-                                           &\updownarrow \\ 
-        - f\left(w_{\text{opt}} \right) \leq - &f(w) \;\; \forall w \in X 
+        f\left(w_{\text{opt}} \right) \geq f(w) \;\; \forall w \in X 
+        \leftrightarrow       
+        - f\left(w_{\text{opt}} \right) \leq - f(w) \;\; \forall w \in X 
     \end{align*}
+
+    Autrement dit, si le vecteur ligne $w_{\text{opt}.}$ produit une solution optimale $f(w_{\text{opt}.})$, 
+    alors le résultat de tous les autres vecteurs lignes $w$ appartenant à $X$--- 
+    c'est-à-dire $f(w)$---seront nécessairement 
+    plus petit ou égal à cette solution optimale : $f(w) \leq f(w_{\text{opt}.})$. Cela 
+    implique aussi que la négation de la solution optimale---c'est-à-dire -$f(w_{\text{opt.}})$ 
+    sera plus plus petite ou égale à tous les autres $-f(w)$. 
     Par conséquent, $-f(w_{\text{opt}})$ est la valeur minimale possible parmi 
-    tous les $-f(w)$ possibles :
+    tous les $-f(w)$ possibles. On a alors :
 
     \begin{align*}
-        - \text{Max} f(w) = 
+        \boxed{
+        - \text{ Max} f(w) = 
         - f\left(w_{\text{opt}}\right) = 
         \text{Min} -f(w)
+    }
     \end{align*}
     Ainsi, qu'on maximise $f(w)$ ou qu'on minimise $-f(w)$, on retrouve la 
     même solution optimale $w_{\text{opt}}$.
-\end{Preuve}
-
-
-
-
-
-
-\begin{Explication*}{}{}
-    Soit la fonction objectif $f : X \rightarrow \mathbb{R}$  
-Dans cette situation, le vecteur \( w \) joue deux rôles distincts : il est à la 
-fois l'argument de la fonction objectif \( f(w) \) et un élément soumis aux 
-contraintes. Ces deux aspects sont essentiels dans un problème de maximisation 
-en programmation linéaire ou non linéaire.
-
-\vspace{1em}%
-\textbf{1. Vecteur dans la fonction objectif :}
-La fonction objectif \( f(w) \) est la fonction que l'on cherche à maximiser. 
-Elle prend un vecteur \( w \) comme entrée, qui est un point dans l'espace 
-\( \mathbb{R}^n \). Ce vecteur \( w \) représente une solution candidate du 
-problème, et \( f(w) \) retourne un nombre réel, par exemple un profit ou une 
-performance, que l'on souhaite maximiser.
-
-\vspace{1em}%
-\textbf{2. Vecteur dans les contraintes :}
-Le vecteur \( w \) doit aussi satisfaire un ensemble de contraintes qui 
-définissent l'ensemble des solutions réalisables, noté \( X \subset \mathbb{R}^n \).
-Ces contraintes peuvent être des inégalités ou des égalités (par exemple, 
-\( g(w) \leq 0 \), \( h(w) = 0 \)), et elles définissent l'ensemble des vecteurs 
-\( w \) admissibles.
-
-\vspace{1em}%
-\textbf{Synthèse des deux rôles :}
-\begin{itemize}
-    \item \textbf{Maximisation :} On cherche à maximiser la fonction \( f(w) \), 
-    c'est-à-dire à trouver la meilleure valeur possible de \( f(w) \).
-    \item \textbf{Contraintes :} Le vecteur \( w \) doit se situer dans un 
-    ensemble admissible \( X \), défini par les contraintes du problème.
-\end{itemize}
-
-En résumé, \( w \) doit satisfaire les contraintes (ce qui garantit qu'il est 
-une solution réalisable), tout en maximisant la valeur de \( f(w) \). Le problème
-consiste à trouver le \( w \) optimal qui satisfait ces deux aspects à la fois.
-\end{Explication*}                  
+                 
 
 \chapter{Algorithme du Simplexe}
 Soit le problème suivant. Un restaurateur dispose de \textbf{14} oursins, 
 \textbf{24} crevettes, \textbf{18} huîtres. Deux types d'assiètes 
 de fruit de mer sont offertes par le restaurateur :
-
 \begin{align*}
-    \textbf{8\$} \colon \text{5 oursins, 2 crevettes 1 huître}  \\
-    \textbf{6\$} \colon \text{3 oursins, 3 crevettes 3 huîtres}   
+    &\textbf{8\$} \colon \text{5 oursins, 2 crevettes 1 huître}  \\
+    &\textbf{6\$} \colon \text{3 oursins, 3 crevettes 3 huîtres}   
 \end{align*}
 
 L'objectif est de déterminer le \textbf{nombres d'assiètes} de chaque 
-type à préparer afin de \textit{maximiser} 
+type à préparer afin de \textbf{maximiser} 
 le revenu total du restaurateur tout en 
 respectant les disponibilité de fruits de mer. 
-
 
 \section{Contraintes}
 \begin{align*}
@@ -264,44 +238,47 @@ respectant les disponibilité de fruits de mer.
     z = 8x + 6x& \quad \text{Objectif}
 \end{align*}
 
-
-
-
 En considérant que la maximisation d'un objectif est 
 équivalente à la minimisation de l'opposé de la minimisation on a :
-
-
-\begin{align*}
-    \text{Min} \;\; -8x  -6y& \\
-    \text{s.a.}
-    \\
-    \\
-    5x + 3y \leq 30& \\
-    2x + 3y \leq 24& \\
-    x  + 3y \leq 18& 
-    \\
-    \\ 
-    x, y \geq 0& 
-    \\ 
-    \\
-    z = 8x + 6x& 
-\end{align*}
-
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x & - 6y & \\
+    &\text{s.a.} && & \\
+    &\phantom{\text{Min}} &\quad 5x & + 3y &\leq 30 & \\
+    &\phantom{\text{Min}} &\quad 2x & + 3y &\leq 24 & \\
+    &\phantom{\text{Min}} &\quad x & + 3y &\leq 18 & \\ \\
+    &\phantom{\text{Min}} &\quad x &,y& \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
+\end{alignat*}
 
 \section{Forme standard}
-
-\begin{align*}
-    \text{Min } z = -8 -6y \\ 
-    \text{s.a.} 
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x & - 6y &\\
+    &\text{s.a.} \\
+    &\phantom{\text{Min}} &\quad 5x & + 3y & 
+    + \textcolor{myr}{\boldsymbol{ u}}& 
+    \phantom{+ \; \textcolor{myr}{\boldsymbol{ p}}} 
+    \phantom{+ \;\textcolor{myr}{\boldsymbol{ h}}} \leq 30 & 
     \\
-    5x + 3y& + \textcolor{myr}{\textbf{\textit{u}}}   &= 30 \\
-    2x + 3y& \quad\quad + \textcolor{myr}{\textbf{\textit{p}}}   &= 24\\
-     x + 3y& \quad\quad\quad\quad + \textcolor{myr}{\textbf{\textit{h}}}   &= 18 \\
-     x, y&,  
-     \textcolor{myr}{\textbf{\textit{u}}}, 
-     \textcolor{myr}{\textbf{\textit{p}}},
-     \textcolor{myr}{\textbf{\textit{h}}} \geq 0
-\end{align*}
+    &\phantom{\text{Min}} &\quad 2x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}& + 
+    \textcolor{myr}{\boldsymbol{ p}} 
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ h}}} 
+    \leq 24 & \\
+    &\phantom{\text{Min}} &\quad x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}&  
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ p}}} 
+    +\textcolor{myr}{\boldsymbol{ h}} \leq 18 & \\ 
+    \\ 
+    \\
+                &\phantom{\text{Min}} &\quad x &, \phantom{+3} y,& 
+    \textcolor{myr}{\boldsymbol{u}}&,
+    \textcolor{myr}{\boldsymbol{ p}}, 
+    \textcolor{myr}{\boldsymbol{ h}}
+    \phantom{+\textcolor{myr}{\boldsymbol{ p}}} \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
+\end{alignat*}
+
+
 
 \section{Choisir les variables indépendantes}
 Supposons que 
@@ -316,17 +293,12 @@ les \textcolor{myr}{\textbf{\textit{variables dépendantes}}}
 \textcolor{myb}{\textbf{\textit{x}}} et \textcolor{myb}{\textbf{\textit{y}}}
 
 
-\begin{align*}
-    u \quad\quad\quad\quad\quad\quad &= 30 - 5x -3y& \\
-    p \quad\quad\quad\quad  &= 24 -2x -3y& \\
-    h \quad\quad &= 18 - x -3y&
-\end{align*}
-\vspace{-2.5em}    
-\Pointilles{1}
-\vspace{-2.5em}
-\begin{align*}
-    \quad\quad\quad\;\; z = 0 -8x -6y
-\end{align*}
+\begin{alignat*}{3}
+    u \quad\quad\quad\quad &= 30 - 5x& -3y & \\
+    p \quad\quad\quad &= 24 -2x& -3y & \\
+    h \quad\quad &= 18 -1x& -3y & \\
+    -z \quad &= \phantom{18} -8x& -6y &
+\end{alignat*}
 En supposant que 
 \textcolor{myb}{\textbf{\textit{x}}} et 
 \textcolor{myb}{\textbf{\textit{y}}}  sont \textbf{fixés à 0}, 
@@ -353,20 +325,20 @@ $y = 0$, on a :
     p &= 24 -2x -3y 
     & \implies \quad  &  x \leq 24/2 = \textbf{12}  
     \\
-    h &= 18 - x -3y&
+    h &= 18 - 1x -3y&
     \implies \quad & x \leq \textbf{18}  
 \end{align*}
 
-\textbf{Explication} : Soit $u = 30 - 5x -3\cancelto{0}{y}$, on sait que pour respecter 
-la contrainte de non négativité, la quantité $u = 30 -5x \geq$. Cela se simplifie par 
+\textbf{Explication} : Soit $u = 30 - 5x -3y \leftrightarrow u = 30 - 5x -3(0)$, 
+on sait que pour respecter 
+la contrainte de non négativité, la quantit é$u$ 
+doit être telle que $u = 30 -5x \geq$. Cela se simplifie par :
 \begin{align*}
-    x \leq 6
+    \boxed{x \leq 6}
 \end{align*}
-
-
+\vspace{-4em}
 \section{Pivot}
-
-Le système est limité par la diminution de $x$ jusqu'à \textcolor{myr}{\textbf{6}} 
+Le système est limité par la diminution de $x$ jusqu'à \textcolor{myr}{\textbf{6}}.
 L'équation limitante est celle qui implique $u$; on dit alors que 
 \textcolor{myr}{\textbf{\textit{u}}} est le 
 \textcolor{myr}{\textbf{\textit{variable de sortie}}}. On 
@@ -378,32 +350,27 @@ $\textcolor{myb}{\textbf{\textit{u}}}$ et
 
 On peut utiliser les équations du système pour extrapoler 
 $x$, $p$, et $h$ en fonction de $u$ et $y$ :
-
-
 \begin{align*}
     u \quad = 30 - 5x &- 3y 
-    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{u}}, \textcolor{myb}{\boldsymbol{y}} = 0 
     \\
                          &\Downarrow
 \end{align*}
       \[% 
-          \boxed{x = \textcolor{myg}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}}}
+          \boxed{x = \textcolor{myp}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}}}
       \]%
-
-
 \begin{align*}
     p \quad = 24 - 2x &- 3y
-    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{u}}, \textcolor{myb}{\boldsymbol{y}} = 0 
     \\
                  &\Downarrow
 \end{align*}
       \[% 
     \boxed{p = 12 +2/5u -9/5y}
       \]%
-
 \begin{align*}
-    h \quad = 18 - x &- 3y
-    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    h \quad = 18 -1x &- 3y
+    \textbf{ et } \textcolor{myb}{\boldsymbol{u}}, \textcolor{myb}{\boldsymbol{y}} = 0 
     \\
                      &\Downarrow
 \end{align*}
@@ -412,11 +379,11 @@ $x$, $p$, et $h$ en fonction de $u$ et $y$ :
       \]%
 \begin{align*}
     z \quad = 0 - 8x &- 6y
-    \textbf{ et } \textcolor{myb}{u}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{u}}, \textcolor{myb}{\boldsymbol{y}}  = 0 
     \\
                      &\Downarrow
     \\
-    z \quad = 0 - 8(&\textcolor{myg}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}})
+    z \quad = 0 - 8(&\textcolor{myp}{\textit{\textbf{6 $-$ 1/5u $-$ 3/5y}}})
  - 6y
     \\ 
                     &\Downarrow
@@ -425,18 +392,14 @@ $x$, $p$, et $h$ en fonction de $u$ et $y$ :
     \boxed{z = -48 +8/5u -6/5y}
       \]%
 
-\section{Système 2}
+\section{Système suite au pivot}
 \begin{align*}
-    x \quad\quad\quad\quad\quad\quad &= 6 - 1/5u -3/5y& \\
+    x \quad\quad\quad\quad\quad\quad &= 6\phantom{2} - 1/5u -3/5y& \\
     p \quad\quad\quad\quad  &= 12 -2/5u -9/5y& \\
-    h \quad\quad &= 12 - 1/5u -12/5y&
+    h \quad\quad &= 12 - 1/5u -12/5y& \\ \\
+    z \quad  &= -48 +8/5x -6/5y
 \end{align*}
-\vspace{-2.5em}    
-\Pointilles{1}
-\vspace{-2.5em}
-\begin{align*}
-    \quad\quad\quad\;\; z = -48 +8/5x -6/5y
-\end{align*}
+
 Sachant que 
 \textcolor{myb}{\textbf{\textit{u}}} et 
 \textcolor{myb}{\textbf{\textit{y}}}  sont \textbf{fixés à 0}, 
@@ -483,22 +446,22 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
 
 \begin{align*}
     h \quad = 12 - 1/5u &-12/5y
-    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{h}}, \textcolor{myb}{\boldsymbol{y}}  = 0 
     \\
                  &\Downarrow
 \end{align*}
       \[% 
-    \boxed{y = \textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}} }
+    \boxed{y = \textcolor{myp}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}} }
       \]%
 
 
 \begin{align*}
     x = 6 - 1/5u &-3/5y 
-    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{h}}, \textcolor{myb}{\boldsymbol{y}}  = 0
     \\
       &\Downarrow
     \\ 
-    x = 6 - 1/5u -3/&5(\textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
+    x = 6 - 1/5u -3/&5(\textcolor{myp}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
     \\
                     &\Downarrow
 \end{align*}
@@ -510,11 +473,11 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
 
 \begin{align*}
     p = 12 - 2/5u &-9/5y 
-    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{h}}, \textcolor{myb}{\boldsymbol{y}}  = 0 
     \\
       &\Downarrow
     \\ 
-    p = 12 - 2/5u -9/&5(\textcolor{myg}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
+    p = 12 - 2/5u -9/&5(\textcolor{myp}{\textbf{\textit{5 + 1/12u $-$ 5/12h}}}) 
     \\
                     &\Downarrow
 \end{align*}
@@ -526,7 +489,7 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
 
 \begin{align*}
     z \quad = -48 +8/5u &- 6/5y
-    \textbf{ et } \textcolor{myb}{h}, \textcolor{myb}{y} = 0 
+    \textbf{ et } \textcolor{myb}{\boldsymbol{h}}, \textcolor{myb}{\boldsymbol{y}}  = 0 
     \\
                       &\Downarrow \\
     z = -48 +8/5u -6&(5 +1/12u -5/12h)
@@ -539,23 +502,18 @@ $x$, $p$, et $h$ en fonction de $h$ et $y$ :
     \boxed{z = -54 +3/2u -1/2h}
       \]%
 
-\section{Système 3}
+\section{Système après le pivot}
 \begin{align*}
     x \quad\quad\quad\quad\quad\quad &= 3 - 1/4u -1/4h& \\
     p \quad\quad\quad\quad  &= 3 +1/4u +3/5h& \\
     y \quad\quad &= 5 + 1/12u -5/12h&
-\end{align*}
-\vspace{-2.5em}    
-\Pointilles{1}
-\vspace{-2.5em}
-\begin{align*}
-    \quad\quad\quad\;\; z = -54 +3/2u -1/2h
+    \\\\
+    z\quad &= -54 +3/2u -1/2h
 \end{align*}
 Sachant que 
 \textcolor{myb}{\textbf{\textit{u}}} et 
 \textcolor{myb}{\textbf{\textit{h}}}  sont \textbf{fixés à 0}, 
 on a la \textbf{solution} : 
-
 \begin{align*}
 \boxed{u = h = 0 \implies 
 \textcolor{myr}{\textbf{\textit{x}}}  = 3, 
@@ -563,19 +521,15 @@ on a la \textbf{solution} :
 \textcolor{myr}{\textbf{\textit{y}}} = 5,
 \textbf{\textit{z}} = -54}
 \end{align*}
-
 Il n’est pas intéressant d’augmenter ni la valeur de $u$, ni la valeur de $h$car la valeur 
 de z augmente. Ainsi, nous sommes \textbf{à l’optimum} !
-
-\end{multicols*}
-
 \section{Résumé de l'algorithme}
 
 \noindent 
 $\blacktriangleright$ \textbf{Compter} le nombre d'équations. Un système 
-en \textit{forme standard} de $N$ équations nécessaite une 
-\textcolor{myb}{\textbf{variables d'équart}} par équation, pour un total de 
-$N$ variable d'équart. 
+en \textbf{forme standard} de $n$ équations nécessite une 
+\textcolor{myr}{\textbf{variables d'équart}} par équation, pour un total de 
+$n$ variables d'équart. 
 
 \begin{note}{}{}
     Si le système sous sa forme standard possède $n$ variables inconnues, ce système 
@@ -586,25 +540,27 @@ $N$ variable d'équart.
 
 
 \noindent 
-$\blacktriangleright$ \textbf{Exprimer} les \textcolor{myb}{\textbf{variables d'équart}} 
-$u, p, h$, etc. et l'objectif $\textcolor{myr}{z}$ en fonction des des 
+$\blacktriangleright$ \textbf{Exprimer} les \textcolor{myr}{\textbf{variables d'équart}} 
+$\textcolor{myr}{\boldsymbol{u}}, 
+\textcolor{myr}{\boldsymbol{p}}, 
+\textcolor{myr}{\boldsymbol{h}}$, etc. et l'objectif $\boldsymbol{z}$ en fonction des des 
 \textbf{variables fixées à zéro}, c'est-à-dire les variables inconnues 
 $x_1, x_2, \cdots,  x_n$.  
 
 \noindent 
 $\blacktriangleright$ \textbf{Identifier} la variable dont l'$\uparrow$ réduit le plus 
 $z$; cette variable minimise l'objectif et est donc la 
-\textcolor{myb}{\textbf{variable d'entrée}} $x_e$.
+\textcolor{myb}{\textbf{variable d'entrée}} $x_s$.
 
 \noindent
-$\rhd$ Soit la variable $x_e$, trouver la variable $x_s$ qui limite le plus l'augmentation 
-de $x_e$. Il s'agit de la \textcolor{myr}{\textbf{variable de sortie}} $x_s$. 
+$\rhd$ Soit la variable $x_s$, trouver la variable $x_r$ qui limite le plus l'augmentation 
+de $x_s$. Il s'agit de la \textcolor{myr}{\textbf{variable de sortie}} $x_r$. 
 
 
 \noindent 
-$\blacktriangleright$ \textbf{Fixer} $x_s$ à zéro. La variable de sortie $x_s$ 
-prend la place de la variable d'entrée $x_e$. Exprimer $x_e$ et les autres variables 
-$x_1, x_2, \cdots, x_n$, ainsi que l'objectif $z$ en fonction de $x_s$. 
+$\blacktriangleright$ \textbf{Fixer} $x_r$ à zéro. La variable de sortie $x_r$ 
+prend la place de la variable d'entrée $x_s$. Exprimer $x_s$ et les autres variables 
+$x_1, x_2, \cdots, x_n$, ainsi que l'objectif $z$ en fonction de $x_r$. 
 
 
 \noindent 
@@ -621,6 +577,8 @@ la diminution de l'objectif, la solution n'est pas optiomale et il faut poursuiv
 \textbf{une autre itération} de l'algorithme.       
 \pagebreak 
 
+\end{multicols*}
+
 
 
 \begin{multicols*}{2}
@@ -630,21 +588,35 @@ la diminution de l'objectif, la solution n'est pas optiomale et il faut poursuiv
 \section{Forme standard}
 
 Soit le sytème suivant sous la forme standard, nous allons 
-utiliser la représentation sous forme de tableau pour appliquer
+utiliser \textbf{la représentation sous forme de tableau} pour appliquer
 l'algorithme du simplexe. 
 
-\begin{align*}
-    \text{Min } z = -8 -6y \\ 
-    \text{s.a.} 
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x & - 6y &\\
+    &\text{s.a.} \\
+    &\phantom{\text{Min}} &\quad 5x & + 3y & 
+    + \textcolor{myr}{\boldsymbol{ u}}& 
+    \phantom{+ \; \textcolor{myr}{\boldsymbol{ p}}} 
+    \phantom{+ \;\textcolor{myr}{\boldsymbol{ h}}} \leq 30 & 
     \\
-    5x + 3y& + \textcolor{myr}{\textbf{\textit{u}}}   &= 30 \\
-    2x + 3y& \quad\quad + \textcolor{myr}{\textbf{\textit{p}}}   &= 24\\
-     x + 3y& \quad\quad\quad\quad + \textcolor{myr}{\textbf{\textit{h}}}   &= 18 \\
-     x, y&,  
-     \textcolor{myr}{\textbf{\textit{u}}}, 
-     \textcolor{myr}{\textbf{\textit{p}}},
-     \textcolor{myr}{\textbf{\textit{h}}} \geq 0
-\end{align*}
+    &\phantom{\text{Min}} &\quad 2x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}& + 
+    \textcolor{myr}{\boldsymbol{ p}} 
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ h}}} 
+    \leq 24 & \\
+    &\phantom{\text{Min}} &\quad x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}&  
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ p}}} 
+    +\textcolor{myr}{\boldsymbol{ h}} \leq 18 & \\ 
+    \\ 
+    \\
+                &\phantom{\text{Min}} &\quad x &, \phantom{+3} y,& 
+    \textcolor{myr}{\boldsymbol{u}}&,
+    \textcolor{myr}{\boldsymbol{ p}}, 
+    \textcolor{myr}{\boldsymbol{ h}}
+    \phantom{+\textcolor{myr}{\boldsymbol{ p}}} \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
+\end{alignat*}
 
 
         \begin{table}[H]
@@ -660,21 +632,21 @@ l'algorithme du simplexe.
                         \\
                         \hline
                         \arrayrulecolor{black}
-                        \rowcolor{myr!40}
-                        $\textcolor{myr}{u} 
-                        $     & 5
+                        \rowcolor{myg!40}
+                        $\textcolor{myr}{\boldsymbol{u}}$     
+                                & 5
                                 & 3
                                 & 1
                                 & 
                                 & &  &  30
                         \\
-                        $\textcolor{myr}{p} $     
+                        $\textcolor{myr}{\boldsymbol{p}}$     
                                & 2
                                & 3
                                & & 1
                                & & & 24 
                         \\
-                        $\textcolor{myr}{h} $     
+                        $\textcolor{myr}{\boldsymbol{h}}$     
                                & 1
                                & 3 
                                &  & 
@@ -682,7 +654,7 @@ l'algorithme du simplexe.
                                & & 18 
                         \\ 
                         \hline
-                        $\textcolor{myr}{-z}$ 
+                        $\textcolor{myr}{\textcolor{myr}{\boldsymbol{-z}}}$ 
                                 & -8
                                 & -6
                                 & 
@@ -696,7 +668,7 @@ l'algorithme du simplexe.
 
                         \end{tabular}
                 \end{center}
-        \caption{État initial de la forme \texttt{STD}}
+                \caption{État initial de la \textbf{forme  standard}}
         \end{table}         
 Le tableau doit avoir la même allure que la forme standard ; 
 il doit être possible d'identifier une \textbf{variable} par 
@@ -756,7 +728,7 @@ est :
                         \\ 
                         \hline
                         $\textcolor{myr}{-z}$ 
-                               & \cellcolor{myr!40}-8
+                               & \cellcolor{myb!40}-8
                                 & -6
                                 & 
                                 & 
@@ -772,40 +744,41 @@ est :
         \caption{Variable d'entrée choisie}
         \end{table}         
  On choisit la variable dont l'augmentation rend l'objectif $z$ 
-plus petit et négatif ; il sagit de \textcolor{myr}{\textbf{$x$ }} qui 
+plus petit et négatif ; il sagit de $\textcolor{myb}{\boldsymbol{x}}$ qui 
 est la \textcolor{myb}{\textbf{variable d'entrée}}.
 
 
 \section{Choix de la variable de sortie}
 Soit une ligne du tableau $l$, et la variable d'entrée 
-$x_e$, pour trouver la variable dépendante 
+$x_s$, pour trouver la variable dépendante 
 \textbf{limite davantage l'augmentation} de la 
 \textcolor{myb}{\textbf{variable d'entrée}}, il suffit d'utiliser la formule  : 
 
 
 \begin{align*}
-    \boxed{\text{lim } = \text{t.d.}(l) \; \div \; x_e(l)}
+    \boxed{\text{lim } = \text{t.d.}(l) \; \div \; x_s(l)}
 \end{align*}
 
 
 \noindent
 \textbf{Exemple} 
 \begin{align*}
-    &\text{lim}(\textcolor{myr}{\textbf{u}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{u}} )} \div 
-    x(\textcolor{myr}{\textbf{u}} ) = 30 \div 5 = \textcolor{myr}{6}
+    &\text{lim}(\textcolor{myr}{\boldsymbol{u}} ) = 
+    \text{t.d.}(\textcolor{myr}{\boldsymbol{u}}) \div 
+    x(\textcolor{myr}{\boldsymbol{u}}) = 30 \div 5 = \textcolor{myr}{\boldsymbol{6}}
     \\
-    &\text{lim}(\textcolor{myr}{\textbf{p}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{p}} )} \div 
-    x(\textcolor{myr}{\textbf{p}} ) = 24 \div 2 = 12 
+    &\text{lim}(\textcolor{myr}{\boldsymbol{p}} ) = 
+\text{t.d.}(\textcolor{myr}{\boldsymbol{p}}) \div 
+    x(\textcolor{myr}{\boldsymbol{p}}) = 24 \div 2 = 12 
     \\
-    &\text{lim}(\textcolor{myr}{\textbf{h}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{h}} )} \div 
-    x(\textcolor{myr}{\textbf{h}} ) = 18 \div 1 = 12 
+    &\text{lim}(\textcolor{myr}{\boldsymbol{h}}) = 
+\text{t.d.}(\textcolor{myr}{\boldsymbol{h}}) \div 
+    x(\textcolor{myr}{\boldsymbol{h}}) = 18 \div 1 = 12 
 \end{align*}
 
 Dans ce cas-ci, $\textcolor{myr}{\boldsymbol{u}}$ limite davantage l'augementation de 
 $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc la variable de sortie.
+$x_r$.
 
 \section{Pivot}
 
@@ -829,13 +802,13 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                 & 
                                 & &  &  30
                         \\
-                        $\textcolor{myr}{p} $     
+                        $\textcolor{myr}{\boldsymbol{p}} $     
                                & 2
                                & 3
                                & & 1
                                & & & 24 
                         \\
-                        $\textcolor{myr}{h} $     
+                        $\textcolor{myr}{\boldsymbol{h}} $     
                                & 1
                                & 3 
                                &  & 
@@ -843,7 +816,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                & & 18 
                         \\ 
                         \hline
-                        $\textcolor{myr}{-z}$ 
+                        $\textcolor{myr}{\boldsymbol{-z}}$ 
                                & -8
                                 & -6
                                 & 
@@ -861,8 +834,8 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
         \end{table}
 
     Le coefficient à l'intersection de la colonne de la variable d'entrée 
-    ($\textcolor{myb}{\boldsymbol{x}}$) et de la rangée de la variable de sortie 
-    ($\textcolor{myr}{\boldsymbol{u}}$) est le \textcolor{myg}{\textit{coefficient pivot}}. 
+    $\textcolor{myb}{\boldsymbol{x}}$ et de la rangée de la variable de sortie 
+    $\textcolor{myr}{\boldsymbol{u}}$ est le \textcolor{myg}{\textit{\textbf{coefficient du pivot}}}. 
     Le \textbf{pivot} est l'action par laquelle on modifie le tableau pour que la variable 
     d'entrée prenne la place de la variable de sortie. 
 
@@ -887,13 +860,13 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                 & 
                                 & &  &  30
                         \\
-                        $\textcolor{myr}{p} $     
+                        $\textcolor{myr}{\boldsymbol{p}} $     
                                & 2
                                & 3
                                & & 1
                                & & & 24 
                         \\
-                        $\textcolor{myr}{h} $     
+                        $\textcolor{myr}{\boldsymbol{h}} $     
                                & 1
                                & 3 
                                &  & 
@@ -901,7 +874,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                & & 18 
                         \\ 
                         \hline
-                        $\textcolor{myr}{-z}$ 
+                        $\textcolor{myr}{\boldsymbol{-z}}$ 
                                & -8
                                 & -6
                                 & 
@@ -917,9 +890,11 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                 \end{center}
         \caption{État suite au pivot}
         \end{table}
-    Pour que $x$ soit \textcolor{myr}{variable dépendante } à la place de u dans la première ligne, il faut un 
+    Pour que $x$ soit \textcolor{myr}{\textbf{\textit{variable dépendante }}} 
+    à la place de u dans la première ligne, il faut un 
     coefficient de 1 sous $x$ dans la première ligne et des coefficients de 0 dans les autres 
-    lignes. Cela revient à diviser la ligne de la variable de sortie par le coefficient du pivot.
+    lignes. Cela revient à diviser la ligne de la variable de sortie par le 
+    \textcolor{myg}{\textbf{\textit{coefficient du pivot}}} .
 
         \begin{table}[H]
                 \begin{center}
@@ -941,13 +916,13 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                 & 
                                 & &  &  $\textcolor{myg}{\boldsymbol{\nicefrac{30}{5}}}$
                         \\
-                        $\textcolor{myr}{p} $     
+                        $\textcolor{myr}{\boldsymbol{p} } $     
                                & 2
                                & 3
                                & & 1
                                & & & 24 
                         \\
-                        $\textcolor{myr}{h} $     
+                        $\textcolor{myr}{\boldsymbol{h}} $     
                                & 1
                                & 3 
                                &  & 
@@ -955,7 +930,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                & & 18 
                         \\ 
                         \hline
-                        $\textcolor{myr}{-z}$ 
+                        $\textcolor{myr}{\boldsymbol{-z}}$ 
                                & -8
                                 & -6
                                 & 
@@ -972,14 +947,15 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
         \caption{Division par le cofficient du pivot}
         \end{table}
 
-        Pour exprimer chaque variable dépendante en terme de la variable d'entrée ($x$)
+        Pour exprimer chaque variable dépendante en terme de la variable d'entrée 
+        $\boldsymbol{\textcolor{myb}{x}}$
         par le coefficient $c_e$ sous la colonne de la variable d'entrée. 
 
 
         \noindent 
         \textbf{Exemple} 
         \begin{align*}
-            \boxed{\textcolor{myg}{x = 6 - \nicefrac{3}{5}y  - \nicefrac{1}{5}u } }
+            \boxed{\boldsymbol{\textcolor{myg}{x = 6 - \nicefrac{3}{5}y  - \nicefrac{1}{5}u }}}
         \end{align*}
 
 
@@ -1026,7 +1002,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                 1 & & & $\textcolor{myg}{\boldsymbol{12}}$
 
                         \\
-                        $\textcolor{myr}{h} $     
+                        $\textcolor{myr}{\boldsymbol{h}  } $     
                                & 1
                                & 3 
                                &  & 
@@ -1034,7 +1010,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                                & & 18 
                         \\ 
                         \hline
-                        $\textcolor{myr}{-z}$ 
+                        $\textcolor{myr}{\boldsymbol{-z}}$ 
                                & -8
                                 & -6
                                 & 
@@ -1199,7 +1175,7 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                         \hline
                         $\textcolor{black}{{-z}}$ 
                                 &  $\textcolor{black}{{0}}$
-                                & \cellcolor{myr!40}$\textcolor{black}{{-\nicefrac{6}{5}}}$
+                                & \cellcolor{myb!40}$\textcolor{black}{{-\nicefrac{6}{5}}}$
                                 & $\textcolor{black}{{\nicefrac{8}{5}}}$
                                 & 
                                 & 
@@ -1213,25 +1189,25 @@ $\textcolor{myb}{\boldsymbol{x}}$ ; $\textcolor{myr}{\boldsymbol{u}}$ est donc l
                 \end{center}
         \end{table}
 
-La variable de sortie est donc $y$
+La variable d'entrée est donc $x_s = \boldsymbol{\textcolor{myb}{y}}$
 \section{Choix de la variable de sortie}
 \textbf{Démonstration} 
 \begin{align*}
-    &\text{lim}(\textcolor{myr}{\textbf{x}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{x}} )} \div 
-    y(\textcolor{myr}{\textbf{x}} ) = 6  \div \nicefrac{3}{5} = 10
+    &\text{lim}(\textcolor{myr}{\boldsymbol{x}}) = 
+    \text{t.d.}(\textcolor{myr}{\boldsymbol{x}}) \div 
+    y(\textcolor{myr}{\boldsymbol{x}} ) = 6  \div \nicefrac{3}{5} = 10
     \\
-    &\text{lim}(\textcolor{myr}{\textbf{p}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{p}} )} \div 
-    y(\textcolor{myr}{\textbf{p}} ) = 12 \div \nicefrac{9}{5} = \nicefrac{20}{3}
+    &\text{lim}(\textcolor{myr}{\boldsymbol{p}}) = 
+    \text{t.d.}(\textcolor{myr}{\boldsymbol{p}}) \div 
+    y(\textcolor{myr}{\boldsymbol{p}}) = 12 \div \nicefrac{9}{5} = \nicefrac{20}{3}
     \\
-    &\text{lim}(\textcolor{myr}{\textbf{h}} ) = 
-    \text{t.d.(\textcolor{myr}{\textbf{h}} )} \div 
-    y(\textcolor{myr}{\textbf{h}} ) = 18 \div \nicefrac{12}{5} = \textcolor{myr}{5} 
+    &\text{lim}(\textcolor{myr}{\boldsymbol{h}}) = 
+    \text{t.d.}(\textcolor{myr}{\boldsymbol{h}}) \div 
+    y(\textcolor{myr}{\boldsymbol{h}} ) = 18 \div \nicefrac{12}{5} = \textcolor{myr}{\boldsymbol{5}} 
 \end{align*}
 
-    La variable de sortie est donc $h$, puisqu'après 
-    $y \leq 5$, $h$ devient négatif, ce qui viole la contrainte de \textbf{non-négativité}. 
+    La variable de sortie est donc $x_r = \boldsymbol{\textcolor{myr}{h}}$, puisqu'après 
+    $y \leq 5$, $h$ devient négatif, ce qui viole la contrainte de \textbf{non négativité}. 
 
 
 \begin{table}[H]
@@ -1261,7 +1237,7 @@ La variable de sortie est donc $y$
                                & & & $\textcolor{black}{{12}}$
 
                         \\
-                    $\textcolor{black}{{h}} $     
+                    $\textcolor{myr}{{\boldsymbol{h}  }} $     
                                 & $\textcolor{black}{{0}}$  
                                 & \cellcolor{myg!40}$\textcolor{myg}{{\nicefrac{12}{5}}}$
                                 & $\textcolor{black}{{-\nicefrac{1}{5}}}$ &  
@@ -1317,8 +1293,7 @@ La variable de sortie est donc $y$
                             \\
 
                         \rowcolor{myg!40}
-                        \cellcolor{myr!40}
-                        $\textcolor{myr}{{y}} $ 
+                        $\textcolor{myb}{{\boldsymbol{y}}} $ 
                                     & $\textcolor{myg}{{0}}$  
                                     & $\textcolor{myg}{{1}}$
                                     & $\textcolor{myg}{{-\nicefrac{1}{12}}}$ &  
@@ -1336,10 +1311,12 @@ La variable de sortie est donc $y$
                             \hline 
                             \end{tabular}
                     \end{center}
-                    \caption{$ligne(h) \div \nicefrac{12}{5}$}
+                    \caption{$ligne(h) \div \nicefrac{12}{5}$
+                    devient $ligne(y)$
+} 
             \end{table}
 
-            On soustrait maintenant $ligne(h)$ à $ligne(p)$ et $ligne(x)$ 
+            On soustrait maintenant $ligne(y)$ à $ligne(p)$ et $ligne(x)$ 
             de façon à avoir un coefficient de 0 sous $y$. 
     \begin{table}[H]
                         \begin{center}
@@ -1391,7 +1368,7 @@ La variable de sortie est donc $y$
                                 \hline 
                                 \end{tabular}
                         \end{center}
-                        \caption{$ligne(p) \; -  \; \nicefrac{9}{5} \; ligne(h) $}
+                        \caption{$ligne(p) \; -  \; \nicefrac{9}{5} \; ligne(y) $}
                 \end{table}
 
 
@@ -1541,15 +1518,12 @@ La variable de sortie est donc $y$
     \begin{align*}
             {5 \choose 2} = \dfrac{5!}{2! \times 3!} = \dfrac{5 \times 4 \times 3!}{2! \times 3!} = \dfrac{20}{2} = 10 
     \end{align*}
-\end{multicols*} 
-
-
 
 \section{Résumé de l'algorithme en forme tableau}
 
 \noindent 
     $\blacktriangleright$  \textbf{Organiser} les équations présentées sous 
-    la \textit{forme standard} en un tableau. La 1\up{ere} colonne 
+    la \textbf{forme standard} en un tableau. La 1\up{ere} colonne 
     contient \entoure{v.d.}, puis, dans chaque rangée subséquente 
     de cette colonne, chacune des variable dépendante et, finalement, 
     l'objectif négatif $-z$. La \textbf{dernière colonne} contient 
@@ -1559,13 +1533,13 @@ La variable de sortie est donc $y$
 
     \noindent 
     $\blacktriangleright$
-    \textbf{Choisir} la variable d'entrée $\boldsymbol{x_e}$
-    ; il s'agit de la variables
+    \textbf{Choisir} la variable d'entrée $\boldsymbol{x_s}$
+    ; il s'agit de la variable
     dépendante dont l'augmentation minimise davantage l'objectif. 
 
     \begin{align*}
         \boxed{
-        x_e = x : -z \underset{x \to \infty}{\longrightarrow} -\infty
+        x_s = x : -z \underset{x \to \infty}{\longrightarrow} -\infty
         }
     \end{align*}                    
 
@@ -1573,7 +1547,7 @@ La variable de sortie est donc $y$
     \noindent
     $\blacktriangleright$ 
     \textbf{Choisir} la variable de sortie 
-    $\boldsymbol{x_s}$. Il s'agit de la variable 
+    $\boldsymbol{x_r}$. Il s'agit de la variable 
     qui limite davantage l'augmentation de la variable de sortie, 
     puisqu'elle atteint 0 plus tôt que toutes les autres variable 
     lorsque $x_e$ augmente. 
@@ -1594,9 +1568,9 @@ La variable de sortie est donc $y$
     \noindent
     $\blacktriangleright$ 
     \textbf{Soustraire} chacune des autres rangées par un facteur 
-    $f \times ligne(x_s)$, de manière à obtenir 0 dans la colonne 
+    $f \times ligne(x_r)$, de manière à obtenir 0 dans la colonne 
     de la variable de sortie (la même colonne que le coefficient pivot). 
-
+\end{multicols*} 
 \begin{multicols*}{2}
 
 \chapter{Résolution Graphique}
@@ -1739,7 +1713,7 @@ droite correspondante :
     \begin{align*}
         {5 \choose 3} = 
         \dfrac{5!}{3! \cdot 2!} 
-        = \textcolor{myr}{10}  
+        = \textcolor{myr}{\boldsymbol{10}}  
     \end{align*}
 
     Or, le polyptote ne contient que 
@@ -1760,27 +1734,34 @@ droite correspondante :
     et $\textcolor{myr}{\boldsymbol{m}}$ \textbf{contraintes} et 
     $n \geq m$, nous avons les entités suivantes :
 
-    \begin{align*}
-        &\boldsymbol{x_j} \Coloneqq \textit{variables de décision} \\   
-        &\boldsymbol{c_j} \Coloneqq \textit{coeff. de } \boldsymbol{x_j}  \textit{ dans l'objectif}  \\  
-        &\boldsymbol{a_{ij}} \Coloneqq \textit{coeff. de } \boldsymbol{x_j} \textit{ dans la contrainte } \boldsymbol{i} \\  
-        &\boldsymbol{b_i} \Coloneqq \textit{terme de droite dans la contrainte } \boldsymbol{i}
-    \end{align*}
+    \begin{alignat*}{2}
+        &\boldsymbol{x_{j\phantom{j}}} \Coloneqq&\quad \text{variables de décision} 
+        &
+        \\   
+        &\boldsymbol{c_{j\phantom{j}}} \Coloneqq \quad\quad& \text{coeficient de } \boldsymbol{x_j}  
+        \text{ dans l'objectif}  &
+        \\  
+        &\boldsymbol{a_{ij}} \Coloneqq& \text{coefficient de } 
+        \boldsymbol{x_{j\phantom{j}}} 
+        \text{ dans la contrainte } \boldsymbol{i} &
+        \\  
+                                                   &\boldsymbol{b_{i\phantom{j}}} \Coloneqq& \text{terme de droite dans la contrainte } \boldsymbol{i} &
+    \end{alignat*}
 
     Les \textbf{variables de décisions} sont donc $x_j, j = 1, 2, \cdots n$ et chacune 
-    d'elle est 
+    d'elles est 
     présente dans une colonne $\boldsymbol{j}$ du tableau. Il y a 
-    $\boldsymbol{m}$ (ou $\boldsymbol{i}$) rangées d'équations 
+    $\boldsymbol{m}$  rangées d'équations 
     dans le tableau, excluant la rangée de l'objectif. 
 
 
 
     \begin{align*}
-        &\text{Min } \quad z = c_1x_1 + c_2x_2 + \cdots c_nx_n \\ 
+        &\text{Min } \quad z = c_1x_1 + c_2x_2 + \cdots + c_nx_n \\ 
         &\text{s.a.}   \\\\ 
         &a_{11}x_1 + a{12}x_2 + \cdots a_{1n}x_n = b_1 \\
         &a_{21}x_1 + a{22}x_2 + \cdots a_{2n}x_n = b_2 \\
-        &\quad\quad\quad\quad\quad \cdots\cdots  \\ 
+        & \vdots  \\ 
         &a_{m1}x_1 + a{m2}x_2 + \cdots a_{mn}x_n = b_m \\
         &x_1, x_2, \cdots, x_n \geq 0 
      \end{align*}
@@ -1789,8 +1770,8 @@ droite correspondante :
 
      \begin{align*}
         &\text{Min } z = \sum_{j=1}^{n }c_jx_j, \; \textbf{s}.\textbf{a}.  
-        \sum_{n=j}^{n }a_{ij} = b_i, i = 1, \cdots,  m \\ 
-        &x_j \geq 0, j = 1, \cdots, n 
+        \sum_{n=j}^{n }a_{ij} = b_i, i = 1, \dots,  m \\ 
+        &x_j \geq 0, j = 1, \dots, n 
      \end{align*} 
 
 
@@ -1835,14 +1816,21 @@ La solution associée est :
 
 \section{Choix de la variable d'entrée}
 
-La variable d'entrée $x_j$ est celle qui minimise $c_j x_j$ dans l'objectif $z$.
-Si tous les coefficients $\overline{c}_j \geq 0$, l'algorithme se termine car l'objectif
+La variable d'entrée $x_s = x_j$ est la variable $x_j$ qui minimise 
+$z$ et est donc \textbf{celle qui est la plus négative}.   
+
+À la fin d'une itération, si tous les  
+nouveaux coefficients sont positifs---c'est-à-dire 
+$\forall j, \; \overline{c}_j \geq 0$---\textbf{alors} 
+l'algorithme se termine car l'objectif
 ne peut plus être amélioré.
 
 \subsection{Scénario 1 : Tous les $\overline{c}_j x_j$ sont positifs}
+\vspace{-2em}
 \begin{align*}
     \left[ \forall j,\ \overline{c}_j x_j \geq 0 \right] \implies
-    z \longrightarrow \infty
+    z \longrightarrow \infty \; 
+    \textbf{fin de l'algorithme}
 \end{align*}
 
 \subsection{Scénario 2 : Au moins un $\overline{c}_j x_j$ est négatif}
@@ -1852,17 +1840,86 @@ Si $\overline{c}_j < 0$ pour au moins un $j$, la variable d'entrée $x_s$ est ch
     \overline{c}_s = \min\left\{ \overline{c}_j : j = 1, \dots, n \right\}
 \end{align*}
 
-Pour chaque ligne, on a :
+Pour chaque ligne \textbf{variable dépendante} du tableau, on a :
 \begin{align*}
     x_i = \overline{b}_i - \overline{a}_{is} x_s,\quad i = 1, \dots, m
 \end{align*}
 
+\noindent 
+\textbf{Exemple}  
+         \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        \rowcolor{myg!40}
+                        $\textcolor{myr}{\boldsymbol{u}}$     
+                                & 5
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{\boldsymbol{p}}$     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{\boldsymbol{h}}$     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{\textcolor{myr}{\boldsymbol{-z}}}$ 
+                                & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+                \caption{État initial de la \textbf{forme  standard}}
+        \end{table}   
+        Soit $x_1 = u, i = 1, x_s = x$, $a_{is} = 5$  on a :
+\begin{align*}
+    u = 30 - 5x
+\end{align*}
 \section{Augmentation de la variable d'entrée}
 
 \subsection{Scénario 1 : Tous les $\overline{a}_{is}$ sont négatifs}
 
 Si $\overline{a}_{is} < 0$ pour tout $i$, l'augmentation de $x_s$ entraîne une augmentation
-des $x_i$, rendant le problème non borné inférieurement.
+des $x_i$, rendant le problème \textbf{non borné inférieurement}. Dans l'exemple 
+précédent, si $a_{is}$ était tel que $a_{is} = -5$ au lieu de $a_{is} = 5$, l'augmentation
+de $x$ serait non bornée ; $u$ serait toujours positif qu'importe la valeur de $x$. 
+Lorsqu'un $a_{is}$ est positif, l'augmentation de $x_s$ est limitée par 
+la contraite de non négativité de $x_i$ :
+\begin{align*}
+    x_i \geq 0 \implies \overline{b} - \overline{a}_{is}x_s \geq 0
+\end{align*}
+\noindent
+\textbf{Exemple}
+\begin{align*}
+    u \geq 0 \implies \left[ 30 - 5x \geq 0 \right] \implies x \leq \dfrac{30}{5}
+\end{align*}
 
 \subsection{Scénario 2 : Au moins un $\overline{a}_{is}$ est positif}
 
@@ -1924,26 +1981,61 @@ et
 Considérons le problème du restaurateur :
 
 
-\begin{alignat*}{7}
-    \text{Min } z \quad & = \quad & -8x & {} - {} & 6y & & & & & & \\
-    \text{s.a.} \quad
-                        &        & 5x & {} + {} & 3y & {} + {} & \textcolor{myr}{\textbf{\textit{u}}} & & &= & 30 \\
-    &        & 2x & {} + {} & 3y & {} + {} & & \textcolor{myr}{\textbf{\textit{p}}}  & & = & 24 \\
-    &        &  x & {} + {} & 3y & {} + {} & & &\textcolor{myr}{\textbf{\textit{h}}} &  = & 18 \\
-    &        &  x,\ y,\ \textcolor{myr}{\textbf{\textit{u}}},\ \textcolor{myr}{\textbf{\textit{p}}},\ \textcolor{myr}{\textbf{\textit{h}}}  \geq & 0 
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x & - 6y &\\
+    &\text{s.a.} \\
+    &\phantom{\text{Min}} &\quad 5x & + 3y & 
+    + \textcolor{myr}{\boldsymbol{ u}}& 
+    \phantom{+ \; \textcolor{myr}{\boldsymbol{ p}}} 
+    \phantom{+ \;\textcolor{myr}{\boldsymbol{ h}}} \leq 30 & 
+    \\
+    &\phantom{\text{Min}} &\quad 2x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}& + 
+    \textcolor{myr}{\boldsymbol{ p}} 
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ h}}} 
+    \leq 24 & \\
+    &\phantom{\text{Min}} &\quad x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}&  
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ p}}} 
+    +\textcolor{myr}{\boldsymbol{ h}} \leq 18 & \\ 
+    \\ 
+    \\
+                &\phantom{\text{Min}} &\quad x &, \phantom{+3} y,& 
+    \textcolor{myr}{\boldsymbol{u}}&,
+    \textcolor{myr}{\boldsymbol{ p}}, 
+    \textcolor{myr}{\boldsymbol{ h}}
+    \phantom{+\textcolor{myr}{\boldsymbol{ p}}} \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
 \end{alignat*}
 
 
 En remplaçant les variables par $x_1$, $x_2$, $x_3$, $x_4$, $x_5$ :
 
-\begin{alignat*}{7}
-    \text{Min } z \quad & = \quad & -8x_1 & {} - {} & 6x_2 & & & & & & \\
-    \text{s.a.} \quad
-                        &        & 5x_1 & {} + {} & 3x_2 & {} + {} & \textcolor{myr}{\boldsymbol{x_3}} & & &= & 30 \\
-                        &        & 2x_1 & {} + {} & 3x_2 & {} + {} & & \textcolor{myr}{\boldsymbol{x_4}}  & & = & 24 \\
-                        &        &  x_1 & {} + {} & 3x_2 & {} + {} & & &\textcolor{myr}{\boldsymbol{x_5}} &  = & 18 \\
-    &        &  x_1,\ x_2,\ \textcolor{myr}{\boldsymbol{x_3}},\ \textcolor{myr}{\boldsymbol{x_4}},\ 
-    \textcolor{myr}{\boldsymbol{x_5}}  \geq & 0 
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x_1 & - 6x_2 &\\
+    &\text{s.a.} \\
+    &\phantom{\text{Min}} &\quad 5x_1 & + 3x_2 & 
+    + \textcolor{myr}{\boldsymbol{ x_3}}& 
+    \phantom{+ \; \textcolor{myr}{\boldsymbol{ p}}} 
+    \phantom{+ \;\textcolor{myr}{\boldsymbol{ h}}} \leq 30 & 
+    \\
+    &\phantom{\text{Min}} &\quad 2x_1 & + 3x_2 & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}& + 
+    \textcolor{myr}{\boldsymbol{ x_4}} 
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ h}}} 
+    \leq 24 & \\
+    &\phantom{\text{Min}} &\quad x_1 & + 3x_2 & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}&  
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ p}}} 
+    +\textcolor{myr}{\boldsymbol{ x_5}} \leq 18 & \\ 
+    \\ 
+    \\
+                &\phantom{\text{Min}} &\quad x_1 &, \phantom{+3} x_2,& 
+    \textcolor{myr}{\boldsymbol{x_3}}&,
+    \textcolor{myr}{\boldsymbol{ x_4}}, 
+    \textcolor{myr}{\boldsymbol{ x_5}}
+    \phantom{+\textcolor{myr}{\boldsymbol{ p}}} \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
 \end{alignat*}
 
 Le tableau initial du simplexe est :
@@ -2001,12 +2093,10 @@ On divise la ligne de $x_3$ par le coefficient pivot $5$, donc on a applique la
 formule 
 \begin{align*}
     \left[ \forall j, \;
-        \overline{\tilde{a}}_{rj} = \overline{a}_{rj} -  
-    \overline{a}_{is} \times \dfrac{\overline{a}_{rj}}{\overline{a}_{rs}} \right]  
+        \overline{\tilde{a}}_{rj} = \dfrac{\overline{a}_{rj}}{\overline{a}_{rs}} \right]  
     \implies 
     \forall j, \;
-        \overline{\tilde{a}}_{3j} = \overline{\tilde{a}}_{3j} -  
-        \overline{a}_{is} \times \dfrac{\overline{a}_{3j}}{\overline{a}_{3s}}, 
+        \overline{\tilde{a}}_{3j} =  \dfrac{\overline{a}_{3j}}{\overline{a}_{3s}}, 
 \end{align*}                
 
 \begin{table}[H]
@@ -2065,27 +2155,23 @@ Pour chaque ligne $i \neq r = x_3 (\text{nouvellement } x_1$, on ajuste :
 \vspace{-3em} 
 
 \begin{align*}
-    &\overline{\tilde{a}}_{41} = 2 - 2 \times 1 = 0, \\
-    &\overline{\tilde{a}}_{42} = 3 - 2 \times \dfrac{3}{5} = \dfrac{9}{5} \\ 
-    &\overline{\tilde{a}}_{43} = 0 - 2 \times \dfrac{1}{5} = -\dfrac{2}{5} \\ 
-    &\overline{\tilde{a}}_{44} = 1 - 2 \times 0  = 1 \\ 
-    &\overline{\tilde{a}}_{45} = 0 - 2 \times 0 = 0 \\
-    &\overline{\tilde{a}}_{51} = 1 - 1 \times 1 = 0, \\
-    &\overline{\tilde{a}}_{52} = 3 - 1 \times \dfrac{3}{5} = \dfrac{12}{5} \\ 
-    &\overline{\tilde{a}}_{53} = 0 - 1 \times \dfrac{1}{5} = -\dfrac{1}{5} \\ 
-    &\overline{\tilde{a}}_{54} = 0 - 1 \times 0  = 0 \\ 
-    &\overline{\tilde{a}}_{55} = 1 - 1 \times 0 = 1 
+     &\overline{\tilde{a}}_{41} = 0, \;
+     \overline{\tilde{a}}_{42} = \dfrac{9}{5}, \;
+     \overline{\tilde{a}}_{43}  = -\dfrac{2}{5}, \;
+     \overline{\tilde{a}}_{44} = 1, \;
+     \overline{\tilde{a}}_{45} = 0 \\
+    &\overline{\tilde{a}}_{51} =   0, \; 
+     \overline{\tilde{a}}_{52} =  \dfrac{12}{5}, \;
+     \overline{\tilde{a}}_{53} = -\dfrac{1}{5}, \;  
+     \overline{\tilde{a}}_{54} = 0, \; 
+     \overline{\tilde{a}}_{55} = 1 
 \end{align*}                    
 et
 \begin{align*}
     \left[ \overline{\tilde{b}}_i = \overline{b}_i - \overline{a}_{is} \overline{\tilde{b}}_r \right] 
     \implies
-\end{align*}
-\vspace{-3em} %
-
-\begin{align*}
-    &\overline{\tilde{b}}_4 = 24 - 2 \times 6 =  12  \\
-    &\overline{\tilde{b}}_5 = 18 - 2 \times 6 =  6  \\
+    \overline{\tilde{b}}_4 =  12, \;
+    \overline{\tilde{b}}_5 =  6  \\
 \end{align*}
 et 
 \begin{align*}
@@ -2093,17 +2179,12 @@ et
     \overline{c}_{j} 
 - \overline{c}_{s} \; \times \; \overline{\tilde{a}}_{rj}  \right] 
 \implies
+    \overline{\tilde{c}}_1  = 0 , \; 
+    \overline{\tilde{c}}_2 = -\dfrac{6}{5}, \;
+    \overline{\tilde{c}}_3 =  \dfrac{8}{5} 
 \end{align*}
 \vspace{-3em}% 
-
-\begin{align*}
-    &\overline{\tilde{c}}_1 = -8  - (-8)\times 1 = 0 , \\ 
-    &\overline{\tilde{c}}_2 = -6  - (-8)\times \dfrac{3}{5} = -\dfrac{6}{5} , \\ 
-    &\overline{\tilde{c}}_3 = 0  - (-8)\times \dfrac{3}{5} = \dfrac{8}{5} , \\ 
-\end{align*}
-
 et 
-
 \begin{align*}
     \left[ -\overline{\tilde{z}} = -\overline{z} - \overline{c}_s  \; \times \;
     \overline{\tilde{b}}_{rj} \right] 
@@ -2164,20 +2245,81 @@ Selon les résultats présentés, on optient alors le tableau suivant :
                 \end{center}
         \end{table}
 
-    \pagebreak
-    \chapter{Algorithme du Simplexe Analyse}
+\section{Résumé de l'algorithme en forme générale}
+\noindent
+    $\rhd$ \textbf{Organiser} les équations sous forme standard dans un tableau.
+
+    \noindent$\rhd$ \textbf{Choisir} la variable d'entrée $x_s$ avec le coefficient $\overline{c}_s$ le 
+    plus négatif.
+
+\noindent
+    $\rhd$ \textbf{Déterminer} la variable de sortie $x_r$ en calculant 
+    $\dfrac{\overline{b}_i}{\overline{a}_{is}}$ pour $\overline{a}_{is} > 0$.
+    Si aucun \( \overline{a}_{is} \) n'est positif, \textbf{alors} 
+    aucune variable $x_i$ ne limite l'augmentation de $x_r$ et le 
+    système est \textbf{non borné}.  
+
+\noindent
+    $\rhd$ \textbf{Effectuer} le pivot en divisant la ligne $r$ par $\overline{a}_{rs}$. 
+    Ajuster le tableau en considérant que $x_s$ prend la place de 
+    $x_r$ sous la colonne \texttt{t.d.}. 
+    mettant à jour les autres lignes.
+
+\noindent
+    $\rhd$ \textbf{Mettre à jour} les autres lignes. Pour chaque ligne $\boldsymbol{i}$, on a : 
+    \begin{align*}
+        \overline{\tilde{a}}_{ij} = \overline{a}_{ij} - a_{is} \times \overline{\tilde{a}}_{rj}
+    \end{align*}
+
+\noindent
+    $\rhd$ \textbf{Mettre à jour} les \entoure{t.d.}  . Pour chaque ligne $\boldsymbol{i}$, on a : 
+    \begin{align*}
+        \overline{\tilde{b}}_{i} = \overline{b}_{i} - a_{is} \times \overline{\tilde{b}}_{r}
+    \end{align*}
+\noindent
+    $\rhd$ \textbf{Mettre à jour} l'objectif :  
+    \begin{align*}
+        -\overline{\tilde{z}} = -\overline{z} - c_{s} \times \overline{\tilde{b}}_{rj}
+    \end{align*}
+
+\noindent
+    $\rhd$ \textbf{Répéter} les étapes 2 à 7 jusqu'à ce que tous les $\overline{c}_j \geq 0$.
+\end{multicols*}
+
+\begin{multicols*}{2}
+    \chapter{Rappel d'algèbre linéaire}
 
     \section{Définitions}
 
     Soit $x, y \in \mathbb{R}^n$, nous avons les quantités suivantes :
 
     \begin{align*}
-        &\text{Produit scalaire } : \quad  x^{T}y = y^Yx = \sum_{j=1}^{n }x_jy_j \\ 
+        &\text{Produit scalaire } : \quad  x^{T}y = y^Tx = \sum_{j=1}^{n }x_jy_j \\ 
         &\text{Vecteur} : \quad
-        \begin{pmatrix} x_1 \\ \vdots \\ x_n \end{pmatrix} \;
+        \begin{bmatrix} x_1 \\ \vdots \\ x_n \end{bmatrix} \;
+        \text{Tranposée} : \quad [x_1, \dots x_n]
     \end{align*}            
 
 
+
+\noindent
+\subsection{Exemple de produit scalaire}
+
+Prenons \( n = 3 \), \( \boldsymbol{x} = \begin{bmatrix} 1 \\ 2 \\ 3 \end{bmatrix} \),
+\( \boldsymbol{y} = \begin{bmatrix} 4 \\ 5 \\ 6 \end{bmatrix} \), et 
+$x^T = \begin{bmatrix} 1 & 2 & 3\end{bmatrix}$
+
+Calculons le produit scalaire :
+\begin{align*}
+    \boldsymbol{x}^T \boldsymbol{y} &= x_1 y_1 + x_2 y_2 + x_3 y_3 \\
+          &= \textcolor{myr}{(1)(4)} + \textcolor{myg}{(2)(5)} + \textcolor{myb}{(3)(6)} \\
+          &= \textcolor{myr}{4} + \textcolor{myg}{10} + \textcolor{myb}{18} \\
+          &= 32
+\end{align*}
+
+Ainsi, le produit scalaire de \( \boldsymbol{x} \) et \( \boldsymbol{y} \) est \boxed{32}.
+
+\subsection{Dépendance linéaire}
     \begin{note}{}{}
         Un ensemble de vecteur $x^1, \dots, x^k \in \mathbb{R}^n$ 
         est dit \textbf{linéairement dépendant} s'il existe  
@@ -2187,46 +2329,1679 @@ Selon les résultats présentés, on optient alors le tableau suivant :
             \lambda_{1}x^1 + \lambda_{2}x^2  + 
             \cdots 
             + \lambda_{k}x^k = 
-        \begin{pmatrix} 0 \\ \vdots \\ 0 \end{pmatrix}  = 0
+        \begin{bmatrix} 0 \\ \vdots \\ 0 \end{bmatrix}  = 0
         \end{align*}
     \end{note}  
 
+        Dans le contexte d'une matrice, s'il existe une 
+        combinaison linéaire de ligne ou de colonne 
+        qui peuvent engendrer une autre ligne ou colonne, on dit que la matrice 
+        linéairement dépendantes.
+
+\subsection{Exemples de dépendance}
+Considérons la matrice suivante :
+Considérons la matrice suivante :
+\[
+\mathbf{A} = 
+\begin{bmatrix}
+1 & 2 & 3 \\
+4 & 8 & 12 \\
+5 & 10 & 15
+\end{bmatrix}
+\]
+Les lignes de cette matrice sont linéairement dépendantes. La première 
+ligne est une combinaison linéaire de la 2\up{e} ligne:
+\[
+\text{Ligne 2} = \lambda \times \text{Ligne 1} = 2 \times \text{Ligne 1}
+\]
+D'ailleurs, la 3\up{e} ligne est une combinaison linéaire des deux premières lignes :
+\[
+\text{Ligne 3} = \text{Ligne 1} + 1\times \text{Ligne 2} 
+\]
+Cela signifie qu'il existe une relation linéaire entre les lignes, donc la matrice
+\(\mathbf{A}\) est linéairement dépendante.
+
+
+\subsection{Exemples d'indépendance linéaire}
+Considérons la matrice suivante :
+\[
+\mathbf{B} = 
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+\]
+Les lignes de cette matrice sont linéairement indépendantes car aucune des lignes 
+ne peut être obtenue comme une combinaison linéaire des autres lignes. 
+Il s'agit d'une matrice identité, et donc elle est linéairement indépendante.
+
+\subsection{Matrice carrée}
+
     Soit une matrice $A$ : 
         \begin{align*}
-                        \begin{pmatrix} 
+                        \begin{bmatrix} 
             a_{11} &  \cdots & a_{1n}  \\ 
-            \vdots &  \ldots & \ldots \\ 
+            \vdots &  \ddots & \ldots \\ 
             a_{m1} &  \cdots & a_{mn}
-            \end{pmatrix}
+            \end{bmatrix}
         \end{align*}
 
     \textbf{alors},  on dit que l'élément $a_{ij}$ est à
-    \textbf{l'intersection} \texttt{ligne } $i$, \texttt{col. } $j$      
+    \textbf{l'intersection} de la ligne  $i$ et de la colonne $j$      
     de la matrice.  Une \textbf{matrice carrée} est une 
     matrice $A_{m \times n}$ où $m = n$ et un vecteur de dimension $n$ 
-    peut être vue comme une matrice de dimension $n \times 1$. 
+    peut être vue comme une matrice de dimension $1 \times n$. 
     La \textbf{matrice identité} $I$ est 
     une \textbf{matrice carrée} telle qu'on a : 
 
     \begin{align*}
         \boxed{\forall a_{ij} \in A_{m \times n} = I, \; 
         \left[  i = j \right] \implies a_{ij} = 1,  \; \textbf{et}  
-        \left[ i \neq j \right] a_{ij} = 0 
+        \left[ i \neq j \right] \implies a_{ij} = 0 
     }
     \end{align*}
 
 
+\section{Multiplication de Matrices}
+
+\subsection{Formule Générale}
+
+Soient les matrices \( A_{a\times n} \)  et \( B_{n \times b} \). Le produit matriciel \( C = A \times B \) est une matrice de taille \( a \times b \), où chaque élément \( c_{ij} \) est donné par :
+
+\begin{align*}
+    c_{ij} = \sum_{k=1}^{n} a_{ik} \times b_{kj}, \quad \text{pour } i = 1, \dots, a \text{ et } j = 1, \dots, b
+\end{align*}
+
+\noindent
+Autrement dit, l'élément \( c_{ij} \) est le produit scalaire de la \( i^\text{ème} \) ligne de \( A \) et de la \( j^\text{ème} \) colonne de \( B \).
+
+\subsection{Exemple Concret}
+
+Prenons \( A \) une matrice \( 2 \times 3 \) et \( B \) une matrice \( 3 \times 2 \) :
+
+\begin{align*}
+    A = \begin{bmatrix}
+        a_{11} & a_{12} & a_{13} \\
+        a_{21} & a_{22} & a_{23}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        1 & 2 & 3 \\
+        4 & 5 & 6
+    \end{bmatrix}
+\end{align*}
+
+\begin{align*}
+    B = \begin{bmatrix}
+        b_{11} & b_{12} \\
+        b_{21} & b_{22} \\
+        b_{31} & b_{32}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        7 & 8 \\
+        9 & 10 \\
+        11 & 12
+    \end{bmatrix}
+\end{align*}
+
+Le produit \( C = A \times B \) est une matrice de taille \( 2 \times 2 \):
+
+\begin{align*}
+    C = \begin{bmatrix}
+        c_{11} & c_{12} \\
+        c_{21} & c_{22}
+    \end{bmatrix}
+\end{align*}
+
+Calculons chaque élément de \( C \) :
+
+\paragraph{Calcul de \( c_{11} \) :}
+
+\begin{align*}
+    c_{11} &= a_{11} \times b_{11} + a_{12} \times b_{21} + a_{13} \times b_{31} \\
+           &= \textcolor{myr}{(1)(7)} + \textcolor{myg}{(2)(9)} + \textcolor{myb}{(3)(11)} \\
+           &= \textcolor{myr}{7} + \textcolor{myg}{18} + \textcolor{myb}{33} \\
+           &= 58
+\end{align*}
+
+\paragraph{Calcul de \( c_{12} \) :}
+
+\begin{align*}
+    c_{12} &= a_{11} \times b_{12} + a_{12} \times b_{22} + a_{13} \times b_{32} \\
+           &= \textcolor{myr}{(1)(8)} + \textcolor{myg}{(2)(10)} + \textcolor{myb}{(3)(12)} \\
+           &= \textcolor{myr}{8} + \textcolor{myg}{20} + \textcolor{myb}{36} \\
+           &= 64
+\end{align*}
+
+\paragraph{Calcul de \( c_{21} \) :}
+
+\begin{align*}
+    c_{21} &= a_{21} \times b_{11} + a_{22} \times b_{21} + a_{23} \times b_{31} \\
+           &= \textcolor{myr}{(4)(7)} + \textcolor{myg}{(5)(9)} + \textcolor{myb}{(6)(11)} \\
+           &= \textcolor{myr}{28} + \textcolor{myg}{45} + \textcolor{myb}{66} \\
+           &= 139
+\end{align*}
+
+\paragraph{Calcul de \( c_{22} \) :}
+
+\begin{align*}
+    c_{22} &= a_{21} \times b_{12} + a_{22} \times b_{22} + a_{23} \times b_{32} \\
+           &= \textcolor{myr}{(4)(8)} + \textcolor{myg}{(5)(10)} + \textcolor{myb}{(6)(12)} \\
+           &= \textcolor{myr}{32} + \textcolor{myg}{50} + \textcolor{myb}{72} \\
+           &= 154
+\end{align*}
+
+\paragraph{Résultat Final :}
+
+La matrice produit \( C = A \times B \) est donc :
+
+\begin{align*}
+    C = \begin{bmatrix}
+        58 & 64 \\
+        139 & 154
+    \end{bmatrix}
+\end{align*}
+
+\noindent
+Ainsi, la multiplication de \( A \) et \( B \) nous donne la matrice \( C \) ci-dessus.
+
+\section{Transposée d'une Matrice : Formule Générale et Exemple}
+
+\subsection{Formule Générale}
+
+Soit $A$ une matrice de taille $m \times n$ :
+
+\begin{align*}
+    A = \begin{bmatrix}
+        a_{11} & a_{12} & \cdots & a_{1n} \\
+        a_{21} & a_{22} & \cdots & a_{2n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{m1} & a_{m2} & \cdots & a_{mn}
+    \end{bmatrix}
+\end{align*}
+
+La \textbf{transposée} de $A$, notée $A^T$, est une matrice de taille $n \times m$,
+obtenue en échangeant les lignes et les colonnes de $A$ :
+
+\begin{align*}
+    A^T = \begin{bmatrix}
+        a_{11} & a_{21} & \cdots & a_{m1} \\
+        a_{12} & a_{22} & \cdots & a_{m2} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        a_{1n} & a_{2n} & \cdots & a_{mn}
+    \end{bmatrix}
+\end{align*}
+
+Autrement dit, l'élément $(A^T)_{ij} = a_{ji}$ pour $i = 1, \dots, n$ et $j = 1, \dots, m$.
+
+\subsection{Exemple Concret}
+
+Prenons $A$ une matrice $2 \times 3$ :
+
+\begin{align*}
+    A = \begin{bmatrix}
+        \textcolor{myr}{a_{11}} & \textcolor{myg}{a_{12}} & \textcolor{myb}{a_{13}} \\
+        \textcolor{myr}{a_{21}} & \textcolor{myg}{a_{22}} & \textcolor{myb}{a_{23}}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \textcolor{myr}{1} & \textcolor{myg}{2} & \textcolor{myb}{3} \\
+        \textcolor{myr}{4} & \textcolor{myg}{5} & \textcolor{myb}{6}
+    \end{bmatrix}
+\end{align*}
+
+La transposée de $A$ est une matrice $3 \times 2$ obtenue en échangeant les lignes et les
+colonnes :
+
+\begin{align*}
+    A^T = \begin{bmatrix}
+        \textcolor{myr}{a_{11}} & \textcolor{myr}{a_{21}} \\
+        \textcolor{myg}{a_{12}} & \textcolor{myg}{a_{22}} \\
+        \textcolor{myb}{a_{13}} & \textcolor{myb}{a_{23}}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \textcolor{myr}{1} & \textcolor{myr}{4} \\
+        \textcolor{myg}{2} & \textcolor{myg}{5} \\
+        \textcolor{myb}{3} & \textcolor{myb}{6}
+    \end{bmatrix}
+\end{align*}
+
+Ainsi, les éléments de $A$ sont réorganisés pour former $A^T$ :
+
+\begin{itemize}
+    \item[$\rhd$ ] $a_{11}$ devient $(A^T)_{11}$, $a_{21}$ devient $(A^T)_{12}$
+    \item[$\rhd$ ] $a_{12}$ devient $(A^T)_{21}$, $a_{22}$ devient $(A^T)_{22}$
+    \item[$\rhd$ ] $a_{13}$ devient $(A^T)_{31}$, $a_{23}$ devient $(A^T)_{32}$
+\end{itemize}
+
+\noindent
+\textbf{Vérification des éléments} :
+
+\begin{align*}
+    (A^T)_{11} &= a_{11} = 1 \\
+    (A^T)_{12} &= a_{21} = 4 \\
+    (A^T)_{21} &= a_{12} = 2 \\
+    (A^T)_{22} &= a_{22} = 5 \\
+    (A^T)_{31} &= a_{13} = 3 \\
+    (A^T)_{32} &= a_{23} = 6
+\end{align*}
+
+Ainsi, la transposée $A^T$ est :
+
+\begin{align*}
+    A^T = \begin{bmatrix}
+        1 & 4 \\
+        2 & 5 \\
+        3 & 6
+    \end{bmatrix}
+\end{align*}
+
+\noindent
+\textbf{Conclusion} : La transposition d'une matrice consiste à transformer ses lignes
+en colonnes (et vice versa), ce qui revient à refléter la matrice par rapport à sa diagonale principale.
+
+
+\section{Calcul du Déterminant d'une Matrice : Formule Générale et Exemple}
+
+\subsection{Formule Générale}
+
+Le déterminant d'une matrice carrée $n \times n$ est défini de manière récursive en utilisant les mineurs et les cofacteurs. La formule générale pour le déterminant de la matrice $A$ est :
+
+\begin{align*}
+    \det(A) = \sum_{j=1}^{n} (-1)^{i+j} a_{ij} \det(A_{ij})
+\end{align*}
+
+où :
+
+- $a_{ij}$ est l'élément de la $i^\text{ème}$ ligne et $j^\text{ème}$ colonne de $A$.
+- $A_{ij}$ est la matrice de dimension $(n - 1) \times (n - 1)$ obtenue en retirant la ligne $i$ et la colonne $j$ de $A$.
+- Le signe $(-1)^{i+j}$ est le signe du cofacteur, positif si $i + j$ est pair, négatif si $i + j$ est impair.
+
+\subsection{Exemple Concret avec une Matrice $2 \times 2$}
+
+Soit la matrice $A$ :
+
+\begin{align*}
+    A = \begin{bmatrix}
+        \textcolor{myr}{a_{11}} & \textcolor{myg}{a_{12}} \\
+        \textcolor{myb}{a_{21}} & \textcolor{orange}{a_{22}}
+    \end{bmatrix}
+    = \begin{bmatrix}
+        \textcolor{myr}{2} & \textcolor{myg}{3} \\
+        \textcolor{myb}{1} & \textcolor{orange}{4}
+    \end{bmatrix}
+\end{align*}
+
+Le déterminant de $A$ est calculé comme suit :
+
+\begin{align*}
+    \det(A) &= a_{11} a_{22} - a_{12} a_{21} \\
+            &= \textcolor{myr}{(2)} \times \textcolor{orange}{(4)} - \textcolor{myg}{(3)} \times \textcolor{myb}{(1)} \\
+            &= \textcolor{myr}{8} - \textcolor{myg}{3} \\
+            &= 5
+\end{align*}
+
+Ainsi, le déterminant de $A$ est \boxed{5}.
+
+\subsection{Remarque sur les Mineurs et les Cofacteurs}
+
+Pour une matrice $2 \times 2$, le calcul du déterminant est direct. Pour des matrices de taille supérieure, on utilise les mineurs et les cofacteurs en appliquant le développement par rapport à une ligne ou une colonne.
+
+\subsection{Exemple avec une Matrice $3 \times 3$}
+
+Soit la matrice $B$ :
+
+\begin{align*}
+    B = \begin{bmatrix}
+        b_{11} & b_{12} & b_{13} \\
+        b_{21} & b_{22} & b_{23} \\
+        b_{31} & b_{32} & b_{33}
+    \end{bmatrix}
+\end{align*}
+
+Le déterminant de $B$ est :
+
+\begin{align*}
+    \det(B) = b_{11} \det(B_{11}) - b_{12} \det(B_{12}) + b_{13} \det(B_{13})
+\end{align*}
+
+où :
+
+- $B_{1j}$ est la matrice $2 \times 2$ obtenue en retirant la première ligne et la $j^\text{ème}$ colonne de $B$.
+- Par exemple, $B_{11}$ est obtenu en supprimant la première ligne et la première colonne de $B$.
+
+\noindent \textbf{Calcul détaillé} :
+
+Supposons que :
+
+\begin{align*}
+    B = \begin{bmatrix}
+        1 & 2 & 3 \\
+        0 & 4 & 5 \\
+        1 & 0 & 6
+    \end{bmatrix}
+\end{align*}
+
+Calculons les mineurs :
+
+- $\det(B_{11}) = \begin{vmatrix} 4 & 5 \\ 0 & 6 \end{vmatrix} = (4)(6) - (5)(0) = 24$
+- $\det(B_{12}) = \begin{vmatrix} 0 & 5 \\ 1 & 6 \end{vmatrix} = (0)(6) - (5)(1) = -5$
+- $\det(B_{13}) = \begin{vmatrix} 0 & 4 \\ 1 & 0 \end{vmatrix} = (0)(0) - (4)(1) = -4$
+
+Calcul du déterminant de $B$ :
+
+\begin{align*}
+    \det(B) &= b_{11} \det(B_{11}) - b_{12} \det(B_{12}) + b_{13} \det(B_{13}) \\
+            &= (1)(24) - (2)(-5) + (3)(-4) \\
+            &= 24 + 10 - 12 \\
+            &= 22
+\end{align*}
+
+Ainsi, le déterminant de $B$ est \boxed{22}.
+
+\subsection{Conclusion}
+
+Le calcul du déterminant d'une matrice carrée implique l'utilisation des mineurs et des cofacteurs, en développant le déterminant par rapport à une ligne ou une colonne. Pour une matrice $n \times n$, cette méthode est appliquée récursivement jusqu'à obtenir des déterminants de matrices $2 \times 2$, qui sont calculés directement.
+
+\section{Rang et matrices non singulières}
+
+Le \textbf{rang} d'une matrice est le nombre maximum de lignes (ou colonnes) 
+linéairement indépendantes.
+
+\subsection{Plein rang}
+Une matrice \(\mathbf{A}_{m \times n}\) est dite de \textbf{plein rang} si son rang 
+est égal à \(\min(m, n)\).
+
+\paragraph{Exemple :}
+Considérons la matrice \(\mathbf{A}\) suivante de plein rang (rang = 2) :
+\[
+\mathbf{A} =
+\begin{bmatrix}
+1 & 2 \\
+3 & 4
+\end{bmatrix}
+\]
+Cette matrice a deux lignes linéairement indépendantes, donc elle est de plein rang.
+
+\subsection{Matrice non singulière}
+Une matrice carrée \(\mathbf{A}_{n \times n}\) est dite \textbf{non singulière} si :
+\begin{itemize}
+    \item[$\rhd$ ] ses lignes (ou colonnes) sont linéairement indépendantes,
+    \item[$\rhd$ ] elle est de plein rang (rang = \(n\)),
+    \item[$\rhd$ ] \(\det(\mathbf{A}) \neq 0\),
+    \item[$\rhd$ ] elle possède une inverse \(\mathbf{A}^{-1}\) telle que 
+    \(\mathbf{A} \mathbf{A}^{-1} = \mathbf{A}^{-1} \mathbf{A} = \mathbf{I}\).
+\end{itemize}
+
+\paragraph{Exemple :}
+Considérons la matrice suivante :
+\[
+\mathbf{B} =
+\begin{bmatrix}
+1 & 2 \\
+3 & 5
+\end{bmatrix}
+\]
+Cette matrice est non singulière car son déterminant est non nul (\(\det(\mathbf{B}) = 1\)),
+ses lignes sont linéairement indépendantes, et elle possède une inverse.
+
+\chapter{Algorithme du Simplexe Analyse}
+
+\noindent
+Posons les quantités suivantes :
+\[
+\begin{array}{r@{\hspace{1.5mm}}l@{\hspace{2.5mm}}>{\raggedright\arraybackslash}p{4cm}}
+\mathbf{x}_{n \times 1} & = 
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_n
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{variables de décision}} \\[25pt]
+
+\mathbf{c}_{n \times 1} & = 
+\begin{bmatrix}
+c_1 \\
+\vdots \\
+c_n
+\end{bmatrix}
+&\text{le vecteur des } \textbf{\text{coefficients de l'objectif}} \\[25pt]
+
+\mathbf{A}_{m \times n} & = 
+\begin{bmatrix}
+a_{11} & \cdots & a_{1n} \\
+\vdots & \ddots & \vdots \\
+a_{m1} & \cdots & a_{mn}
+\end{bmatrix}
+& \text{la matrice des } \textbf{\text{coefficients des contraintes}} \\[25pt]
+
+\mathbf{b}_{m \times 1} & = 
+\begin{bmatrix}
+b_1 \\
+\vdots \\
+b_m
+\end{bmatrix}
+&\text{le vecteur des } \textbf{\text{termes de droite}}
+\end{array}
+\]
+\section{Noatation matricielle}
+Nous avons montré plus tôt que la forme standard peut être 
+simplifiée par la notation suivant en utilisant le forme générale :
+     \begin{align*}
+        &\text{Min } z = \sum_{j=1}^{n }c_jx_j, \; \textbf{s}.\textbf{a}.  
+        \sum_{n=j}^{n }a_{ij} = b_i, i = 1, \dots,  m \\ 
+        &x_j \geq 0, j = 1, \dots, n 
+     \end{align*} 
+
+Nous pouvons utiliser cette expression et les quantités matricielles 
+que nous avons posé pour engendrer la notation matricielle 
+de la forme standard :
+\begin{align*}
+    &\text{Min }z \\ 
+    &\text{s.a.} \\
+    &A\mathbf{x} = b \\ 
+    &c^T \mathbf{x} - z = 0 \\  
+    & x \geq 0 
+\end{align*}
+
+\section{Démonstration de la notation matricielle}
+
+Partons de la formulation classique du problème linéaire en forme standard :
+
+\[
+\text{Min } z = \sum_{j=1}^{n} c_j x_j
+\]
+Sous les contraintes :
+\[
+\sum_{j=1}^{n} a_{ij} x_j = b_i \quad \text{pour } i = 1, 2, \dots, m
+\]
+avec \(x_j \geq 0\), \(j = 1, 2, \dots, n\).
+
+En notation matricielle :
+\[
+\mathbf{c}^T \mathbf{x} \quad \text{et} \quad \mathbf{A} \mathbf{x} = \mathbf{b}
+\]
+
+\textbf{1. Objectif} :  
+\[
+\mathbf{c}^T \mathbf{x} = 
+\begin{bmatrix}
+c_1 & c_2 & \cdots & c_n
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{bmatrix}
+= \sum_{j=1}^{n} c_j x_j
+\]
+Le produit \(\mathbf{c}^T \mathbf{x}\) est donc équivalent à la somme pondérée 
+de \(x_j\) par \(c_j\).
+
+\textbf{2. Contraintes} :  
+\[
+\mathbf{A} \mathbf{x} = 
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2 \\
+\vdots \\
+x_n
+\end{bmatrix}
+=
+\begin{bmatrix}
+\sum_{j=1}^{n} a_{1j} x_j \\
+\sum_{j=1}^{n} a_{2j} x_j \\
+\vdots \\
+\sum_{j=1}^{n} a_{mj} x_j
+\end{bmatrix}
+\]
+Ce produit est équivalent aux \(m\) contraintes :
+\[
+\sum_{j=1}^{n} a_{ij} x_j = b_i, \quad i = 1, 2, \dots, m
+\]
+
+\textbf{3. Conditions de non-négativité} :  
+\[
+\mathbf{x} \geq 0
+\]
+Cela signifie simplement que chaque composante \(x_j \geq 0\), ce qui correspond 
+directement aux conditions de non-négativité.
+
+\textbf{Conclusion }  
+
+Nous avons montré que la notation matricielle pour l'algorithme du simplexe, 
+\(\mathbf{c}^T \mathbf{x}\) pour l'objectif et \(\mathbf{A} \mathbf{x} = \mathbf{b}\) 
+pour les contraintes, est équivalente à la formulation classique du problème. 
+Chaque terme du produit matriciel correspond exactement aux termes de la formulation 
+d'origine.
+
+\section{Notation matricielle dans le problème du restaurateur}
+Dans le problème du restaurateur, nous avons les quantités suivantes : 
+\begin{alignat*}{4}
+    &\text{Min} &\quad -8x & - 6y &\\
+    &\text{s.a.} \\
+    &\phantom{\text{Min}} &\quad 5x & + 3y & 
+    + \textcolor{myr}{\boldsymbol{ u}}& 
+    \phantom{+ \; \textcolor{myr}{\boldsymbol{ p}}} 
+    \phantom{+ \;\textcolor{myr}{\boldsymbol{ h}}} \leq 30 & 
+    \\
+    &\phantom{\text{Min}} &\quad 2x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}& + 
+    \textcolor{myr}{\boldsymbol{ p}} 
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ h}}} 
+    \leq 24 & \\
+    &\phantom{\text{Min}} &\quad x & + 3y & 
+    \phantom{+\textcolor{myr}{\boldsymbol{ u}}}&  
+    \phantom{+\;\textcolor{myr}{\boldsymbol{ p}}} 
+    +\textcolor{myr}{\boldsymbol{ h}} \leq 18 & \\ 
+    \\ 
+    \\
+                &\phantom{\text{Min}} &\quad x &, \phantom{+3} y,& 
+    \textcolor{myr}{\boldsymbol{u}}&,
+    \textcolor{myr}{\boldsymbol{ p}}, 
+    \textcolor{myr}{\boldsymbol{ h}}
+    \phantom{+\textcolor{myr}{\boldsymbol{ p}}} \geq 0 & \\
+    & \phantom{\text{Min}} &\quad z = 8x & + 6y &
+\end{alignat*}
+\[
+\begin{array}{r@{\hspace{1.5mm}}l@{\hspace{2.5mm}}>{\raggedright\arraybackslash}p{4cm}}
+\mathbf{x}_{5 \times 1} & = 
+\begin{bmatrix}
+x \\
+y \\
+u \\ 
+p \\
+h
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{variables de décision}} \\[35pt]
+
+\mathbf{c}_{5 \times 1} & = 
+\begin{bmatrix}
+    -8\phantom{-} \\
+-6\phantom{-} \\
+\phantom{-}0\phantom{-} \\ 
+\phantom{-}0\phantom{-} \\ 
+\phantom{-}0\phantom{-} \\
+\end{bmatrix}
+&\text{le vecteur des } \textbf{\text{coefficients de l'objectif}} \\[35pt]
+
+\mathbf{A}_{3 \times 5} & = 
+\begin{bmatrix}
+5 & 3 & 1 & 0 & 0 \\
+2 & 3 & 0 & 1 & 0 \\
+1 & 3 & 0 & 0 & 1
+\end{bmatrix}
+& \text{la matrice des } \textbf{\text{coefficients des contraintes}} \\[25pt]
+
+\mathbf{b}_{3 \times 1} & = 
+\begin{bmatrix}
+30 \\
+24 \\
+18
+\end{bmatrix}
+&\text{le vecteur des } \textbf{\text{termes de droite}}
+\end{array}
+\]
+\section{Base et variable de base}
+Soit une matrice de coefficents de contraintes $\mathbf{A}_{m \times n}$ où 
+$m \leq n$ et $\mathbf{A}_{m \times n}$ est de plein range $m$. 
+
+\textbf{Alors}, une sous-matrice $B_{m\times m}$ est une \textcolor{myr}{\textbf{base}} de 
+$\mathbf{A}$ si $\mathbf{B}$ est \textcolor{myr}{\textbf{non singulière}}. 
+
+Puisque chacune colonne de la matrice $\mathbf{A}$ est associée  
+à une variable, les variables qui correspondent 
+aux colonnes de $\mathbf{B}$ sont appelées 
+\textcolor{myr}{\textbf{variables de base}}. Les autres 
+variables sont les \textcolor{myr}{\textbf{variables hors-base}}. 
+
+\vspace{1em}
+\noindent 
+\textbf{Exemple}\\
+dans le problème du restaurateur, on a la matrice $A_{3 \times 5}$ :
+\[
+\begin{bNiceMatrix}[
+    first-row,
+    ]
+    \textcolor{myr}{\boldsymbol{x}}  
+    & \textcolor{myr}{\boldsymbol{y}} 
+    & \textcolor{myr}{\boldsymbol{u}} 
+    & \textcolor{myr}{\boldsymbol{p}} 
+    & \textcolor{myr}{\boldsymbol{h}} \\
+    5 & 3 & 1 & 0 & 0 \\
+    2 & 3 & 0 & 1 & 0 \\
+    1 & 3 & 0 & 0 & 1
+\end{bNiceMatrix}
+\]
+
+
+Pour leses examples de bases possibles on a alors : 
+% Matrices B_1, B_2, B_3
+
+% Matrices B_1, B_2, B_3
+\[
+\begin{array}{c@{\quad}c@{\quad}c}
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{p}} & \textcolor{myr}{\boldsymbol{h}} \\
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1
+\end{bNiceMatrix}
+& 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} \\
+    5 & 1 & 0 \\
+    2 & 0 & 0 \\
+    1 & 0 & 1
+\end{bNiceMatrix}
+& 
+\begin{bNiceMatrix}[first-row,]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{p}} & \textcolor{myr}{y} \\
+    5 & 0 & 3 \\
+    2 & 1 & 3 \\
+    1 & 0 & 3
+\end{bNiceMatrix}
+\\
+B_1 & B_2 & B_3
+\end{array}
+\]
+
+\subsection{Dérivations matricielles}
+Ponson les quantités suivantes : 
+\[
+\begin{array}{r@{\hspace{1.5mm}}l@{\hspace{2.5mm}}>{\raggedright\arraybackslash}p{6cm}}
+
+\mathbf{x} & = 
+\begin{bmatrix}
+\mathbf{x}_B \\
+\mathbf{x}_R
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{variables}} \\[25pt]
+
+\mathbf{x}_B^T & = \left[x_1, x_2, \dots, x_m\right]
+& \text{le vecteur des } \textbf{\text{variables de base}} \\[25pt]
+
+\mathbf{x}_R^T & = \left[ x_{m+1}, x_{m+2}, \dots, x_n\right]
+& \text{le vecteur des } \textbf{\text{variables hors-base}} \\[25pt]
+
+\mathbf{c} & = 
+\begin{bmatrix}
+\mathbf{c}_B \\
+\mathbf{c}_R
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{coûts}} \\[25pt]
+
+\mathbf{c}_B^T & = \left[c_1, c_2, \dots, c_m \right]
+& \text{le vecteur des } \textbf{\text{coûts des variables de base}} \\[25pt]
+
+\mathbf{c}_R^T & = \left[ c_{m+1}, c_{m+2}, \dots, c_n\right]
+& \text{le vecteur des } \textbf{\text{coûts des variables hors-base}} \\[25pt]
+
+\mathbf{A} & = 
+\left[ B : R \right]
+& \text{avec } $B_{m \times m}$ \text{ base (colonnes des variables de base)} \\[25pt]
+& & $R_{m \times (n-m)}$ \text{ reste de } A \text{ (colonnes des variables hors-base)}
+\end{array}
+\]
+
+
+
+\end{multicols*} 
+
+\section{Représentation tabulée de la notation matricielle}
+\[
+\begin{array}{c c}
+\begin{array}{c c c c c c c c c c c}
+    \multicolumn{4}{c}{\overbrace{\hspace{2.25cm}}^{\mathbf{x}_B^T}} & & \multicolumn{3}{c}{\overbrace{\hspace{3cm}}^{\mathbf{x}_R^T}} & & \\
+\end{array} \\
+\begin{array}{|c|c c c c|c c c c|c|c|}
+\hline
+\text{v.d.} & x_1 & x_2 & \cdots & x_m & x_{m+1} & x_{m+2} & \cdots & x_n & -z & \text{t.d.} \\
+\hline
+& &  & & & &  & & & & \\
+& \multicolumn{4}{c|}{B} & \multicolumn{3}{c}{R} & & & b \\
+& &  & & & &  & & & & \\
+\hline
+-z & c_1 &  c_2 &  \dots & c_m & c_{m+1} & c_{m+2} & \dots & c_n & 1 & 0 \\
+\hline
+\end{array}\\
+\begin{array}{c c c c c c c c c c c}
+    & & &\underbrace{\hspace{2.5cm}}_{\mathbf{c}_B^T}   & & \underbrace{\hspace{3.25cm}}_{\mathbf{c}_R^T} & & & & & \\
+\end{array}
+\end{array}
+\]
+
+\begin{multicols*}{2}
+
+\section{Dérivation du vecteur multiplicateur du simplexe}
+
+Nous allons représenter le tableau du simplexe en utilisant les variables de base \( \mathbf{x}_B \) et les variables hors-base \( \mathbf{x}_R \). À partir de la matrice \( A = (B : R) \), on peut exprimer le système de contraintes sous forme matricielle comme suit :
+
+\[
+\begin{minipage}{0.20\textwidth}
+\begin{align*}
+& \text{Min } z \notag \\
+& \text{s.a.} \notag \\
+& \left[B : R\right]
+\begin{bmatrix}
+\mathbf{x}_B \\
+\mathbf{x}_R
+\end{bmatrix} = \mathbf{b} \notag \\
+& \left[ \mathbf{c}_B^T : \mathbf{c}_R^T \right] 
+\begin{bmatrix}
+\mathbf{x}_B \\
+\mathbf{x}_R
+\end{bmatrix} - z = 0 \notag \\
+& \mathbf{x}_B \geq 0, \mathbf{x}_R \geq 0 \notag
+\end{align*}
+\end{minipage}
+\Leftrightarrow
+\begin{minipage}{0.20\textwidth}
+\begin{align*}
+& \text{Min } z \notag \\
+& \text{s.a.} \notag \\
+& B \mathbf{x}_B + R \mathbf{x}_R = \mathbf{b} \notag \\\\
+& \mathbf{c}_B^T \mathbf{x}_B + \mathbf{c}_R^T \mathbf{x}_R - z = 0 \notag \\\\
+& \mathbf{x}_B \geq 0, \mathbf{x}_R \geq 0 \notag
+\end{align*}
+\end{minipage}
+\]
+
+où \( B \) est une sous-matrice non singulière correspondant aux variables de base.
+
+\subsection{Transformation par \( B^{-1} \)}
+
+Pour obtenir une matrice identité sous \( \mathbf{x}_B \), on multiplie tout le système par l'inverse de la matrice \( B \), ce qui donne :
+
+\[
+B^{-1}(Bx_B + Rx_R) = B^{-1}b
+\quad \Rightarrow \quad 
+\mathbf{x}_B + B^{-1}R \mathbf{x}_R = B^{-1}b
+\]
+
+Ainsi, on peut exprimer \( \mathbf{x}_B \) comme suit :
+
+\[
+    \boxed{\mathbf{x}_B = B^{-1}b - B^{-1}R \mathbf{x}_R}
+\]
+
+En remplaçant cette expression dans la fonction objectif, on obtient la forme suivante :
+
+\[
+c_B^T \left(B^{-1}b - B^{-1}R \mathbf{x}_R\right) + c_R^T \mathbf{x}_R - z = 0
+\]
+\[
+\Rightarrow \left(c_R^T - c_B^T B^{-1} R\right) \mathbf{x}_R - z = -c_B^T B^{-1} b
+\]
+
+Le vecteur des multiplicateurs du simplexe \( \pi^T \) est défini par :
+\[
+    \boxed{\pi^T = c_B^T B^{-1}}
+\]
+
+Finalement, la fonction objectif devient :
+
+\[
+    \boxed{\left(c_R^T - \pi^T R\right) \mathbf{x}_R - z = -\pi^T b}
+\]
+
+Ainsi, \( \pi \) représente les multiplicateurs
+
+\section{Dérivation du vecteur multiplicateur du simplexe}
+
+Nous calculons le vecteur multiplicateur \( \pi \) associé à la base \( B \) comme suit :
+\[
+\pi^T = c_B^T B^{-1}
+\]
+Cela nous permet de calculer les coûts réduits pour les variables hors-base :
+\[
+    \boxed{\tilde{c}_j = c_j - \pi^T a_j \quad \text{pour } j = m+1, \dots, n}
+\]
+où \( a_j \) est la \( j \)-ème colonne de la matrice \( A \).
+
+On peut calculer la valeur de l'objectif grâce à la formule :
+\begin{align*}
+    \boxed{- z = -\pi^Tb}
+\end{align*}
+
+Pour les nouveaux coût dans la ligne objectif, on a :
+\begin{align*}
+    \overline{c}^T = c^T -\pi^TA
+\end{align*}
+
+Et pour les termes de droite on :
+\begin{align*}
+    \boxed{\overline{b} = B^{-1}b}
+\end{align*}
+
+\section{Résolution par la méthode tablualire et matricielle}
+\noindent 
+$\rhd$ \textbf{Choisir} le variable d'entrée et la variable de sortie comme on  
+l'a vu précédemment. Pour la première itération, supposer que les variables 
+d'équarts sont les variable dépendantes. Effectuer le pivot : la variable 
+d'entrée prend la place d'une des variables dépendantes qui est la variable de 
+sortie. Après ce pivot, il est facile d'identifier la base $\boldsymbol{B}_{m\times m}$.
+
+\noindent
+$\rhd$ \textbf{Calculer} les quantités $B^{-1}$ et $\pi^T$. Calculer ensuite 
+les quantités $\overline{c}^T$, $\overline{b}$, et $-\overline{z}$.
+\end{multicols*}
+
+\[
+\begin{array}{c c}
+\begin{array}{|c|c c c c c c c c|c|c|}
+\hline
+\text{v.d.} & x_1 & x_2 & \cdots & x_m & x_{m+1} & x_{m+2} & \cdots & x_n & -z & \text{t.d.} \\
+\hline
+& &  & & & &  & & & & \\
+\textcolor{myr}{\boldsymbol{x_B}} & & & & & \textcolor{myr}{\boldsymbol{B^{-1}A}}  & & & & & 
+\textcolor{myr}{\boldsymbol{B^{-1}b}  } \\
+& &  & & & &  & & & & \\
+\hline
+-z & &  & &   
+   &\textcolor{myr}{\boldsymbol{c^T -\pi^TA}  } & & & & 1 & -\pi^Tb \\
+\hline
+\end{array}\\
+\begin{array}{c c c c c c c c c }
+    & & & & \underbrace{\hspace{6.cm}}_{\mathbf{c}_B^T} & & & & \underbrace{\hspace{1.1cm}}_{-\overline{z}} \\
+\end{array}
+\end{array}
+\]
+
+
+\begin{multicols*}{2}
+\section{Exemple de restaurateur}
+         \begin{table}[H]
+                \begin{center}
+                    \renewcommand{\arraystretch}{1.5}
+                    \fontfamily{flr}\selectfont
+                    \footnotesize
+                        \begin{tabular}{|l|l l l l l |l|l|}
+                        \arrayrulecolor{blue}
+                        \hline
+                        v.d. & $x$
+                             & $y$ & $u$ & $p$ & $h$ & $-z$ & t.d 
+                        \\
+                        \hline
+                        \arrayrulecolor{black}
+                        \rowcolor{myg!40}
+                        $\textcolor{myr}{\boldsymbol{x}}$     
+                                & 5
+                                & 3
+                                & 1
+                                & 
+                                & &  &  30
+                        \\
+                        $\textcolor{myr}{\boldsymbol{p}}$     
+                               & 2
+                               & 3
+                               & & 1
+                               & & & 24 
+                        \\
+                        $\textcolor{myr}{\boldsymbol{h}}$     
+                               & 1
+                               & 3 
+                               &  & 
+                               &  1
+                               & & 18 
+                        \\ 
+                        \hline
+                        $\textcolor{myr}{\textcolor{myr}{\boldsymbol{-z}}}$ 
+                                & -8
+                                & -6
+                                & 
+                                & 
+                                & 
+                                & 1 & 0 
+                        \\
+                        \hline 
+
+
+
+                        \end{tabular}
+                \end{center}
+        \end{table}
+Considérons le problème du restaurateur. En notation matricielle, 
+nous avons les quatités suivantes 
+\[
+\begin{array}{r@{\hspace{1.5mm}}l@{\hspace{2.5mm}}>{\raggedright\arraybackslash}p{4cm}}
+\mathbf{x}_B & = 
+\begin{bmatrix}
+\textcolor{myr}{\boldsymbol{x}}  \\
+\textcolor{myr}{\boldsymbol{p}} \\ 
+\textcolor{myr}{\boldsymbol{y}} 
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{variables de bases}} \\[20pt]
+\mathbf{x}_R & = 
+\begin{bmatrix}
+u \\
+h
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{variables hors bases}} \\[20pt]
+\mathbf{c}_B & = 
+\begin{bmatrix}
+    -8 \phantom{-} \\ 
+\phantom{-} 0 \phantom{-} \\ 
+-6 \phantom{-}
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{coûts basiques}} \\[20pt]
+\mathbf{c}_R & = 
+\begin{bmatrix}
+0 \\ 
+0
+\end{bmatrix}
+& \text{le vecteur des } \textbf{\text{coûts non basiques}} \\[20pt]
+\mathbf{A} & = 
+\begin{bmatrix}
+    5 & 3 & 1 & 0 & 0 \\ 
+    2 & 3 & 0 & 1 & 0 \\ 
+    1 & 3 & 0 & 0 & 1 
+\end{bmatrix}
+& \text{la matrice du} \textbf{\text{tableau}} \\[20pt]
+\mathbf{B} & = 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{p}} & 
+    \textcolor{myr}{\boldsymbol{y}} \\
+    5 & 0 & 3 \\
+    2 & 1 & 3 \\
+    1 & 0 & 3 
+\end{bNiceMatrix}
+& \text{la matrice des coefficients} \textbf{\text{de base}} \\[20pt]
+\mathbf{R} & = 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}}  
+    \\
+    1 & 0 \\ 
+    0 & 0 \\
+    0 & 1 
+\end{bNiceMatrix}
+& \text{la matrice des coefficients} \textbf{\text{hors-base}} \\[20pt]
+\mathbf{B}^{-1} & = 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{p}} & 
+    \textcolor{myr}{\boldsymbol{y}} \\
+    1/4 & 0 & -1/4\\
+    -1/4 & 1 & -3/4\\
+    -1/12 & 0 & 5/12
+\end{bNiceMatrix}
+& \text{l'inverse de la matrice} \textbf{\text{de base}} \\[25pt]
+\end{array}
+\]
+
+Pour obtenir la matrice des coefficients du tableau après une itération, 
+on calcule la quantité $B^{-1}A$ : 
+\begin{align*}
+&B^{-1}A =
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{p}} & 
+    \textcolor{myr}{\boldsymbol{y}} \\
+    1/4 & 0 & -1/4\\
+    -1/4 & 1 & -3/4\\
+    -1/12 & 0 & 5/12
+\end{bNiceMatrix}
+\begin{bmatrix}
+    5 & 3 & 1 & 0 & 0 \\ 
+    2 & 3 & 0 & 1 & 0 \\ 
+    1 & 3 & 0 & 0 & 1 
+\end{bmatrix}
+\\
+&\phantom{B^{-1}A} = 
+\begin{bNiceMatrix}[first-row, last-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{y}} & 
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{p}} &
+    \textcolor{myr}{\boldsymbol{h}} \\
+    1 & 0 &  1/4  & 0 & -1/4\\
+    0 & 0 & -1/4  & 1 & -3/4 \\
+    0 & 1 & -1/12 & 0 &  5/12 \\ 
+    \textcolor{myr}{\boldsymbol{\uparrow }} & \textcolor{myr}{\boldsymbol{\uparrow }} & 
+    & \textcolor{myr}{\boldsymbol{\uparrow }} &\\
+\end{bNiceMatrix}
+\end{align*}
+
+Nous conaissons déjà les coefficients sous 
+$x$, $p$, $y$ dans le résultat de $B^{-1}A$ ; ce sont des variables dépendantes 
+dans le tableau après l'itération et auront donc un $\boldsymbol{1}$ 
+sous la colonne appropriée de la matrice. Nous pouvons donc 
+simplifier le calcul en évaluant d'abord $B^{-1}R$ et 
+en se servant de l'information des variables dépendantes pour 
+reconstruire la matrice $B^{-1}A$. 
+
+\begin{align*}
+    B^{-1}R = 
+\begin{bNiceMatrix}
+    1/4 & 0 & -1/4\\
+    -1/4 & 1 & -3/4\\
+    -1/12 & 0 & 5/12
+\end{bNiceMatrix}
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} 
+    \\
+    1 & 0 \\
+    0 & 0 \\
+    0 & 1 
+\end{bNiceMatrix}
+= 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} 
+    \\
+    \phantom{-}1/4 & -1/4 \\
+    -1/4 & -3/4 \\
+    -1/12 & 5/12 
+\end{bNiceMatrix}
+\end{align*}
+
+Cela revient à effectuer l'addition 
+\begin{align*}
+    B^{-1}A &= B^{-1}R + \varepsilon \\ 
+         &= 
+\begin{bNiceMatrix}[first-row, last-row]
+    \textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{y}} & 
+    \textcolor{myr}{\boldsymbol{}} & \textcolor{myr}{\boldsymbol{p}} &
+    \textcolor{myr}{\boldsymbol{}} \\
+    1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 \\
+    0 & 1 & 0 & 0 & 0\\ 
+    \textcolor{myr}{\boldsymbol{\uparrow }} & \textcolor{myr}{\boldsymbol{\uparrow }} & 
+    & \textcolor{myr}{\boldsymbol{\uparrow }} &\\
+\end{bNiceMatrix}
++
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{}} & \textcolor{myr}{\boldsymbol{}} & 
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{}} &
+    \textcolor{myr}{\boldsymbol{h}} \\
+    0 & 0 &  1/4  & 0 & -1/4\\
+    0 & 0 & -1/4  & 0 & -3/4 \\
+    0 & 0 & -1/12 & 0 & 5/12 
+\end{bNiceMatrix}
+\end{align*}
+
+On peut calculer les termes de droite : 
+
+\begin{align*}
+    B^{-1}b = 
+\begin{bNiceMatrix}
+    1/4 & 0 & -1/4\\
+    -1/4 & 1 & -3/4\\
+    -1/12 & 0 & 5/12
+\end{bNiceMatrix}
+\begin{bmatrix}
+    30 \\ 24 \\ 18
+\end{bmatrix}
+= 
+\begin{bmatrix}
+    3 \\ 3 \\ 5
+\end{bmatrix}
+\end{align*}
+
+On peut calculer le vecteur multiplicateur du simplexe :
+\begin{align*}
+    \pi^T &= \mathbf{c}^T_BB^{-1} = 
+\begin{bNiceMatrix}[first-row]
+    \phantom{-}\textcolor{myr}{\boldsymbol{x}} & \textcolor{myr}{\boldsymbol{p}} & 
+    \phantom{-}\textcolor{myr}{\boldsymbol{y}} \\ 
+    -8 & 0 & -6
+\end{bNiceMatrix}
+\begin{bNiceMatrix}
+    1/4 & 0 & -1/4\\
+    -1/4 & 1 & -3/4\\
+    -1/12 & 0 & 5/12
+\end{bNiceMatrix}
+\\
+&= 
+\begin{bmatrix}
+    -3/2 & 0 & -1/2
+\end{bmatrix}
+\end{align*}
+
+Nous pouvons calculer le vecteur \( \mathbf{c}^T \) en combinant \( \mathbf{c}_B^T \) et \( \mathbf{c}_R^T \) :
+\[
+\mathbf{c}^T = 
+\begin{bmatrix}
+\mathbf{c}_B^T & \mathbf{c}_R^T
+\end{bmatrix}
+=
+\begin{bmatrix}
+-8 & 0 & -6 & 0 & 0
+\end{bmatrix}
+\]
+
+On peut calculer les coût réduit : 
+
+\begin{align*}
+    &\mathbf{c}^T - \pi^T \mathbf{A} : \\ 
+&=
+\begin{bmatrix}
+-8 & 0 & -6 & 0 & 0
+\end{bmatrix}
+\\ 
+&- 
+\begin{bmatrix}
+    -3/2 & 0 & -1/2
+\end{bmatrix}
+\begin{bmatrix}
+    5 & 3 & 1 & 0 & 0 \\ 
+    2 & 3 & 0 & 1 & 0 \\ 
+    1 & 3 & 0 & 0 & 1 
+\end{bmatrix} 
+\\
+&=
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} &
+    \textcolor{myr}{\boldsymbol{y}} &
+    \textcolor{myr}{\boldsymbol{u}} &
+    \textcolor{myr}{\boldsymbol{p}} &
+    \textcolor{myr}{\boldsymbol{h}}  
+    \\
+    0 & 0 & 3/2 & 0 & 1/2
+\end{bNiceMatrix}
+\end{align*}
+
+Nous connaissons déjà les coefficient 
+$x$, $p$, $y$ dans le résultat $\mathbf{c}^T - \pi^T \mathbf{A}$. En effet 
+chacune de ses variables aura un  coefficient de $\boldsymbol{0}$ dans 
+cette rangée, puisque ce sont les variables dépendantes.
+Nous pouvons donc simplifier le calcul en évaluant 
+$c^T_R - \pi^TR$
+
+
+\( R \) est donné par :
+\[
+R = 
+\begin{bNiceMatrix}[first-row]
+\textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} \\
+1 & 0 \\
+0 & 0 \\
+0 & 1
+\end{bNiceMatrix}
+\]
+
+Calculons maintenant \( \pi^T R \) :
+\[
+\pi^T R = 
+\begin{bmatrix}
+-3/2 & 0 & -1/2
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 \\
+0 & 0 \\
+0 & 1
+\end{bmatrix}
+= 
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} \\ 
+-3/2 & -1/2
+\end{bNiceMatrix}
+\]
+
+Ainsi, le calcul de \( \mathbf{c}^T_R - \pi^T R \) est :
+\[
+\mathbf{c}^T_R - \pi^T R = 
+\begin{bNiceMatrix}[first-row]
+\textcolor{myr}{\boldsymbol{u}} & \textcolor{myr}{\boldsymbol{h}} \\  
+0 & 0
+\end{bNiceMatrix}
+- 
+\begin{bmatrix}
+-3/2 & -1/2
+\end{bmatrix}
+= 
+\begin{bmatrix}
+3/2 & 1/2
+\end{bmatrix}
+\]
+Cela revient à l'addition 
+\begin{align*}
+    \mathbf{c}^T -\pi^T\mathbf{A} &= 
+    \mathbf{c}^T_R -\pi^{T}_R + \varepsilon \\
+    &=
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} &
+    \textcolor{myr}{\boldsymbol{y}} &
+    \textcolor{myr}{\boldsymbol{u}} &
+    \textcolor{myr}{\boldsymbol{p}} &
+    \textcolor{myr}{\boldsymbol{h}}  
+    \\
+    0& 0 & 3/2 &  0 & 1/2
+\end{bNiceMatrix}
++
+\begin{bNiceMatrix}[first-row]
+    \textcolor{myr}{\boldsymbol{x}} &
+    \textcolor{myr}{\boldsymbol{y}} &
+    \textcolor{myr}{\boldsymbol{u}} &
+    \textcolor{myr}{\boldsymbol{p}} &
+    \textcolor{myr}{\boldsymbol{h}}  
+    \\
+    0 & 0 & 0 & 0 & 0
+\end{bNiceMatrix}
+\end{align*}
+
+Le calcul de \( \pi^T b \) donne :
+\[
+\pi^T b = 
+\begin{bmatrix}
+-3/2 & 0 & -1/2
+\end{bmatrix}
+\begin{bmatrix}
+30 \\ 24 \\ 18
+\end{bmatrix}
+= -54 
+\]
+
+
+\section{Multiplicateurs du simplexe}
+
+Soit $x_{j_i}$ la variable dépendante dans le ligne $i$ 
+du \textbf{tableau} initial. Le coût relatif 
+$\overline{c}_{j_i}$ pour cette variable est donné par :  
+
+\begin{align*}
+    \overline{c}_{j_i} = c_j - \pi^T a_{.j_i} = 0 - \pi^T 
+    \begin{bmatrix}
+        0 \\ \vdots \\ 1 \vdots \\ 0     
+    \end{bmatrix}
+= \pi_i, \; \forall i \in (1, \dots, m)
+\end{align*}
+
+Les multiplicateurs \( \pi_i \) sont associés à chaque contrainte et permettent de
+calculer les coûts relatifs pour les variables de base.
+
+\subsection{Impact des multiplicateurs sur l'objectif}
+
+Le vecteur des multiplicateurs \( \pi \) mesure l'impact des modifications des termes
+de droite \( b \) sur la valeur optimale de l'objectif. Si \( b_i \) est modifié de 1
+unité, la valeur optimale de \( z \) change de \( \pi_i \) unités :
+\[
+z = \pi^T b = \sum_{i=1}^{m} \pi_i b_i
+\]
+Les multiplicateurs \( \pi_i \) indiquent la sensibilité de la solution optimale à
+des modifications des termes de droite.
+
+\subsection{Dégénérescence}
+
+Une solution est dite \textbf{dégénérée} si au moins une variable de base a une
+valeur nulle. Lorsqu'il y a dégénérescence, il est possible d'effectuer un pivot
+sans changer la solution, ce qui entraîne un phénomène de "surplace".
+
+
+\section{Résumé de l'algorithme en notation matricielle}
+\noindent
+$\rhd$
+\textbf{S'assurer} que le système est sous forme standard et 
+\textbf{tabuler} le système. Le coeur du tableau contient 
+la \textbf{matrice} \( \mathbf{A} \). 
+
+\noindent
+$\rhd$
+\textbf{Obtenir} une base \( \mathbf{B} \) en choisissant 
+une variable d'entrée et une variable de sortie, puis en effectuant 
+le pivot. 
+
+\noindent
+$\rhd$
+\textbf{Calculer} la matrice \( \mathbf{B}^{-1} \) en utilisant 
+l'algorithme de \textbf{Gauss-Jordan}.  
+
+\noindent
+$\rhd$
+\textbf{Mettre à jour} le coeur du tableau en effectuant 
+l'opération \( \mathbf{B}^{-1} \mathbf{A} \). Pour simplifier ce calcul, 
+il est possible d'effectuer d'abord \( \mathbf{B}^{-1} \mathbf{R} \) 
+(pour les colonnes hors-base) et de reconstituer la matrice \( \mathbf{B}^{-1} \mathbf{A} \) en tenant compte des variables de base. Chaque variable basique 
+aura un \(1\) dans la colonne et la ligne correspondantes, et un \(0\) ailleurs.
+
+\noindent
+$\rhd$
+\textbf{Calculer} les termes de droite en effectuant l'opération
+\[
+\mathbf{B}^{-1} \mathbf{b}
+\]
+
+\noindent
+$\rhd$
+\textbf{Calculer} le vecteur multiplicateur du simplexe en effectuant
+\[
+\mathbf{\pi}^T = \mathbf{c}_B^T \mathbf{B}^{-1}
+\]
+
+\noindent
+$\rhd$
+\textbf{Calculer} l'objectif en effectuant l'opération 
+\[
+\mathbf{\pi}^T \mathbf{b}
+\]
+
+\noindent
+$\rhd$
+\textbf{Calculer} les coûts réduits dans le tableau final avec l'opération
+\[
+\mathbf{c}^T - \pi^T \mathbf{A}
+\]
+Une simplification est possible en effectuant d'abord 
+\( \mathbf{c}_R^T - \pi^T \mathbf{R} \), puis en reconstituant le tableau 
+pour les variables de base. Chaque coefficient \textbf{non basique} \( c_j \) aura une valeur nulle dans le tableau final.
+
+\noindent
+$\rhd$
+\textbf{Identifier} les coûts relatifs pour une variable de base. 
+Pour obtenir le coût réduit \( \overline{c}_{j_i} \) associé à la variable 
+\( c_j \) dans la ligne \( i \) du tableau initial, utiliser la formule :
+\[
+\overline{c}_{j_i} = c_j - \pi^T a_{.j_i}
+\pagebreak
+\] 
+
+\chapter{Analyse post-optimale}
+
+
+
+
+\section{Modification des termes de droite}
+
+Soit une modification des termes de droite \( b \), avec \( b + \Delta b \).
+Nous avons :
+\[
+    \boxed{\overline{\tilde{b}} = B^{-1} (b + \Delta b) = \overline{b} + B^{-1} \Delta b}
+\]
+La solution optimale est affectée par cette modification. La nouvelle solution
+optimale---le nouveau vecteur des variables de bases---est donnée par :
+\[
+x_B = \overline{b} + B^{-1} \Delta b \geq 0, \quad x_R = 0
+\]
+La valeur de l'objectif est perturbée comme suit :
+\[
+\boxed{\tilde{z} = \bar{z} + \pi^T \Delta b}
+\]
+Si la nouvelle solution \( \tilde{b} \geq 0 \), alors la base optimale reste 
+la même. Sinon, il faut résoudre le problème modifié avec l'algorithme du 
+simplexe.
+
+\section{Modification d'un coût dans l'objectif}
+
+Supposons que le coût dans la fonction objectif est modifié pour une variable 
+\( x_j \), avec \( c_j + \Delta c_j \).
+
+Si \( x_j \) est une variable hors-base, la modification se transmet directement
+dans le tableau optimal. Le coût réduit est donné par :
+\[
+    \boxed{\overline{\tilde{c}_j} = c_j - \pi^T a_{.j} + \Delta c_j = \overline{c}_j 
+    + \Delta c_j}
+\]
+Si \( \tilde{c}_j + \Delta c_j \geq 0 \), la base optimale reste optimale. 
+Sinon, il faut continuer avec l'algorithme du simplexe.
+
+\section{Modification d'une variable hors-base}
+Soit $x_j$ une variable hors-base et soit $a_{.j}$ la colonne 
+de $x_j$ dans la matrice $A$, on a 
+
+\[
+    \tilde{a}_j =  a_{.j} + \Delta a_j \text{ où }  \Delta a_j = 
+\begin{bmatrix}
+0 \\
+\vdots \\
+\Delta a_{ij} \\
+\vdots \\
+0
+\end{bmatrix}
+\]
+Le coût réduit après modification est :
+\[
+    \boxed{\overline{\tilde{c}_j} = c_j - \pi^T a_{.j} 
+    =\overline{c}_j - \pi^T_i \Delta a_{ij}}
+\]
+Si \( \tilde{c}_j \geq 0 \), la base optimale demeure optimale. Sinon, il faut 
+appliquer l'algorithme du simplexe.
+
+\section{Ajout d'une nouvelle action}
+
+L'ajout d'une nouvelle variable de décision \( r \) dans le problème correspond
+à l'ajout d'une nouvelle action. Cette nouvelle action peut être représentée 
+par la nouvelle colonne de la matrice \( a_r \) et un coût \( c_r \).
+
+Dans le tableau optimal, la nouvelle colonne et le coût sont donnés par :
+\[
+\boxed{\tilde{a}_r = B^{-1} a_r, \quad \tilde{c}_r = c_r - \pi^T a_r}
+\]
+Si \( \tilde{c}_r \geq 0 \), alors la nouvelle action n'est pas profitable, et
+la solution optimale reste inchangée. Sinon, la nouvelle action est profitable 
+et on continue avec l'algorithme du simplexe pour trouver la solution optimale.
+
+\chapter{Programmation linéaire de nombre entiers}
+
+
+La programmation linéaire avec des variables entières permet de modéliser des
+problèmes plus réalistes, notamment
+\textbf{lorsque des solutions fractionnaires ne sont
+pas pertinentes}.
+
+Exemple : un restaurateur ne peut pas commander une fraction d'assiette.
+
+\subsection{Modèles binaires}
+
+Les modèles avec variables binaires sont particulièrement utiles. Les variables
+\( x_i \in \{0, 1\} \) représentent des décisions binaires :
+\[
+x_i =
+\begin{cases}
+1 & \text{si l'option \( i \) est choisie} \\
+0 & \text{sinon}
+\end{cases}
+\]
+
+\section{Problème de coloration de graphe}
+
+Soit un graphe non orienté \( G = (V, E) \), où \( V \) représente les sommets et 
+\( E \) les arêtes. Une coloration du graphe consiste à affecter une couleur 
+différente à chaque sommet, de manière à ce que deux sommets adjacents n'aient 
+pas la même couleur.
+
+\begin{tikzpicture}
+
+% Noeuds
+\node[circle, draw] (A) at (0,0) {1};
+\node[circle, draw] (B) at (1,1) {2};
+\node[circle, draw] (C) at (-1,-1) {2};
+\node[circle, draw] (D) at (2,0) {2};
+\node[circle, draw] (E) at (3,0) {1};
+
+% Arêtes
+\draw (A) -- (B);
+\draw (A) -- (C);
+\draw (A) -- (D);
+\draw (D) -- (E);
+
+\end{tikzpicture}
+
+Le nombre minimal de couleurs utilisées est noté \( m \). La coloration 
+minimale pour le graphe ci-haut est donc $m = 2$.
+
+Pour modéliser ce problème, on utilise deux types de variables binaires :
+\begin{align*}
+&c_i =
+\begin{cases}
+1 & \text{si la couleur \( i \) est utilisée} \\
+0 & \text{sinon}
+\end{cases}
+\\
+&x_{ij} =
+\begin{cases}
+1 & \text{si le sommet \( j \) est coloré avec \( i \)} \\
+0 & \text{sinon}
+\end{cases}
+\end{align*}
+
+L'objectif est de minimiser \( \sum_{i=1}^{m} c_i \), tout en respectant les 
+contraintes suivantes :
+\[
+\boxed{
+x_{ij} + x_{ik} \leq 1 \quad \text{pour tout couple de sommets adjacents} \ (j, k)
+}
+\]
+\[
+\sum_{i=1}^{m} x_{ij} = 1 \quad \text{pour tout sommet} \ j
+\]
+où \( c_i \in \{0, 1\} \) et \( x_{ij} \in \{0, 1\} \).
+
+\section{Deux principes généraux en PLNE}
+
+Soit un problème \( P \) et sa relaxation continue \( \tilde{P} \), où les 
+contraintes d'intégralité sont relâchées. Nous avons alors :
+\[
+F(P) \subseteq F(\tilde{P}) \quad \text{et} \quad v(\tilde{P}) \leq v(P)
+\]
+Les principes suivants s'appliquent :
+\begin{enumerate}
+    \item Si \( F(P) \subseteq F(\tilde{P}) \), alors la valeur optimale de 
+    \( \tilde{P} \) est toujours meilleure ou égale à celle de \( P \).
     
-    \end{multicols*} 
+    \item Si \( x^* \) est une solution optimale entière de \( \tilde{P} \), 
+    alors \( x^* \) est aussi solution optimale de \( P \).
+\end{enumerate}
+
+\section{Exemple : Problème de relaxation continue}
+
+Considérons un problème \( P \) et sa relaxation continue \( \tilde{P} \) avec 
+les contraintes suivantes :
+\[
+P: \quad \text{Minimiser} \quad z = -x_1 - 5x_2
+\]
+\[
+\text{s.a.} \quad x_1 + 10x_2 \leq 20, \quad x_1 \leq 2, \quad x_1, x_2 \geq 0
+\]
+Dans la relaxation \( \tilde{P} \), les variables \( x_1 \) et \( x_2 \) ne sont 
+plus contraintes à être entières. La solution fractionnaire est donnée par :
+\[
+x_1 = 2, \quad x_2 = 9/5
+\]
+Cependant, la solution entière optimale est obtenue par des algorithmes de PLNE, 
+car ni l'arrondi ni la troncature ne donnent des solutions optimales dans ce cas.
+
+
+\begin{tikzpicture}[scale=0.9]
+
+% Coloration de la région
+\filldraw[fill=orange, fill opacity=0.7] (0,0) -- (2,0) -- (2,1.8) -- (0,2) -- cycle;
+
+% Axes
+\draw[->] (-0.5,0) -- (3,0) node[below] {$x_1$};
+\draw[->] (0,-0.5) -- (0,3) node[left] {$x_2$};
+
+% Étiquettes des axes
+\node at (2,-0.2) {2};
+\node at (-0.2,2) {2};
+
+% Les lignes contraintes
+\draw[dashed] (-2,0.4) -- (1.75,-0.35) node[below right] {$-x_1 - 5x_2 = 0$};
+\draw[dashed] (2,0) -- (2,2.5) node[above right] {$x_1 = 2$};
+\draw[dashed] (.1,2.18) -- (4, 1.4); 
+\draw[red] (0,2) -- (3.5, 1.65) node[right] {$x_1 + 10x_2 = 20$};
+% Les points
+\filldraw[red] (2,1.8) circle (2pt);
+\filldraw[red] (1,1) circle (2pt);
+\filldraw[red] (0,1) circle (2pt);
+\filldraw[red] (1,0) circle (2pt);
+\filldraw[red] (2,1) circle (2pt);
+\filldraw[red] (0,2) circle (2pt);
+\filldraw[red] (0,0) circle (2pt);
+\filldraw[red] (2,0) circle (2pt);
+\filldraw[red] (2,9/5) circle (2pt);
+
+% Légende point (2,9/5)
+\node[right] at (2.2,10/5) {\textcolor{red}{$(2,9/5)$}};
+
+% Le label de F(\overline{P})
+\node at (1,0.6) {\textcolor{black}{$F(\overline{P})$}};
+
+\end{tikzpicture}
+
+\chapter{Algorithme Branch and Bound}
+
+\section{Introduction}
+
+L'algorithme de \textbf{Branch-and-Bound} est utilisé pour résoudre des 
+problèmes de \textbf{programmation linéaire en nombres entiers}. Il divise un 
+problème en sous-problèmes tout en exploitant les solutions fractionnaires et 
+entières.
+
+\section{Branchement}
+
+Si la solution optimale de la relaxation continue \( \overline{P} \) est 
+fractionnaire, le problème est divisé en deux sous-problèmes \( P_1 \) et 
+\( P_2 \) tels que :
+\[
+F(P_1) \cap F(P_2) = \emptyset, \quad F(P_1) \cup F(P_2) = F(P)
+\]
+Cela permet de réduire les domaines des sous-problèmes :
+\[
+F(\overline{P}_1) \subset F(\overline{P}), \quad F(\overline{P}_2) \subset F(\overline{P})
+\]
+
+\section{Évaluation des sous-problèmes}
+
+L'algorithme explore les sous-problèmes en suivant un parcours en profondeur. La 
+solution optimale entière trouvée est utilisée pour mettre à jour la borne 
+supérieure \( \overline{z} \).
+
+La relaxation continue \( \overline{P} \) fournit une borne inférieure \( z \). Si un 
+sous-problème produit une meilleure solution entière, la borne supérieure est 
+mise à jour.
+
+\section{Critère d'arrêt}
+
+Le processus de division s'arrête pour un sous-problème \( P_C \) si :
+\begin{itemize}
+    \item Le domaine réalisable est vide.
+    \item La solution optimale de \( P_C \) est entière.
+    \item La solution optimale fractionnaire de \( P_C \) est telle que 
+    \( v(P_C) \geq \overline{z} \).
+\end{itemize}
+
+Dans ces cas, diviser \( P_C \) ne permet pas de trouver une meilleure solution.
+
+\section{Branchement et Pseudo-Code}
+
+Si la solution optimale \( \overline{x} \) de \( P_C \) est fractionnaire, on choisit 
+une variable \( x_j \) ayant une valeur fractionnaire \( w \). Deux sous-problèmes 
+sont alors créés :
+\[
+P_{C_1} : x_j \leq \lfloor w \rfloor, \quad P_{C_2} : x_j \geq \lceil w \rceil
+\]
 
 
 
 
-        
 
-        
-            
+\begin{algorithm}[H]
+\caption{Branch-and-Bound}
+\SetAlgoLined
+Étape 0 : Initialiser \( L \leftarrow \emptyset \), \( \overline{z} \leftarrow \infty \),
+\( x^* \leftarrow \emptyset \)\;
+Étape 1 : Résoudre \( \overline{P} \), obtenir \( x^* \)\;
+\If{ \( x^* \) est entier }{
+    Aller à l'étape 3\;
+}
+\Else{
+    Diviser \( P \) en \( P_1 \) et \( P_2 \), ajouter à \( L \)\;
+}
+Étape 2 : Pour chaque sous-problème dans \( L \), résoudre \( P_C \)\;
+\If{ \( F(P_C) = \emptyset \) \textbf{ou} \( v(P_C) \geq \overline{z} \)}{
+    Continuer\;
+}
+\ElseIf{ \( x^* \) est entier \textbf{et} \( v(P_C) < \overline{z} \)}{
+    Mettre à jour \( \overline{z} \) et \( x^* \)\;
+}
+\Else{
+    Diviser \( P_C \)\;
+}
+Étape 3 : Retourner \( x^* \)\;
+\end{algorithm}
 
 
+
+\end{multicols*}
 \end{document}
-
