@@ -50,6 +50,11 @@
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
 
+\hypersetup{
+    colorlinks=true,
+    linkcolor=myb
+    }
+
 
 
 
@@ -67,17 +72,121 @@
 
 \begin{document}
 
-\maketitle
-\newpage% or \cleardoublepage
-% \pdfbookmark[<level>]{<title>}{<dest>}
+
+\begin{tikzpicture}[remember picture,overlay]
+
+% Fill the background with BlueViolet color
+\fill[myb] (current page.south west) rectangle (current page.north east);
+
+% Hexagon pattern on the left
+\foreach \i in {2.5,3,...,22} {
+    \node[
+        rounded corners,
+        myb!90,
+        draw,
+        regular polygon,
+        regular polygon sides=6,
+        minimum size=\i cm,
+        ultra thick
+    ] at ($(current page.west)+(2.5,-5)$) {};
+}
+
+% Central hexagon with the year
+\node[
+    rounded corners,
+    fill=myb!95,
+    text=myb!5,
+    regular polygon,
+    regular polygon sides=6,
+    minimum size=2.5cm,
+    inner sep=0,
+    ultra thick
+] at ($(current page.west)+(2.5,-5)$) {\LARGE \bfseries 2024};
+
+% Hexagon pattern at the top left
+\foreach \i in {0.5,1,...,22} {
+    \node[
+        rounded corners,
+        myb!90,
+        draw,
+        regular polygon,
+        regular polygon sides=6,
+        minimum size=\i cm,
+        ultra thick
+    ] at ($(current page.north west)+(2.5,0)$) {};
+}
+
+% Hexagon pattern at the top right
+\foreach \i in {0.5,1,...,22} {
+    \node[
+        rounded corners,
+        myb!98,
+        draw,
+        regular polygon,
+        regular polygon sides=6,
+        minimum size=\i cm,
+        ultra thick
+    ] at ($(current page.north east)+(0,-9.5)$) {};
+}
+
+% Hexagon pattern at the bottom right
+\foreach \i in {12} {
+    \node[
+        fill=myb,
+        rounded corners,
+        draw=myb,
+        regular polygon,
+        regular polygon sides=6,
+        minimum size=\i cm,
+        ultra thick
+    ] at ($(current page.south east)+(-0.2,-0.45)$) {};
+}
+
+\foreach \i in {21,20,...,6} {
+    \node[
+        myb!95,
+        rounded corners,
+        draw,
+        regular polygon,
+        regular polygon sides=6,
+        minimum size=\i cm,
+        ultra thick
+    ] at ($(current page.south east)+(-0.2,-0.45)$) {};
+}
+
+% Title of the report
+\node[
+    left,
+    myb!5,
+    minimum width=0.625\paperwidth,
+    minimum height=3cm,
+    rounded corners
+] at ($(current page.north east)+(0,-9.5)$) {\fontsize{25}{30}\selectfont \bfseries MATH-1400};
+
+% Subtitle of the report
+\node[
+    left,
+    myb!10,
+    minimum width=0.625\paperwidth,
+    minimum height=2cm,
+    rounded corners
+] at ($(current page.north east)+(0,-11)$) {\huge \textit{Calcul Mutivariables}};
+
+% Author name
+\node[
+    left,
+    myb!5,
+    minimum width=0.625\paperwidth,
+    minimum height=2cm,
+    rounded corners
+] at ($(current page.north east)+(0,-13)$) {\Large \textsc{Franz Girardin}};
+
+\end{tikzpicture}
+\newpage
 \pdfbookmark[section]{\contentsname}{toc}
 \tableofcontents
 \pagebreak
 
-
-\titleformat*{\section}{%
-    \normalsize\bfseries%
-}
 
 \titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
 
@@ -88,7 +197,7 @@
     \chapter{Suites numériques}
     \section{Définition d'une suite}
         \textbf{Fonction} $a \colon \mathbb{N}^* 
-        \rightarrow \mathbb{R}$ qui accepte 
+        \rightarrow \mathbb{R}$ qui accepte des valeurs entières 
         $n \in \mathbb{N}^*$ et engendre une \textbf{séquence ordonnée} de 
         \textbf{réels} $a_n$. L'image de $n$ est donnée par :
         \[%
@@ -101,8 +210,8 @@
             \{a_1, a_2, a_3,\dots\} \leftrightarrow  \{ a_n \} 
                             \leftrightarrow  \{a_n\}_{ n = 1}^{\infty }
         \]%
-        On dit que $a_n ou \{a_n\}$ est le \textbf{terme général}; c'est la 
-        règle qui définit la suite; \textit{laformule}  qui permet de calculer 
+        On dit que $a_n$ ou $\{a_n\}$ est le \textbf{terme général}; c'est la 
+        règle qui définit la suite; \textit{la formule}  qui permet de calculer 
         n'importe quel terme de la suite en fonction de $n$. 
 
     \vspace{-1em}
@@ -119,7 +228,7 @@
     \begin{align*}
         &a_n \Coloneqq 
         \begin{cases}
-            a_1 = y & \hspace{2.5em} \textbf{1\textsuperscript{er} Terme}\\  
+            a_1 = a_1 & \hspace{2.5em} \textbf{1\textsuperscript{er} Terme}\\  
             a_{n} = a_{n-1} + r & \hspace{2.5em} \text{Récurrence}
         \end{cases}
         \\\\
@@ -133,13 +242,11 @@
     \end{align*}
 
     \section{Somme $n$ termes d'une arithmétique}
-    \vspace{-2em}
-        \[% 
-        S_n = a_0 + a_1 + a_2 + \cdots + a_n 
-        \]%
-        \vspace{-1em}
+    Nous pouvons \hyperlink{Somme des n premiers termes arithmétique}{\textbf{montrer}}
+    que la somme des $n$ premiers termes d'une suites arithmétique
+        $S_n = a_1 + a_2 + \cdots + a_n$ est donnée par :
     \[% 
-        \boxed{S_n = \sum_{n=0}^{n }a_k = \dfrac{n}{2}(a_1 + a_n)}
+        \boxed{S_n = \sum_{k=1}^{n }a_k = \dfrac{n(a_1 + a_n)}{2}}
     \]%
 
 
@@ -148,76 +255,98 @@
         \begin{align*}
                 &a_n \Coloneqq 
                 \begin{cases}
-                    a_1 = y  &\omit\quad\quad\quad \textbf{1\textsuperscript{er} Terme} \\  a_{n} = a_{n-1} \cdot r &\omit\hfill \quad\quad Récurrence \end{cases} \\\\ &r = \frac{a_n}{a_{n-1}} \; \forall \; n \geq 2 \quad\quad\quad\quad\quad\quad\;\; \textbf{Raison} \\ &a_n = a_1r^{n - 1} \; \forall \; n \geq 1 \text{\quad\quad\quad\quad\;\; $n$\up{e} terme} \end{align*} 
+                    a_1 = a_1 &\omit\quad\quad\quad \textbf{1\textsuperscript{er} Terme} 
+                \\  
+                    a_{n} = a_{n-1} \cdot r &\omit\hfill \quad\quad Récurrence 
+            \end{cases} 
+           \\\\ &r = \frac{a_n}{a_{n-1}} \; \forall \; n \geq 2 
+                 \quad\quad\quad\quad\quad\quad\;\; \textbf{Raison} 
+            \\ &a_n = a_1r^{n - 1} \; \forall \; n \geq 1 
+        \text{\quad\quad\quad\quad\;\; $n$\up{e} terme} 
+        \end{align*} 
 
         \section{Somme $n$ termes d'une géométrique}
-        \vspace{-2em}
-        \[% 
-        S_n = a_0 + a_1 + a_2 + \cdots + a_n 
-        \]%
+        Nous pouvons \hyperlink{Somme des n premiers termes géométrique}{\textbf{montrer}}
+        que la somme des $n$ premiers termes d'une suites arithmétique
+            $S_n = a_1 + a_2 + \cdots + a_n$ est donnée par :
     \[% 
-        \boxed{S_n = \sum_{n=0}^{n }a_k = a_0\dfrac{r^{n+1} - 1}{r - 1}, 
-            \;\; \textcolor{myr}{\textbf{$r \neq 1$}}}    
+        \boxed{S_n = \sum_{k=1}^{n }a_k = a_1\dfrac{r^{n} - 1}{r - 1}, 
+            \;\; \textcolor{myr}{\boldsymbol{r \neq 1}}}    
         \]%
 
         \section{Convergence d'une suite géométrique}
+        \vspace{-1em}
         \noindent       
-        $\Big( -1 < r \leq 1 \Big) \implies \{r^n\} \; 
-        \textbf{\textcolor{myb}{conv}}. \; 
-        \forall r \in \mathbb{R}$
         \begin{align*}
-            \lim\limits_{n\to+\infty }\{r^n\} = 
+            \lim\limits_{n\to+\infty }a_1r^n  
                     \begin{cases}
-                        0 \quad \text{si $-1 < r < 1$} \\
-                        1 \quad \text{si $r = 1$}
+                        \textcolor{myb}{\textbf{conv.}}  \quad \text{si $-1 < r \leq 1$} \\
+                        \textcolor{myr}{\textbf{div.}}  \quad\;\; \text{autrement}
                     \end{cases}
         \end{align*}
 
 
-    \section{Convergence d'une série géométrique}
-    \begin{align*}
-        S = \sum\limits_{n=0}^{\infty}ar^n = \lim\limits_{n \to+\infty }S_n = 
-        \lim\limits_{n \to+\infty } \sum\limits_{k=0}^{n}ar^k 
-    \end{align*}
-        \noindent$\rhd$ 
-            $\Big(|r| < 1\big) \implies  
-            \sum_{n=0}^{\infty }ar^{n} = 
-            \dfrac{a}{1 - r} $ \;\;(\textbf{\textcolor{myb}{conv}}.)  
-        \\
-        $\rhd$ 
-            $\bigl(|r| \geq 1, a \neq 0\bigr) \implies 
-            \sum_{n=0}^{\infty }ar^{n} = \infty$ 
-            (\textbf{\textcolor{myr}{div}}. )   
+        \begin{align*}
+            \boxed{
+            \lim\limits_{n\to+\infty }a_1r^n = 
+                    \begin{cases}
+                        0 \quad \text{si $-1 < r < 1$} \\
+                        1 \quad \text{si $r = 1$}
+                \end{cases}}
+        \end{align*}
 
+
+    \section{Convergence d'une série géométrique}
+        Nous pouvons \hyperlink{Convergence série géométrique}{\textbf{montrer}}
+        qu'une suite géométrique converge vers la valeur suivante :
+        \begin{align*}
+                \sum_{n=1}^{\infty }a_1r^n  
+                    \begin{cases}
+                    \textcolor{myb}{\textbf{conv.}}  \quad \text{si $|r| < 1$} \\
+                    \textcolor{myr}{\textbf{div.}}  \quad\;\;\, \text{si $|r| \geq 1$}
+                \end{cases}
+        \end{align*}
+
+        Si la série converge, on a :
+        \begin{align*}
+            \boxed{
+            \sum_{n=0}^{\infty }a_1r^{n} = 
+            \dfrac{a_1}{1 - r}, \; \forall r \colon |r| < 1 
+        }
+        \end{align*}
 
     \section{Monotonicité} 
     Soit une suite $a_n$, on dit que la suite est : 
     \begin{itemize} 
         \item[$\rhd$ ] \textbf{Strictement croissante} 
-            \\ \textbf{si} $\forall n \geq 1, a_{n+1} \textcolor{myr}{>} a_n$         
+            \\ \textbf{si} $\forall n \geq 1, a_{n+1} \; \textcolor{myr}{\boldsymbol{>}} \; a_n$         
         \item[$\rhd$ ] \textbf{Croissante} \\ 
-            \textbf{si} $\forall n \textcolor{myr}{\geq} 1, a_{n+1} \geq a_n$         
+            \textbf{si} $\forall n \geq 1, a_{n+1}\;  \textcolor{myr}{\boldsymbol{\geq}} \; a_n$         
         \item[$\rhd$ ] \textbf{Strictement décroissante} \\ 
-            \textbf{si} $\forall n \geq 1, a_{n+1} < a_n$ 
+            \textbf{si} $\forall n \geq 1, a_{n+1} \; \textcolor{myr}{\boldsymbol{<}}  \;a_n$ 
         \item[$\rhd$ ] \textbf{Décroissante} \\ 
-            \textbf{si} $\forall n \geq 1, a_{n+1} < a_n$ 
+            \textbf{si} $\forall n \geq 1, a_{n+1} \;  \textcolor{myr}{\boldsymbol{\leq}}  \; a_n$ 
         \item[$\rhd$ ] \textbf{Stationnaire} ou \textbf{constante} \\ 
             \textbf{si} elle est telle que $a_{n+1} = a_n = a_{n-1}$
     \end{itemize}
 
     \section{Propriétés limites d'une suite}
     \begin{itemize}
-        \item[$\rhd$] \textbf{Unicité.} La limite d'une suite convergente est \textit{unique}.
+        \item[$\rhd$] \textbf{Unicité.} La limite d'une suite convergente est \textit{unique}. Ainsi, les limite à gauche 
+            et est à droite sont les mêmes. 
         
         \item[$\rhd$] Toute suite convergente est \textbf{bornée};  
             toute suite non bornée est \textbf{divergente}.        
         \item[$\rhd$] Toute suite croissante et majorée est convergente. 
+
             \textbf{Exemple} : \( a_n = 1 - 1/n \). 
         \[
         \lim_{n \to \infty} a_n = 1.
         \]
         
-        \item[$\rhd$] Toute suite décroissante et minorée est convergente. \textbf{Exemple} : \( b_n = 1/n \).
+        \item[$\rhd$] Toute suite décroissante et minorée est convergente. 
+
+            \textbf{Exemple} : \( b_n = 1/n \).
         \[
         \lim_{n \to \infty} b_n = 0.
         \]
@@ -227,17 +356,21 @@
 
 
      \section{Définitions de bornes d'une suite} 
-     Une suite $a_{n = 1}^{\infty}$ est \textbf{minoriée} ou 
+     Une suite  est \textbf{minoriée} ou 
      \textbf{majorée} selon les conditions suivantes :
 
-     \noindent$\rhd$ 
-     $\forall n \in \mathbb{N}, a_n \leq M \implies \textcolor{myb}{\textbf{majorée}} $
-     
-     \noindent
-     $\rhd$ $\forall n \in \mathbb{N}, a_n \geq m  \; \implies \textcolor{myb}{\textbf{minorée}}$
+     \begin{align*}
+        a_n 
+        \begin{cases} 
+            \textbf{Majorée} \quad \text{si } \forall n \in \mathbb{N}, a_n \leq M 
+            \\ 
+            \textbf{Minorée} \quad \text{si } \forall n \in \mathbb{N} a_n \geq m  
+        \end{cases}
+     \end{align*}
+
      
      On dit qu'elle est \textcolor{myr}{\textbf{bornée}} si elle est à la fois  
-     \textit{majorée et minorée}.      
+     majorée et minorée.
      \vspace{0.25em}
 
      \section{Théorème des suites monotones}
@@ -283,7 +416,8 @@
     \]%
 
     \section{Vulgarisation}
-    Soit un nombre positif $\varepsilon > 0$ \textit{aussi petit que l'on souhaite}. Il est toujours possible de trouver un entier 
+    Soit un nombre positif $\varepsilon > 0$ \textbf{aussi petit que l'on souhaite}. 
+    Il est toujours possible de trouver un entier 
     $N(\varepsilon)$ tel que, pour tous les termes de la suite dont l'indice $n$ est supérieur à 
     $N$, c'est-à-dire $n > N(\varepsilon)$, l'image $a_n$ sera suffisamment proche de $L$. 
     Autrement dit, la distance entre $a_n$ et $L$ sera inférieure à $\varepsilon$ et donc négligeable, 
@@ -357,7 +491,7 @@
 \]%
         
     \section{Vulgarisation}
-    Soit un nombre positif aussi grand que l'on souhaite, \(M > 0\). Il est toujours possible 
+    Soit un nombre positif \textbf{aussi grand que l'on souhaite}, \(M > 0\). Il est toujours possible 
     de trouver un entier \(N(M)\) tel que, pour tous les termes de la suite dont 
     l'indice \(n\) est supérieur à \(N\), c'est-à-dire \(n > N(M)\), l'image \(a_n\) 
     sera plus grande que \(M\). Autrement dit, à partir d'un certain rang, 
@@ -365,28 +499,38 @@
     revenir vers des valeurs plus petites.
 
     \section{Corollaire de divergence}
-    \textbf{Si} $\lim\limits_{n\to+\infty }a_n  = \infty$,  
-    \textbf{alors}, 
-    \[ \lim\limits_{n\to+\infty }{\dfrac{1}{a_n}}  = 0 \]
-
+    Si une série diverge, \textbf{alors} son inverse \( 1/a_n \) 
+    \textbf{converge à zéro} :
+    \begin{align*}
+        \left[\lim\limits_{n\to+\infty }a_n  = \infty\right] \implies
+     \lim\limits_{n\to+\infty }{\dfrac{1}{a_n}}  = 0
+    \end{align*}
     \textcolor{myr}{\textbf{Attention}} 
         \begin{align*}
-            \lim\limits_{n\to\infty  }\frac{1}{a_n} = 0 
-            \textcolor{red}{\notimplies}
+            \left[\lim\limits_{n\to\infty  }\frac{1}{a_n} = 0 \right]
+            \textcolor{myr}{\boldsymbol{\notimplies}}
             \lim\limits_{n\to+\infty }a_n  = \infty
         \end{align*}  
 
+    Mais lorsqu'une série \( 1/a_n \) converge à zéro cela 
+    \textbf{n'implique pas nécessairement} que son inverse
+    \( a_n \) diverge à l'infini.  
 
     \section{Association d'une fonction à une suite}
-        Soit $f\left(x\right)$ une fonction admettant une limite $L$ à 
-        $\text{+}\infty$, Alors, la suite 
-        $\{a_n\} = f\left(n\right)$ admet \textit{la même limite} : 
+        Soit \( f \colon x \rightarrow \mathbb{R} \) une fonction admettant une limite $L$ à 
+        $+\infty$, Alors, la suite 
+        $\{a_n\}_{n=1}^{\infty} = f\left(n\right)$ admet \textbf{la même limite} : 
         \begin{align*}
-          \lim\limits_{x\to\infty  }f(x) = L \implies \lim\limits_{n\to\infty  }a_n = L
+            \resizebox{1\linewidth}{!}{$ 
+            \left[f(n) = a_n, \lim\limits_{x\to\infty  }f(x) = L \right]   \implies \lim\limits_{n\to\infty  }a_n = L$}
         \end{align*}
         De la même façon :
         \begin{align*}
-          \lim\limits_{x\to\infty  }f(x) = \infty \implies \lim\limits_{n\to\infty  }a_n = \infty
+            \resizebox{1\linewidth}{!}{$ 
+                \left[f(n) = a_n, \lim\limits_{x\to\infty  }f(x) = \infty \right] 
+                \implies 
+                \lim\limits_{n\to\infty  }a_n = \infty
+        $}
         \end{align*}
 
 
@@ -395,7 +539,6 @@
         \begin{axis}[
             domain=0:5,
             samples=100,
-            xlabel={$x$},
             axis lines=middle,
             grid=none,
             xtick={0,1,2,3,4,5},
@@ -404,7 +547,7 @@
             ymin=0, ymax=1.45,
             width=12cm,
             height=6cm,
-            xlabel style={anchor=west},
+            xlabel style={anchor=east},
             ylabel style={anchor=south},
             legend pos=north east,
             legend style={draw=none},
@@ -437,16 +580,35 @@
         converge vers $L$, alors la limite suivante \textcolor{myb}{\textbf{converge}} 
         vers $f\left(L\right)$ :
         \begin{align*}
-                    \lim\limits_{n\to+\infty  }f(a_n)  = f(L) \\ 
-                    \lim\limits_{n\to+\infty  }f(\lim\limits_{n \to \infty} a_n)  
+            \boxed{
+                    \lim\limits_{n\to+\infty  }f(a_n)  = 
+                    f(\lim\limits_{n \to \infty} a_n)  
                     = f(L)  
+            }
         \end{align*}
         \underline{\textbf{Exemple}}
         \vspace{1em}\\
-        \noindent $\lim\limits_{n \to+\infty }\sin(\pi/2)  = 
-        \sin(\lim\limits_{n \to+\infty })  \pi/2  = 0$
-        \vspace{1em}
 
+
+Soit la fonction $f(x) = \sin(x)$, qui est continue sur $\mathbb{R}$.
+Considérons la suite $\{a_n\}$ définie par :
+\[
+a_n = \dfrac{\pi}{2} - \dfrac{1}{n}
+\]
+Cette suite converge vers $L = \dfrac{\pi}{2}$ lorsque $n \to +\infty$.
+
+Selon le théorème de continuité des fonctions en limite de suite, nous avons :
+\[
+\lim_{n\to+\infty} f(a_n) = f\left( \lim_{n\to+\infty} a_n \right) = f\left( \dfrac{\pi}{2} \right)
+\]
+Ainsi, nous avons :
+\[
+f\left( \dfrac{\pi}{2} \right) = \sin\left( \dfrac{\pi}{2} \right) = 1
+\]
+Donc :
+\[
+\lim_{n\to+\infty} \sin\left( \dfrac{\pi}{2} - \dfrac{1}{n} \right) = 1
+\]
 
 
     \section{Théorème des gendarmes}{}
@@ -518,19 +680,19 @@
         Soit $k \geq 0 \in \mathbb{N}$, les sommes suivantes ont le même comportement ; l'une converge 
         \textbf{uniquement si l'autre converge également}  :
         \[%  
-            \sum_{n=1}^{\infty }a_n = L \; (\textbf{\textcolor{myb}{conv}}.)  
-            \leftrightarrow 
-            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myb}{conv}}.  
+            \sum_{n=1}^{\infty }a_n = L \; (\textbf{\textcolor{myb}{conv.}})  
+            \Leftrightarrow 
+            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myb}{conv.}}  
         \]%
         \[%  
-            \sum_{n=1}^{\infty }a_n  = \pm \infty \;  (\textbf{\textcolor{myr}{div}}.)  
-            \leftrightarrow 
-            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myr}{div}}.  
+            \sum_{n=1}^{\infty }a_n  = \pm \infty \;  (\textbf{\textcolor{myr}{div.}})  
+            \Leftrightarrow 
+            \sum_{n=1}^{\infty }a_{n+k} \; \textbf{\textcolor{myr}{div.}}  
         \]%
 
 
 
-    \section{Addition et multiplication par un scal.}
+    \section{Addition et multiplication scalaire}
     \begin{itemize}
         \item[$\rhd$] Si \(\sum_{n=1}^{\infty } a_n = s\) (\textcolor{myb}{\textbf{conv}}.) 
             et \(\lambda\) est un scalaire, 
@@ -552,14 +714,14 @@
         \textcolor{myr}{\textbf{Attention}} 
         \item[$\blacktriangleright$] 
             $\sum_{n=1}^{\infty }a_nb_n \textcolor{red}{\neq} 
-            (\sum_{n=1}^{\infty }a_n)(\sum_{n=1}^{\infty}b_n)$
+            \left(\sum_{n=1}^{\infty }a_n\right) \left(\sum_{n=1}^{\infty}b_n\right)$
         \item[$\blacktriangleright$]
             $\sum_{n=1}^{\infty }\dfrac{a_n}{b_n} 
             \textcolor{red}{\neq} 
             \dfrac{\sum_{n=1}^{\infty }a_n}{\sum_{n=1}^{\infty }b_n}$
     \end{itemize}
 
-    \section{Théorème de conv. du terme général}
+    \section{Théorème de convergence du terme général}
         Le terme général d'une série convergente \textbf{tend vers 0} : 
         $$% 
         \boxed{\sum_{n=1}^{\infty }a_n = s \; (\textcolor{myb}{\textbf{conv.}}) 
@@ -571,10 +733,10 @@
 
     \section{Corollaire de divergence du terme général}
     \vspace{-1em}%
-        Une suite qui ne converge par à zéro engendre une série qui \textbf{diverge}.        
+        Une suite qui ne converge pas à zéro engendre une série qui \textbf{diverge}.        
         \[% 
         \boxed{
-        \lim\limits_{n\to \infty} a_n \; \textcolor{red}{\neq} \; 0 \implies   
+        \lim\limits_{n\to \infty} a_n \; \textcolor{myr}{\neq} \; 0 \implies   
         \sum_{n=1}^{\infty }a_n = \infty \; (\textcolor{myr}{\textbf{div.}})}
         \]%
     \vspace{-1em}
@@ -587,7 +749,6 @@
             \lim\limits_{n \to+\infty } \dfrac{1}{n} 
             \longrightarrow 0
         \end{align*}
-        /
         Mais on a également  : 
         \begin{align*}
             \sum_{n=1}^{\infty }\dfrac{1}{n} \longrightarrow 
@@ -618,16 +779,15 @@
 
 
     \section{Définition d'une série à termes positifs}
-    Il s'agit d'une série dont tous les termes $a_{n+1}$ sont au moins aussi grands 
-    que  leurs prédecessaur $a_n$ : 
+    Il s'agit d'une série dont tous les termes $a_{n}$ sont \textbf{positifs} :
     \begin{align*}
-        \left[ \forall n \geq 1 a_n \geq 0 \right] \implies \sum_{n=1}^{\infty }a_n 
-     \textbf{à termes positifs}.
+        \left[ \forall n \geq 1 \colon a_n \geq 0 \right] \implies \sum_{n=1}^{\infty }a_n 
+     \textbf{ à termes positifs}.
     \end{align*}
     
                 
 
-    \section{Théorème de conv. des séries à termes positfs}
+    \section{Théorème de convergence des séries à termes positfs}
     Une condition \textbf{nécessaire et suffisante} pour que la série à termes positifs 
         $\sum_{n=1}^{\infty }a_n$ converge est que la suite des sommes partielles
         $s_n = \sum_{k=1}^{n }a_k$ soit majorée. 
@@ -652,34 +812,43 @@
     \section{Test de comparaison}
         Soient $\sum a_n, \sum b_n$ des séries à \textbf{termes positifs} 
         et $n_0 \in \mathbb{R}$, une série \textbf{plus petite} qu'une série convergente 
-        converge nécessaire ; et une série \textbf{plus grande} qu'une série 
+        converge nécessairement ; et une série \textbf{plus grande} qu'une série 
         divergente diverge nécessairement :
-    \vspace{1em}\\
-    \resizebox{1\linewidth}{!}{$ 
-     \rhd  \sum_{n=1}^{\infty }b_n  \; \textcolor{myb}{\textbf{conv}}. , \; 
-                   a_n \leq b_n \forall n \geq n_0\implies 
-                   \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv}}.  
-     $}
-     \vspace{1em}\\
-     \resizebox{1\linewidth}{!}{$ 
-    \rhd \sum_{n=1}^{\infty }b_n  \; \textcolor{myr}{\textbf{div}}. , 
-                   a_n \geq b_n \forall n \geq n_0 \implies 
-                   \sum_{n=1}^{\infty }a_n \;\; \textcolor{myr}{\textbf{div}}. 
-     $}
-
-     \section{Forme limite du test de comparaison}
-        En évaluant le rapport entre deux suites, ont peut déterminer 
-        si leur série correspondente 
-        convergent ou divergent tout deux. 
-        
         \begin{align*}
-        \resizebox{1\linewidth}{!}{$
-        \left[\lim\limits_{n \to+\infty } \dfrac{b_n}{a_n}  = L \neq 0 \right]
-            \implies  \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv}}.  
-        \leftrightarrow 
-        \sum_{n=1}^{\infty }b_n \; \textcolor{myb}{\textbf{conv}}.                
-        $}  
+        \resizebox{1\linewidth}{!}{$ 
+         \sum_{n=1}^{\infty }b_n  \; \textcolor{myb}{\textbf{conv.}}, \; 
+                   a_n \leq b_n \forall n \geq n_0\implies 
+                   \sum_{n=1}^{\infty }a_n \; \textcolor{myb}{\textbf{conv.}}  
+        $}
         \end{align*}
+        \begin{align*}
+        \resizebox{1\linewidth}{!}{$ 
+         \sum_{n=1}^{\infty }b_n  \; \textcolor{myr}{\textbf{div.}}, 
+                   a_n \geq b_n \forall n \geq n_0 \implies 
+                   \sum_{n=1}^{\infty }a_n \;\; \textcolor{myr}{\textbf{div}}.  
+        $}
+        \end{align*}                
+\section{Forme limite du test de comparaison}
+
+En évaluant le rapport entre deux suites de termes positifs, on peut déterminer
+si leurs séries correspondantes convergent ou divergent toutes deux.
+
+Soient \( (a_n) \) et \( (b_n) \) deux suites de nombres réels positifs, avec
+\( a_n > 0 \) et \( b_n > 0 \) pour tout \( n \) suffisamment grand. \textbf{Si}  :
+
+\begin{align*}
+\lim_{n \to+\infty} \dfrac{b_n}{a_n} = L \quad \text{avec} \quad 0 < L < \infty,
+\end{align*}
+
+\textbf{alors}  :
+
+    \begin{align*}
+    \sum_{n=1}^{\infty} a_n \; \textcolor{myb}{\textbf{conv}.}  \quad 
+    \Longleftrightarrow 
+    \quad% 
+    \sum_{n=1}^{\infty} b_n \; 
+    \textcolor{myb}{\textbf{conv}.} 
+    \end{align*}
     \vspace{-1em}
     \section{Critère de Riemann}
     Soit $\sum_{n=1}^{\infty} a_n$ une \textbf{série à termes positifs}. Supposons 
@@ -696,7 +865,7 @@
     \vspace{0.75em}
     \noindent
       $\rhd$ Si $p \leq 1$ et $l \neq 0$ (ou $l = +\infty$), \textbf{alors }   
-      $\sum_{n=1}^{\infty} a_n$ \textcolor{myr}{\textbf{div}}.
+      $\sum_{n=1}^{\infty} a_n$ \textcolor{myr}{\textbf{div.}}
  
 
     \vspace{1em}
@@ -761,53 +930,60 @@ d’après le critère de Riemann.
 
     \section{Astuce pour le critère de Riemann}
     Soit $k$ et $l$, les valeurs de l'exposant de plus petit degré et du plus grand 
-    degré du polynôme, il suffit de choisir $m$ tel que $m + k = l$.  
+    degré du polynôme, il suffit de choisir $p$ tel que $p + k = l$.  
     Dans l'\textcolor{myb}{\textbf{exemple}} précédent, nous avions                 
-    $k = 1$, $l = 4$ et $m = l - k  = 3$ et $n^m = n^3$.  
+    $k = 1$, $l = 4$ et $p = l - k  = 3$ et $n^p = n^3$.  
 
     \section{Série de Riemann et série puissance} 
     \vspace{-1em}
     \begin{align*}
         \sum_{n=1}^{\infty }\dfrac{1}{n^p} 
-        \text{ converge si } p > 1 \text{, diverge si } p \leq 1
+        \begin{cases} 
+        \text{ converge si } \quad\quad\quad p > 1 \\
+        \text{ diverge si } \quad\quad\quad\;\;\, p \leq 1
+        \end{cases}
         \\
-        \sum_{n=1}^{\infty }n^p \text{ converge  si }
-         p > 1 
+        \sum_{n=1}^{\infty} n^p 
+        \begin{cases} 
+        \text{ converge si } \quad\quad\quad\; p < 1 \\
+        \text{ diverge si } \quad\quad\quad\;\;\;\, p \geq 1
+        \end{cases}
     \end{align*}
     La première est un \textbf{série de Riemann}; la seconde 
     est une \textbf{série puissance}. 
 
     \section{Test de l'intégrale}
-    Soit $f : [1, \infty [ \rightarrow  \mathbb{R}$ 
-    \textbf{continue}, \textbf{positive} et \textbf{décroissante} 
-    et $a_n : f(n) = a_n$, la somme suivante converge ou diverge avec 
-    son intégrale correspondante :
-    \begin{align*}
-        &\sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv.}} 
-        \\
-        & \updownarrow 
-        \\
-        &\lim\limits_{a \to +\infty }\int_{x=1}^{x = a}f(x)dx = S \;\; 
-        (\textcolor{myb}{\textbf{conv}}.)    
-    \end{align*}
+        Soit $f : [1, \infty [ \rightarrow  \mathbb{R}$ 
+        \textbf{continue}, \textbf{positive} et \textbf{décroissante} 
+        et $a_n : f(n) = a_n$, la somme suivante converge ou diverge avec 
+        son intégrale correspondante :
+            \begin{align*}
+                &\sum_{n=1}^{\infty }a_n \;\; \textcolor{myb}{\textbf{conv.}} 
+                \\
+                & \Updownarrow 
+                \\
+                &\lim\limits_{a \to +\infty }\int_{x=1}^{x = a}f(x)dx = S \;\; 
+                (\textcolor{myb}{\textbf{conv}}.)    
+            \end{align*}
     $\blacktriangleright$ Utile lorsqu'on connait \textbf{une intégrale convergente} qui est 
     analogue à la somme qu'on veut calculer. 
 
 
-
-
     \section{Approximation de la somme}
-    \textbf{Si} $f:$ \textbf{positive}, \textbf{continue} et \textbf{décroissante} 
-    après sur son domaine et soit $n \in \mathbb{N}^*, 
-    a_n = f(n), \sum_{n=1}^{\infty }a_n = s \in \mathbb{R}, 
-    R_n = s - s_n$, \textbf{alors} le reste $R_n$ est borné et peut être 
-     estimé :
+        \textbf{Si} $f:$ \textbf{positive}, \textbf{continue} et \textbf{décroissante} 
+        sur son domaine, soit un seuil $n \in \mathbb{N}^*, \text{et  soient }  
+        a_n = f(n), \sum_{n=1}^{\infty }a_n = s \in \mathbb{R}, 
+        R_n = s - s_n$, \textbf{alors} le reste $R_n$ est borné et peut être 
+         estimé :
+
      \begin{align*}
         \resizebox{1\linewidth}{!}{$ 
-        \boxed{
-        \int_{n+1}^{\infty }f(x)dx \leq R_n = \sum_{k=n+1}^{\infty} a_k 
-        \leq \int_{n}^{\infty }f(x)dx
-        }
+            \boxed{
+                \int_{n+1}^{\infty }f(x)dx \leq R_n 
+                = 
+                \sum_{k=n+1}^{\infty} a_k 
+                \leq \int_{n}^{\infty }f(x)dx
+            }
         $}
         \\ 
         s_n + \int_{n+1}^{\infty }f(x)dx \leq s  
@@ -819,13 +995,17 @@ d’après le critère de Riemann.
      et on a 
     
      \begin{align*}
-         \sum_{n=N}^{\infty} a_n = s (\textbf{\textcolor{myb}{conv}}.) \leftrightarrow    
-         \int_{n+1}^{\infty }f(x)dx  \; \textbf{conv}.   
+         \sum_{n=N}^{\infty} a_n = s \; 
+         (\textbf{\textcolor{myb}{ conv}}.) 
+         \Leftrightarrow    
+         \int_{n}^{\infty }f(x)dx  \; \textbf{conv}.   
      \end{align*}               
 
 
     \begin{center}
     \begin{tikzpicture}[xscale=0.7, yscale=0.4]
+
+            \node at (2, 5.5) {\textcolor{myr}{$y =f(x)$}};
 
         % Axes
         \draw[->] (0,0) -- (6,0) node[right] {$x$};
@@ -841,7 +1021,7 @@ d’après le critère de Riemann.
         \draw[very thick, myb!70] (2,0) -- (2,2.5);
 
         % Point de départ de l'aire
-        \node[below] at (1,0) {$n$};
+        \node[below] at (2,0) {$n+1$};
         \node[] at (3,3.75) {\textcolor{myb}{$\int_{n + 1 }^{\infty }f(x)dx$}};
 
 
@@ -889,6 +1069,7 @@ d’après le critère de Riemann.
 
         % Courbe
         \draw[thick, myr, domain=1:5.5] plot (\x, {5/\x}) node[above] {};
+            \node at (2, 5.5) {\textcolor{myr}{$y =f(x)$}};
 
         % Remplissage de l'aire sous la courbe à partir de n=1
         \fill[myb!50] (1,0) -- plot[domain=1:5] (\x, {5/\x}) -- (5,0) -- cycle;
@@ -1150,7 +1331,7 @@ d’après le critère de Riemann.
  
     \begin{align*}
     \boxed{
-        \sum\limits_{k=1}^{\infty }u_n(x) = 
+        \sum\limits_{n=1}^{\infty }u_n(x) = 
         \lim\limits_{n \to+\infty } 
         \sum\limits_{k=1}^{n}u_k(x) =  
         \lim\limits_{n \to +\infty } s_n(x) 
@@ -1167,7 +1348,7 @@ d’après le critère de Riemann.
     \resizebox{1\linewidth}{!}{$ 
     \boxed{
         c_0 + c_1x + c_2x^2 + \cdots + c_nx^n + \cdots = 
-        \sum\limits_{k=1}^{\infty }  c_nx^n  
+        \sum\limits_{n=1}^{\infty }  c_nx^n  
     }
 $}
     \end{align*} 
@@ -1259,7 +1440,7 @@ $}
     a la somme partielle \( T_n(x) \) portant le nom de polynôme de Taylor : 
     \begin{align*}
         \resizebox{\linewidth}{!}{$
-            f(x) = \sum_{n=0}^{\infty }\dfrac{1}{n!}f^{n}(a)(x - a)^n, \; |x - a| < R
+            f(x) = \sum_{k=0}^{\infty }\dfrac{1}{k!}f^{k}(a)(x - a)^k, \; |x - a| < R
         $}
     \end{align*}            
 
@@ -1387,7 +1568,7 @@ $}
 
 
     \section{Somme des $n$ premiers terme d'une suite \textcolor{myb}{\textbf{arithmétique}}}
-    \begin{Preuve}{Somme partielle d'une suite arithmétique}{}
+    \begin{Preuve}{\hypertarget{Somme des n premiers termes arithmétique}{Somme partielle d'une suite arithmétique}}{}
         Montrons que la formule générale pour la somme $s_n$ des $n$ premiers 
         termes d'une \textbf{suite arithmétique} est donnée par : 
 
@@ -1484,7 +1665,7 @@ $}
 
 
     \section{Somme des $n$ premiers termes d'une suite \textcolor{myb}{\textbf{géométrique}} }
-        \begin{Preuve}{Somme partielle d'une suite géométrique}{}
+    \begin{Preuve}{\hypertarget{Somme des n premiers termes géométrique}{Somme partielle d'une suite géométrique}}{}
             Montrons que la somme des $n$ premiers termes d'une suite géométrique est 
             donnée par :
 
@@ -1604,7 +1785,7 @@ $}
 
     \section{Convergence d'un série géométrique}
     \begin{Preuve}{}{}
-        Considérons une suite géométrique de terme initial $a$ et de raison $r$. Les
+        \hypertarget{Convergence série géométrique}{Considérons} une suite géométrique de terme initial $a$ et de raison $r$. Les
         termes de cette suite sont donnés par $u_n = ar^n$. Nous devons prouver que si 
         $|r| < 1$, la somme de cette suite converge vers $\dfrac{a}{1 - r}$, et qu'elle
         diverge lorsque $|r| \geq 1$.
