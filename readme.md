@@ -7,9 +7,9 @@ This repository contains all the LaTeX source code for the lecture notes I took 
 
 The core of this template is built around the `preamble.tex` file located in the `LaTeXTemplate` folder. This folder also includes other essential files used to compile the documents:
 
-1. [`letterfonts.tex`](LaTeXTemplate/letterfonts.tex)
-2. [`macros.tex`](LaTeXTemplate/macros.tex)
-3. [`lstlistingEnvs.tex`](LaTeXTemplate/lstlistingEnvs.tex)
+1. [`letterfonts.tex`](TemplateRessources/letterfonts.tex)
+2. [`macros.tex`](TemplateRessources/macros.tex)
+3. [`lstlistingEnvs.tex`](TemplateRessources/lstlistingEnvs.tex)
 
 These files contain shortcuts for mathematical symbols, custom macros, and LaTeX environments that help present information in organized boxes.
 
