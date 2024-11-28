@@ -178,7 +178,6 @@ Every finite-dimensional vector space has a basis.
 The proof involves constructing a basis by extending a linearly independent set.
 \end{proof}
 
-This is the end of your document.
 
 \end{document}
  
