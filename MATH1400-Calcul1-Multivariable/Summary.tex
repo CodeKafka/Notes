@@ -3,6 +3,7 @@
 %\usepackage{amsmath, amsthm}
 
 
+
 \usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
 %\usepackage[varbb]{newpxmath}
 %\usepackage[osf,largesc,theoremfont]{newpxtext}
@@ -49,6 +50,8 @@
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
 \input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+\usepackage[tmargin=2cm,rmargin=1in,lmargin=1in,margin=0.85in,bmargin=2cm,footskip=.5in]{geometry}
 
 \hypersetup{
     colorlinks=true,
@@ -190,6 +193,8 @@
 
 \titleformat{\section}[block]{\normalsize\bfseries}{}{0pt}{}
 
+\titleformat{\subsection}[block]{\small\bfseries}{}{0pt}{}
+
 
 \begin{multicols*}{3}
     \footnotesize
@@ -207,8 +212,8 @@
         \textbf{Notations équivalentes} :    
         \end{center}
         \[%
-            \{a_1, a_2, a_3,\dots\} \leftrightarrow  \{ a_n \} 
-                            \leftrightarrow  \{a_n\}_{ n = 1}^{\infty }
+            \{a_1, a_2, a_3,\dots\} \Leftrightarrow  \{ a_n \} 
+                            \Leftrightarrow  \{a_n\}_{ n = 1}^{\infty }
         \]%
         On dit que $a_n$ ou $\{a_n\}$ est le \textbf{terme général}; c'est la 
         règle qui définit la suite; \textit{la formule}  qui permet de calculer 
@@ -298,7 +303,7 @@
 
     \section{Convergence d'une série géométrique}
         Nous pouvons \hyperlink{Convergence série géométrique}{\textbf{montrer}}
-        qu'une suite géométrique converge vers la valeur suivante :
+        qu'une série géométrique converge vers la valeur suivante :
         \begin{align*}
                 \sum_{n=1}^{\infty }a_1r^n  
                     \begin{cases}
@@ -310,7 +315,7 @@
         Si la série converge, on a :
         \begin{align*}
             \boxed{
-            \sum_{n=0}^{\infty }a_1r^{n} = 
+            \sum_{n=1}^{\infty }a_1r^{n} = 
             \dfrac{a_1}{1 - r}, \; \forall r \colon |r| < 1 
         }
         \end{align*}
@@ -333,7 +338,7 @@
     \section{Propriétés limites d'une suite}
     \begin{itemize}
         \item[$\rhd$] \textbf{Unicité.} La limite d'une suite convergente est \textit{unique}. Ainsi, les limite à gauche 
-            et est à droite sont les mêmes. 
+            et celle à droite sont les mêmes. 
         
         \item[$\rhd$] Toute suite convergente est \textbf{bornée};  
             toute suite non bornée est \textbf{divergente}.        
@@ -963,7 +968,7 @@ d’après le critère de Riemann.
                 & \Updownarrow 
                 \\
                 &\lim\limits_{a \to +\infty }\int_{x=1}^{x = a}f(x)dx = S \;\; 
-                (\textcolor{myb}{\textbf{conv}}.)    
+                (\textcolor{myb}{\textbf{conv.}})    
             \end{align*}
     $\blacktriangleright$ Utile lorsqu'on connait \textbf{une intégrale convergente} qui est 
     analogue à la somme qu'on veut calculer. 
@@ -1117,7 +1122,7 @@ d’après le critère de Riemann.
 
     \noindent
     $\blacktriangleright$
-    $\sum_{n=1}^{\infty }  (-1)n \; \textcolor{myb}{\textbf{conv}}$ vers $s \in
+    $\sum_{n=1}^{\infty }  (-1)^{n}a_n \; \textcolor{myb}{\textbf{conv.}}$ vers $s \in
     \mathbb{R} \;\; \forall m \geq N $ 
 
      \begin{itemize}
@@ -1311,7 +1316,7 @@ d’après le critère de Riemann.
         \end{align*}                    
 
     est une série de fonction de \textbf{terme général}  
-    $u_n(x)$ et on a la somme partielle de range $n$ correspondante : 
+    $u_n(x)$ et on a la somme partielle \( s_n \) correspondante : 
 
 
     \begin{align*}
@@ -1322,8 +1327,8 @@ d’après le critère de Riemann.
     \end{align*}
     
     \section{Définition du domaine de convergence}
-    L'ensemble des $x \in E$ qui sont tels que la suite $s_n(x)$ 
-    convergent porte le nom de  
+    L'ensemble des $x \in E$ qui sont tels que la série $s_n(x)$ 
+    converge porte le nom de  
     \textbf{\textcolor{myb}{domaine de convergence}} $D \subset E$.    
 
     La somme $s_n(x)$ est donc la somme qu'on obtient lorsqu'on 
@@ -1356,21 +1361,36 @@ $}
     Lorsqu'elle est \textbf{centrée en} $a$, une série entière prend la forme : 
 
     \begin{align*}
-        \resizebox{\linewidth}{!}{$
-         c_0 + c_1(x - a) + \cdots + c_n(x - a)^n + \cdots = 
+            c_0 + c_1(x - a) &+ \cdots + c_n(x - a)^n + \cdots 
+        \\
+                            &= 
         \sum\limits_{k=1}^{\infty }  c_n(x - a)^n  
-    $}
     \end{align*}    
 
 
-    \vspace{-1.5em}
-    \section{Convergence de série entière}
-    \vspace{-0.5em}
-        Considérons la série entière 
-        \begin{align*}
-           S = \sum_{n=0}^{\infty }c_n(x - a)^n 
-        \end{align*}
-        \textbf{Alors}, on a l'une des trois possibilités : 
+
+    \section{Rayon de convergence}
+
+
+    Le \textbf{rayon de convergence} \(R\) d'une série entière 
+    \(S = \sum_{n=0}^\infty c_n (x-a)^n\) représente la distance maximale à 
+    \(a\) pour laquelle la série converge. La convergence dépend de la 
+    décroissance des coefficients \(c_n\), et \(R\) est calculé à l'aide des 
+    coefficients.
+
+    \subsection{Étapes pour déterminer \(R\) et la convergence}
+
+    \begin{enumerate}
+        \item \textbf{Analyser les coefficients \(c_n\) :} Trouver la limite \(L\) 
+        à partir du \textit{critère de d'Alembert} (\(\lim \left| \frac{c_{n+1}}{c_n} 
+        \right|\)) ou du \textit{critère de Cauchy} (\(\lim \sqrt[n]{|c_n|}\)).
+        
+        \item \textbf{Calculer \(R\) :} 
+            \begin{align*}
+                \boxed{R = \dfrac{1}{L}}
+            \end{align*}
+        \item \textbf{Vérifier la convergence :}
+
 
             \noindent$\rhd$
                 $R = 0 \;\;\; \implies S$ \; 
@@ -1378,17 +1398,66 @@ $}
             \\
             $\rhd$  $R = +\infty \implies S \;$ 
             \textcolor{myb}{\textbf{conv.}} 
-            \; $\forall x \in \mathbb{R}$  
+            $\forall x \in \mathbb{R}$  
             \\ \\
             $\blacktriangleright$ 
-            $\exists R > 0 : |x - a| < R \implies  S \; \textbf{\textcolor{myb}{conv.}}$
+            $|x - a| < R \implies  S \; \textbf{\textcolor{myb}{conv.}}$
 
             \noindent 
-            $\blacktriangleright$ $\exists R > 0 : |x - a| > R \; \implies  S \;
-            \textbf{\textcolor{myr}{ div.}}$   
-            \\\\ 
-            Mais pour les points $x = a$ et $x = -a$, il faut déterminer  
-            la convergence cas par cas. 
+            $\blacktriangleright$ $|x - a| > R \; \implies  S \;
+            \textbf{\textcolor{myr}{ div.}}$ 
+        
+\item \textbf{Analyser le bord \( |x - a| = R \) :} Tester les points où 
+\( |x - a| = R \) pour déterminer individuellement s'ils convergent ou non. 
+Ces points incluent typiquement \(x = a + R\) et \(x = a - R\).
+    \end{enumerate}
+
+
+\section{Exemple  conv. série entière}
+
+Considérons la série entière :
+\[
+S = \sum_{n=1}^\infty \frac{(-1)^n}{n} (x - 2)^n.
+\]
+
+\subsection*{Étape 1 : Rayon de convergence}
+Les coefficients sont \(c_n = \frac{(-1)^n}{n}\). Par le critère de Cauchy :
+\[
+\lim_{n \to \infty} \sqrt[n]{|c_n|} = \lim_{n \to \infty} \sqrt[n]{\frac{1}{n}} = 1.
+\]
+Ainsi, le rayon de convergence est \(R = 1\).
+
+\subsection*{Étape 2 : Domaine de convergence}
+ La série \textbf{converge} pour \( |x - 2| < 1 \). 
+ La série \textbf{diverge} pour \( |x - 2| > 1 \).
+Sur le bord \( |x - 2| = 1 \), testons \(x = 3\) et \(x = 1\).
+
+\subsection*{Étape 3 : Analyse du bord}
+\textbf{Cas \(x = 3\) } :
+Si \(x = 3\), alors \((x - 2)^n = 1\). La série devient :
+\[
+S = \sum_{n=1}^\infty \frac{(-1)^n}{n}.
+\]
+Elle converge par le critère des séries alternées.
+
+\textbf{Cas \(x = 1\) :}
+Si \(x = 1\), alors \((x - 2)^n = (-1)^n\). La série devient :
+\[
+S = \sum_{n=1}^\infty \frac{1}{n}.
+\]
+C'est la série harmonique, qui diverge.
+
+\subsection*{Conclusion}
+Le rayon de convergence est \(R = 1\), et :
+\begin{itemize}
+    \item [$\blacktriangleright$ ] La série converge pour \( |x - 2| < 1 \).
+    \item [$\blacktriangleright$ ] Sur \( |x - 2| = 1 \) :
+    \begin{itemize}
+        \item [$\blacktriangleright$ ]  \(x = 3\) : convergence.
+        \item [$\blacktriangleright$ ] \(x = 1\) : divergence.
+    \end{itemize}
+\end{itemize}
+    \vspace{-1.5em}
 
 
     \vspace{-1em}
@@ -1433,6 +1502,97 @@ $}
             f(x) = \sum_{n= 0}^{\infty }\dfrac{1}{n!}f^{n}(a)(x - a)^n, \; |x - a| < R 
         $}
         \end{align*}
+
+
+    \section{Exemple de développement en série entière}
+    Développons \( f(x) = \ln(1 + x) \) en série de Taylor autour de \(a = 0\).
+
+    \subsection*{Étape 1 : Dérivées successives de \(f(x)\)}
+    \begin{align*}
+        f(x) &= \ln(1 + x), \quad f(0) = \ln(1) = 0, \\
+        f'(x) &= \frac{1}{1 + x}, \quad f'(0) = 1, \\
+        f''(x) &= -\frac{1}{(1 + x)^2}, \quad f''(0) = -1, \\
+        f^{(3)}(x) &= \frac{2}{(1 + x)^3}, \quad f^{(3)}(0) = 2, \\
+        f^{(4)}(x) &= -\frac{6}{(1 + x)^4}, \quad f^{(4)}(0) = -6.
+    \end{align*}
+
+    \subsection*{Étape 2 : Coefficients \(c_n\)}
+    Les coefficients de la série sont donnés par :
+    \[
+    c_n = \frac{f^{(n)}(0)}{n!}.
+    \]
+    Pour les premières valeurs :
+    \begin{align*}
+        c_0 &= \frac{f(0)}{0!} = 0, \\
+        c_1 &= \frac{f'(0)}{1!} = 1, \\
+        c_2 &= \frac{f''(0)}{2!} = \frac{-1}{2}, \\
+        c_3 &= \frac{f^{(3)}(0)}{3!} = \frac{2}{6} = \frac{1}{3}, \\
+        c_4 &= \frac{f^{(4)}(0)}{4!} = \frac{-6}{24} = \frac{-1}{4}.
+    \end{align*}
+
+    Donc on a \( c_n \) : 
+    \begin{align*}
+                c_n =   \dfrac{(-1)^n}{n} 
+    \end{align*}
+
+    \subsection*{Étape 3 : Série de Taylor}
+    En remplaçant les coefficients \(c_n\), la série de Taylor devient :
+   
+    \begin{align*}
+        f(x) = \ln(1 + x) &= \sum_{n=1}^\infty c_n x^n = x - \frac{x^2}{2} + \frac{x^3}{3} 
+    - \frac{x^4}{4} + \cdots 
+    \\ 
+                          &= \sum_{n=1}^\infty \dfrac{(-1)^nx^n }{n} 
+    \end{align*}            
+
+
+    \subsection*{Étape 4 : Rayon de convergence}
+    La série converge si \(|x| < 1\), car la fonction \(\ln(1 + x)\) est définie 
+    uniquement pour \(x > -1\). Ainsi, le rayon de convergence est \(R = 1\).
+
+    \section{De série géométrique à série entière}
+
+
+    Si une fonction peut être exprimée sous la forme \( \frac{1}{1 - u(x)} \), alors 
+    elle peut être développée en série entière en utilisant la série géométrique :
+    \[
+    \frac{1}{1 - u(x)} = \sum_{n=0}^\infty [u(x)]^n, \quad \text{pour } |u(x)| < 1.
+    \]
+
+    \subsection*{Exemple : \( f(x) = \frac{1}{1 + x} \)}
+
+    \begin{enumerate}
+        \item \textbf{Réécriture de la fonction :} Exprimons \( f(x) \) sous la forme
+        \[
+        f(x) = \frac{1}{1 + x} = \frac{1}{1 - (-x)},
+        \]
+        avec \( u(x) = -x \).
+        
+        \item \textbf{Utilisation de la série géométrique :} En appliquant la série 
+        \[
+        \sum_{n=0}^\infty [u(x)]^n, 
+        \]
+        on obtient :
+        \[
+        f(x) = \sum_{n=0}^\infty (-x)^n.
+        \]
+
+        \item \textbf{Simplification :} Simplifions la série pour obtenir :
+        \[
+        f(x) = \sum_{n=0}^\infty (-1)^n x^n.
+        \]
+
+        \item \textbf{Rayon de convergence :} La série converge pour \( |u(x)| = |x| < 1 \),
+        donc \( R = 1 \).
+    \end{enumerate}
+
+    \subsection*{Résultat final}
+    \[
+    \frac{1}{1 + x} = \sum_{n=0}^\infty (-1)^n x^n, \quad \text{pour } |x| < 1.
+    \]
+
+    Cette méthode exploite la convergence de la série géométrique pour obtenir rapidement
+    une série entière sans calculer explicitement les dérivées.
 
     \section{Polynôme de Taylor}
     Si \( f(x) \) peut se mettre sous la forme d'une \textbf{série entière} au voisinage de 
