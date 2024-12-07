@@ -1,0 +1,1587 @@
+\documentclass{report}
+%\usepackage[utopia]{mathdesign}
+%\usepackage{amsmath, amsthm}
+
+\usepackage[top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
+\usepackage{nicefrac, xfrac}
+%\usepackage[varbb]{newpxmath}
+%\usepackage[osf,largesc,theoremfont]{newpxtext}
+%\usepackage{coelacanth}
+%\usepackage{beraserif} % Bitstream Vera Serif font
+%\usepackage{berasans} % Bitstream Vera Sans font
+%\usepackage{beramono} % Bitstream Vera Sans Mono font
+%\usepackage{berasans}
+%\usepackage{libertine}
+%\usepackage{mathpazo}
+%\usepackage{palatino}
+%\usepackage{crimson}
+
+% NEW ------- For pointilles lines
+\usepackage{multido}
+\usepackage{lipsum}
+
+%% Choose one of the following (if not choosing the  
+%% default, viz., Computer Modern, font family):
+%\usepackage{lmodern}
+\usepackage{bold-extra}
+%%
+%\usepackage{mathpazo}
+% \usepackage{newpxmath}
+%\usepackage{kpfonts} % Very good
+%%
+%\usepackage{mathptmx} %Very good
+%\usepackage{stix} 
+%\usepackage{txfonts} %Very good
+\usepackage{newtxtext,newtxmath} %Very good
+%%
+%\usepackage{libertine} \usepackage[libertine]{newtxmath}
+%\usepackage{libertine,libertinust1math} % added 2019/11/28
+%%
+%\usepackage{newpxtext} \usepackage[euler-digits]{eulervm}
+%\usepackage{textcomp}
+%\usepackage{bm}
+\usepackage{contour}
+\usepackage{adjustbox}
+\usepackage{nicematrix}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+%For multiple line boxed equations
+\usepackage{empheq}
+
+
+
+
+
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/preamble.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/macros.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/letterfonts.tex}
+\input{/home/cryptopsy/Semesters/LaTeXTemplates/UniversalTeXTemplate/lstlistingsEnvs.tex}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+%For multiple line boxed equations
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+\newtcbox{\othermathbox}[1][]{nobeforeafter, math upper, tcbox raise base, 
+          % enhanced, 
+          % sharp corners, 
+          % colback=black!10, 
+          colframe=black!60, 
+          drop fuzzy shadow, left=1em, top=1em, right=3em, bottom=1em}
+
+
+
+\def\blankpage{%
+      \clearpage%
+      \thispagestyle{empty}%
+      \addtocounter{page}{-1}%
+      \null%
+      \clearpage}
+
+
+\begin{document}
+\begin{multicols*}{2}
+    \chapter{Programmation dynamique probabiliste}
+
+    \section{Principe}
+    \textcolor{myr}{\textbf{Dans le contexte de programmation dynamique déterministe}}, l'état $S_{n+1}$ à l'étape $n+1$ est \textbf{complètement déterminé}                                
+    par l'état $S_n$ à l'étape $n$ et la décision prise 
+    dans l'état $S_n$. 
+
+
+    \begin{figure}[H]
+    \centering
+            \begin{tikzpicture}[
+            node distance=2cm and 2cm,
+            every node/.style={font=\sffamily},
+            box/.style={draw, fill=gray!30, minimum size=1.5cm, 
+            rectangle, align=center}, % Ajout de fill=gray!30
+            arrow/.style={-{Stealth}, thick},
+            textred/.style={text=red, font=\sffamily\small}
+        ]
+
+        % Noeuds principaux
+        \node[box] (box) {};
+        \node[above=1cm of box] (xn) {$x_n$};
+        \node[left=2cm of box] (Sn) {$S_n$};
+        \node[right=2cm of box] (Sn1) {$S_{n+1} = S_n - x_n$};
+        \node[below=1cm of box] (Cn) {$C_n$};
+
+        % Flèches
+        \draw[arrow] (xn) -- (box);
+        \draw[arrow] (Sn) -- (box);
+        \draw[arrow] (box) -- (Sn1);
+        \draw[arrow] (box) -- (Cn);
+% Annotation rouge
+\node[draw=red, below left=2.25cm and -2cm of box, align=left] (textred) {
+    $\textcolor{red}{C_n : }$ Contribution directe à la\\
+    valeur de l'objectif    
+};
+\draw[red, thick, -{Stealth}] (Cn) -- ++(-2,0) -- (textred.north west);
+        \end{tikzpicture}
+    \end{figure}
+
+    \textcolor{myr}{\textbf{Dans le contexte de programmation dynamique probabiliste}}, l'état $S_{n+1}$ à l'étape $n+1$ \textbf{n'est pas} 
+    complètement déterminé par l'état $S_n$ à l'étape $n$ 
+    et la décision $x_n$ prise dans l'état $S_n$
+
+    On a donc une \textbf{distribution de probabilités}. On peut 
+    Il est possible d'obtenir différents états $S_{n+1}$ 
+    à l'état $n + 1$, en fonction de \textbf{la décision} $x_n$ 
+    et de l'\textbf{état} $S_n$ : 
+
+
+
+
+
+
+
+\begin{tikzpicture}[
+    node distance=2cm and 2cm,
+    every node/.style={font=\sffamily},
+    box/.style={draw, fill=gray!30, minimum size=3cm, rectangle, align=center},
+    dashedarrow/.style={dashed, thick, -{Stealth}},
+    arrow/.style={thick, -{Stealth}},
+    textmyb/.style={text=myb, font=\sffamily\footnotesize\itshape}
+]
+
+% Boîte principale
+\node[box] (box) {};
+
+% Entrées
+\node[above=1.2cm of box] (xn) {$x_n$};
+\node[left=1.5cm of box] (sn) {$S_n$};
+
+% Sorties
+\node[right=2cm of box, yshift=1cm] (sn1i1) {$S_{n+1}^{i_1}$};
+\node[right=2cm of box, yshift=0.5cm] (sn1i2) {$S_{n+1}^{i_2}$};
+\node[right=2cm of box, yshift=-1cm] (sn1it) {$S_{n+1}^{i_t}$};
+
+% Variables C_n^i en bas
+\node[below=1.5cm of box, xshift=-1.0cm] (ci1) {$C_n^{i_1}$};
+\node[below=1.5cm of box, xshift=-0.5cm] (ci2) {$C_n^{i_2}$};
+\node[below=1.5cm of box, xshift=1cm] (cit) {$C_n^{i_t}$};
+
+% Labels p_n^i
+\node[right=0.35cm of box,  yshift=1.35cm, textmyb] (pn1) {$p_n^{i_1}$};
+\node[right=0.35cm of box, yshift=0.8cm, textmyb] (pn2) {$p_n^{i_2}$};
+\node[right=0.35cm of box, yshift=-0.6cm, textmyb] (pnt) {$p_n^{i_t}$};
+
+% Flèches extérieures
+\draw[arrow] (xn) -- (box.north);
+\draw[arrow] (sn) -- (box.west);
+
+% Flèches pour i_1
+\draw[arrow] (box.south) ++(-1.0cm, 0) -- (ci1); % Extérieure vers C_n^{i_1}
+\draw[dashed] (ci1.north) -- ++(0, 3)  -- ++(0, 1.0) -- (box.east|-sn1i1); % Pointillée intérieure
+\draw[arrow] (box.east|-sn1i1) -- (sn1i1); % Extérieure vers s_{n+1}^{i_1}
+
+% Flèches pour i_2
+\draw[arrow] (box.south) ++(-0.5cm, 0) -- (ci2); % Extérieure vers C_n^{i_2}
+\draw[dashed] (ci2.north) -- ++(0, 3) -- ++(0, 0.5) -- (box.east|-sn1i2); % Pointillée intérieure
+
+\draw[arrow] (box.east|-sn1i2) -- (sn1i2); % Extérieure vers s_{n+1}^{i_2}
+
+% Flèches pour i_t
+\draw[arrow] (box.south) ++(1cm, 0) -- (cit); % Extérieure vers C_n^{i_t}
+\draw[dashed] (cit.north) -- ++(0, 1.5) -- ++(0, 0.5) -- (box.east|-sn1it); % Pointillée intérieure
+\draw[arrow] (box.east|-sn1it) -- (sn1it); % Extérieure vers s_{n+1}^{i_t}
+
+% Points de suspension
+\node[below=1.3cm of box, xshift=0.25cm] (dots1) {$\cdots$};
+\node[right=.6cm of box] (dots2) {$\vdots$};
+
+\end{tikzpicture}
+
+\begin{itemize}
+    \item [$\rhd$ ] \textbf{Ensemble des états suivants possibles}  
+        \begin{itemize}
+            \item [$\blacktriangleright$ ] 
+                $A_{n+1} =  
+                s_{n+1}^{\textcolor{myb}{1}}, 
+                s_{n+1}^{\textcolor{myb}{2}}, 
+                \dots, s_{n+1}^{\textcolor{myb}{|A_{n+1}|}}$
+        \end{itemize}
+    \item [$\rhd$ ]                             
+        \textbf{Probabilité d'atteindre l'état spécifique} 
+        $\boldsymbol{s_{n+1}^{i}}$
+        \begin{itemize}
+            \item [$\blacktriangleright$ ] 
+                $p_n^{\textcolor{myb}{i} } 
+                = 
+                \text{Prob}\{s_{n+1} 
+                = 
+        s_{n+1}^{\textcolor{myb}{i}}\} \quad i = 1, \dots, |A_{n+1}|$ 
+        \end{itemize}
+    \item [$\rhd$ ] 
+        \textbf{États atteignabless} 
+        $\boldsymbol{s_n^{\textcolor{myb}{i_{n+1}}}} 
+        \in A_{\text{atteingnable}} \subseteq A_{n+1}$   
+        \begin{itemize}
+            \item [$\blacktriangleright$ ] 
+                $p_n^{\textcolor{myb}{i} } > 0$ \quad $1 = i_1, \dots, i_t$ 
+            \item [$\rhd$ ] 
+                $\{
+                s_{n+1}^{\textcolor{myb}{i_1}}, 
+                s_{n+1}^{\textcolor{myb}{i_2}}, 
+                \dots,
+                s_{n+1}^{\textcolor{myb}{i_t}}
+                \}% 
+                \subseteq A_{n+1}$
+    \end{itemize}
+    \item [$\rhd$ ] 
+        \textbf{États non atteignabless} 
+        \begin{itemize}
+            \item [$\blacktriangleright$ ] 
+                $p_n^{\textcolor{myb}{i} } 
+                = 
+                0$ 
+                \quad 
+                $i = 1, \dots, |A_{n+1}|, i \neq i_1, \dots, i_t$ 
+    \end{itemize}
+\end{itemize}       
+
+\begin{note}{}{}
+   Dans le diagramme et le texte, \( p^i_n \) représente \textbf{la probabilité de transition} vers un état spécifique \( s_{n+1}^{i} \) à l’étape \( n+1 \), \textbf{conditionnellement à être dans l’état \( s_n \) et après avoir effectué l’action \( x_n \)}. 
+\end{note}                                
+
+    Pour chaque état $s_n$, on a donc le le système suivant : 
+    \begin{align*}
+            &\phantom{p}p_{n}^{\textcolor{myb}{i}} \geq 0 \quad i = 1, \dots, |A_{n+1}|  
+            \\
+            &\sum_{\textcolor{myb}{i} =1}^{\textcolor{myb}{|A_{n+1}|}}p_n^{\textcolor{myb}{i}} 
+            = 1
+    \end{align*}            
+
+    \section{Exemple du problème de diligence}
+    On peut imaginer un scénario où \textbf{il n'est pas garantit} que lorsqu'on 
+    prend la décision de se déplacer à la ville $x_n \in A_{n+1}$ \textbf{en partant}  
+    de $x$, il n'est pas garantit qu'on atteigne cette ville. 
+
+
+\subsection{Tenter de se rendre à la ville $\boldsymbol{2}$}
+    Supponons que nous voulons nous rendre à la ville $2$.
+    Posons qu'il y a une \textbf{probabilité}  de $0.8$ qu'on arrive à la ville $2$ 
+    et une \textbf{probabilité} de $0.2$ qu'on arrive à la ville $3$, lorsqu'on 
+    prendre la \textbf{décision  de se rendre à la ville} $2$. Ponsons que la 
+    distance de $1$ à $2$ et de $1$ à $3$ est de $2$ et $4$ unités, respectivement. 
+
+    Nous avons alors la situation suivante :
+    \begin{center}
+        \begin{tikzpicture}[
+        scale=0.85, 
+            ->,>=stealth',shorten >=1pt, auto, 
+            node distance=2cm and 2cm, thick,
+            every node/.style={font=\sffamily},
+            state/.style={circle, draw, minimum size=6mm, font=\footnotesize},
+            weight/.style={font=\small},
+            dottedarrow/.style={->, dotted, thick},
+            arrow/.style={->, thick},
+            costred/.style={text=red, font=\small},
+            costmyb/.style={text=myb, font=\small},
+            squarebox/.style={draw=green, thick, minimum size=6mm, font=\bfseries, align=center}
+        ]
+
+        % Noeuds
+        \node[squarebox] (box1) at (0, 3) {1};
+        \node[squarebox] (box2) at (2, 3) {2};
+        \node[squarebox] (box5) at (5, 3) {5};
+
+        \node[state] (node1) at (0, 0) {1};
+        \node[state] (node2) at (2, 2) {2};
+        \node[state] (node3) at (2, 0) {3};
+        \node[state] (node4) at (2, -2) {4};
+        \node[state] (node10) at (5, 0) {10};
+
+        % Arcs
+        \draw[arrow] (node1) -- (node2) node[midway, weight, above left] {\textcolor{red}{2}  };
+        \draw[arrow] (node1) -- (node3) node[midway, weight, above right] {\textcolor{red}{4}  };
+        \draw[arrow] (node1) -- (node4) node[midway, weight, below ] {\textcolor{red}{3}  };
+
+        \draw[dottedarrow] (node2) -- (node10) node[midway, above right] {$f_2^*(2)$};
+        \draw[dottedarrow] (node3) -- (node10)  node[midway, below ] {$f_2^*(3)$};
+
+
+        % Coûts (textes colorés)
+
+
+        \node[costmyb, below=0cm of node2 ]  {1};
+        \node[costmyb, below=0cm of node3 ]  {2};
+        \node[costmyb, below=0cm of node4 ]  {3};
+
+
+        \node[right=0.2cm of node2, yshift=-0.2cm]  {0.8};
+        \node[right=0.2cm of node3, yshift=0.3cm]  {0.2};
+
+
+        \end{tikzpicture}
+        
+    \end{center}
+
+    Ainsi, le chemin optimal pour se rendre de $1$ à $2$ dépend de 
+    la probabilité de d'arriver à $2$ ou $3$ : 
+    \begin{align*}
+        f_1(1,2) = \texttt{0.8} (2 + f_2^{*}(2)) + \texttt{0.2} (4 + f_2^{*}(3))    
+    \end{align*}
+
+
+    On peut  également représenter la situation avec le diagramme d'état suivant :
+
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm and 2cm,
+    every node/.style={font=\sffamily},
+    box/.style={draw, fill=gray!30, minimum size=3cm, rectangle, align=center},
+    dashedarrow/.style={dashed, thick, -{Stealth}},
+    arrow/.style={thick, -{Stealth}},
+    textmyb/.style={text=myb, font=\sffamily\footnotesize\itshape}
+]
+
+% Boîte principale
+\node[box] (box) {};
+
+% Entrées
+\node[above=1.2cm of box] (xn) {$x_1 = 2$};
+\node[left=1.5cm of box] (sn) {$s_1 = 1$};
+
+% Sorties
+\node[right=2cm of box, yshift=0.75cm] (s1) {$s_2^1 = 2$};
+\node[right=2cm of box, yshift=-0.75cm] (s2) {$s_2^2 = 3$};
+
+% Variables lambda
+\node[below=1.5cm of box, xshift=-1cm] (lambda1) {$\lambda_{1,2} = 2$};
+\node[below=1.5cm of box, xshift=1cm] (lambda2) {$\lambda_{1,3} = 4$};
+
+% Probabilités
+\node[right=0.3cm of box, yshift=1.05cm] (p1) {$0.8$};
+\node[right=0.3cm of box, yshift=-0.45cm] (p2) {$0.2$};
+
+% Flèches extérieures
+\draw[arrow] (xn) -- (box.north);
+\draw[arrow] (sn) -- (box.west);
+
+% Flèche pour s_2^1
+\draw[arrow] (box.south) ++(-1cm, 0) -- (lambda1); % Extérieure vers lambda_1,2
+\draw[dashed] (lambda1.north) -- ++(0, 3.75)  -- (box.east|-s1); % Pointillée intérieure
+\draw[arrow] (box.east|-s1) -- (s1); % Extérieure vers s_2^1
+
+% Flèche pour s_2^2
+\draw[arrow] (box.south) ++(1cm, 0) -- (lambda2); % Extérieure vers lambda_1,3
+\draw[dashed] (lambda2.north) -- ++(0, 2.25) -- (box.east|-s2); % Pointillée intérieure
+\draw[arrow] (box.east|-s2) -- (s2); % Extérieure vers s_2^2
+
+% Probabilités
+
+\end{tikzpicture}
+    
+\end{center}
+
+\subsection{Tenter de se rendre à la ville $\boldsymbol{3}$}
+
+\[%
+\begin{aligned}
+    &n = 1, \quad s_1 = \textcolor{red}{1}, \quad x_1 = \textcolor{red}{3}, \\
+    &s_2^1 = \textcolor{myb}{2}, \quad s_2^2 = \textcolor{myb}{3}, \quad s_2^3 = \textcolor{myb}{4}, \\
+    &p_1^1(1, 3) = \textcolor{red}{0.1}, \quad 
+    p_1^2(1, 3) = \textcolor{red}{0.6}, \quad 
+    p_1^3(1, 3) = \textcolor{red}{0.3}.
+\end{aligned}
+\]%
+
+
+\begin{tikzpicture}[
+        scale=0.85, 
+            ->,>=stealth',shorten >=1pt, auto, 
+            node distance=2cm and 2cm, thick,
+            every node/.style={font=\sffamily},
+            state/.style={circle, draw, minimum size=6mm, font=\footnotesize},
+            weight/.style={font=\small},
+            dottedarrow/.style={->, dotted, thick},
+            arrow/.style={->, thick},
+            costred/.style={text=red, font=\small},
+            costmyb/.style={text=myb, font=\small},
+            squarebox/.style={draw=green, thick, minimum size=6mm, font=\bfseries, align=center}
+        ]
+
+        % Noeuds
+        \node[squarebox] (box1) at (0, 3) {1};
+        \node[squarebox] (box2) at (2, 3) {2};
+        \node[squarebox] (box5) at (5, 3) {5};
+
+        \node[state] (node1) at (0, 0) {1};
+        \node[state] (node2) at (2, 2) {2};
+        \node[state] (node3) at (2, 0) {3};
+        \node[state] (node4) at (2, -2) {4};
+        \node[state] (node10) at (5, 0) {10};
+
+        % Arcs
+        \draw[arrow] (node1) -- (node2) node[midway, weight, above left] {\textcolor{red}{2}};
+        \draw[arrow] (node1) -- (node3) node[midway, weight, above right] {\textcolor{red}{4}};
+        \draw[arrow] (node1) -- (node4) node[midway, weight, below ] {\textcolor{red}{3}};
+
+        \draw[dottedarrow] (node2) -- (node10) node[midway, above right] {$f_2^*(2)$};
+        \draw[dottedarrow] (node3) -- (node10)  node[midway, below ] {$f_2^*(3)$};
+        \draw[dottedarrow] (node4) -- (node10)  node[midway, below, yshift=-0.2cm ] {$f_2^*(4)$};
+
+        % Coûts (textes colorés)
+        \node[costmyb, below=0cm of node2 ]  {1};
+        \node[costmyb, below=0cm of node3 ]  {2};
+        \node[costmyb, below=0cm of node4 ]  {3};
+
+        % Probabilités
+        \node[right=0.2cm of node2, yshift=-0.2cm]  {0.1};
+        \node[right=0.2cm of node3, yshift=0.3cm]  {0.6};
+        \node[right=0.2cm of node4, yshift=0.9cm]  {0.3};
+
+\end{tikzpicture}
+
+
+
+\vspace{4em}
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm and 2cm,
+    every node/.style={font=\sffamily},
+    box/.style={draw, fill=gray!30, minimum size=3cm, rectangle, align=center},
+    dashedarrow/.style={dashed, thick, -{Stealth}},
+    arrow/.style={thick, -{Stealth}},
+    textmyb/.style={text=myb, font=\sffamily\footnotesize\itshape}
+]
+
+% Boîte principale
+\node[box] (box) {};
+
+% Entrées
+\node[above=1.2cm of box] (xn) {$x_1 = 3$};
+\node[left=1.5cm of box] (sn) {$s_1 = 1$};
+
+% Sorties
+\node[right=2cm of box, yshift=1.2cm] (s1) {$s_2^1 = 2$};
+\node[right=2cm of box, yshift=0cm] (s2) {$s_2^2 = 3$};
+\node[right=2cm of box, yshift=-1.2cm] (s3) {$s_2^3 = 4$};
+
+% Variables lambda
+\node[below=1.5cm of box, xshift=-1.5cm] (lambda1) {$\lambda_{1,2} = 2$};
+\node[below=1.5cm of box] (lambda2) {$\lambda_{1,3} = 4$};
+\node[below=1.5cm of box, xshift=1.5cm] (lambda3) {$\lambda_{1,4} = 3$};
+
+% Probabilités
+\node[right=0.3cm of box, yshift=1.5cm] (p1) {$0.1$};
+\node[right=0.3cm of box, yshift=0.3cm] (p2) {$0.6$};
+\node[right=0.3cm of box, yshift=-0.9cm] (p3) {$0.3$};
+
+% Flèches extérieures
+\draw[arrow] (xn) -- (box.north);
+\draw[arrow] (sn) -- (box.west);
+
+% Flèche pour s_2^1
+\draw[arrow] (box.south) ++(-1.5cm, 0) -- (lambda1); % Extérieure vers lambda_{1,2}
+\draw[dashed, thick] (box.south) ++(-1.5, 0) -- ++(0, 2.7)  -- (box.east|-s1); % Pointillée intérieure
+\draw[arrow] (box.east|-s1) -- (s1); % Extérieure vers s_2^1
+
+% Flèche pour s_2^2
+\draw[arrow] (box.south) -- (lambda2); % Extérieure vers lambda_{1,3}
+\draw[dashed, thick] (box.south)  -- ++(0, 1.5)  -- (box.east|-s2); % Pointillée intérieure
+\draw[arrow] (box.east|-s2) -- (s2); % Extérieure vers s_2^2
+
+% Flèche pour s_2^3
+\draw[arrow] (box.south) ++(1.5cm, 0) -- (lambda3); % Extérieure vers lambda_{1,4}
+
+\draw[dashed, thick] (box.south)  ++(1.5,0)  -- (box.east|-s3); % Pointillée intérieure
+\draw[arrow] (box.east|-s3) -- (s3); % Extérieure vers s_2^3
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Tenter de se rendre à la ville $\boldsymbol{4}$}
+
+\[%
+\begin{aligned}
+    &n = 1, \quad s_1 = \textcolor{red}{1}, \quad x_1 = \textcolor{red}{4}, \\
+    &s_2^1 = \textcolor{myb}{2}, \quad s_2^2 = \textcolor{myb}{3}, \quad s_2^3 = \textcolor{myb}{4}, \\
+    &p_1^1(1, 4) = 0, \quad 
+    p_1^2(1, 4) = \textcolor{red}{0.3}, \quad 
+    p_1^3(1, 4) = \textcolor{red}{0.7}.
+\end{aligned}
+\]%
+
+
+\begin{tikzpicture}[
+        scale=0.85, 
+        ->,>=stealth',shorten >=1pt, auto, 
+        node distance=2cm and 2cm, thick,
+        every node/.style={font=\sffamily},
+        state/.style={circle, draw, minimum size=6mm, font=\footnotesize},
+        weight/.style={font=\small},
+        dottedarrow/.style={->, dotted, thick},
+        arrow/.style={->, thick},
+        costred/.style={text=red, font=\small},
+        costmyb/.style={text=myb, font=\small},
+        squarebox/.style={draw=green, thick, minimum size=6mm, font=\bfseries, align=center}
+    ]
+
+    % Noeuds
+    \node[squarebox] (box1) at (0, 3) {1};
+    \node[squarebox] (box2) at (2, 3) {2};
+    \node[squarebox] (box5) at (5, 3) {5};
+
+    \node[state] (node1) at (0, 0) {1};
+    \node[state] (node2) at (2, 2) {2};
+    \node[state] (node3) at (2, 0) {3};
+    \node[state] (node4) at (2, -2) {4};
+    \node[state] (node10) at (5, 0) {10};
+
+    % Arcs
+    \draw[arrow] (node1) -- (node2) node[midway, weight, above left] {\textcolor{red}{2}};
+    \draw[arrow] (node1) -- (node3) node[midway, weight, above right] {\textcolor{red}{4}};
+    \draw[arrow] (node1) -- (node4) node[midway, weight, below ] {\textcolor{red}{3}};
+
+    \draw[dottedarrow] (node3) -- (node10) node[midway, above right] {$0.3$};
+    \draw[dottedarrow] (node4) -- (node10) node[midway, below, yshift=-0.2cm] {$0.7$};
+
+    % Coûts (textes colorés)
+    \node[costmyb, below=0cm of node2] {1};
+    \node[costmyb, below=0cm of node3] {2};
+    \node[costmyb, below=0cm of node4] {3};
+\end{tikzpicture}
+
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm and 2cm,
+    every node/.style={font=\sffamily},
+    box/.style={draw, fill=gray!30, minimum size=3cm, rectangle, align=center},
+    dashedarrow/.style={dashed, thick, -{Stealth}},
+    arrow/.style={thick, -{Stealth}},
+    textmyb/.style={text=myb, font=\sffamily\footnotesize\itshape}
+]
+
+% Boîte principale
+\node[box] (box) {};
+
+% Entrées
+\node[above=1.2cm of box] (xn) {$x_1 = 4$};
+\node[left=1.5cm of box] (sn) {$s_1 = 1$};
+
+% Sorties
+\node[right=2cm of box, yshift=0.6cm] (s2) {$s_2^2 = 3$};
+\node[right=2cm of box, yshift=-0.6cm] (s3) {$s_2^3 = 4$};
+
+% Variables lambda
+\node[below=1.5cm of box, xshift=-0.8cm] (lambda2) {$\lambda_{1,3} = 4$};
+\node[below=1.5cm of box, xshift=0.8cm] (lambda3) {$\lambda_{1,4} = 3$};
+
+% Probabilités
+\node[right=0.3cm of box, yshift=0.9cm] (p2) {$0.3$};
+\node[right=0.3cm of box, yshift=-0.3cm] (p3) {$0.7$};
+
+% Flèches extérieures
+\draw[arrow] (xn) -- (box.north);
+\draw[arrow] (sn) -- (box.west);
+
+% Flèche pour s_2^2
+\draw[arrow] (box.south) ++(-0.8cm, 0) -- (lambda2); % Extérieure vers lambda_{1,3}
+\draw[dashed, thick] (box.south) ++(-0.8, 0) -- ++(0, 2.1) -- (box.east|-s2); % Pointillée intérieure
+\draw[arrow] (box.east|-s2) -- (s2); % Extérieure vers s_2^2
+
+% Flèche pour s_2^3
+\draw[arrow] (box.south) ++(0.8cm, 0) -- (lambda3); % Extérieure vers lambda_{1,4}
+\draw[dashed, thick] (lambda3.north) -- ++(0, 2.4) -- (box.east|-s3); % Pointillée intérieure
+\draw[arrow] (box.east|-s3) -- (s3); % Extérieure vers s_2^3
+\end{tikzpicture} 
+\end{center}    
+
+
+
+\subsection{Formule de récurrence}
+
+    Considérons les probabilité suivantes :
+
+\[
+\begin{aligned}
+    &p_1^1(1, 2) = 0.8, \quad p_1^2(1, 2) = 0.2, \quad p_1^3(1, 2) = 0.0, \\
+    &p_1^1(1, 3) = 0.1, \quad p_1^2(1, 3) = 0.6, \quad p_1^3(1, 3) = 0.3, \\
+    &p_1^1(1, 4) = 0.0, \quad p_1^2(1, 4) = 0.3, \quad p_1^3(1, 4) = 0.7.
+\end{aligned}
+\]
+
+    Nous avons déterminé poids du \textbf{chemin probable}   pour chacune 
+    des villes $2, 3, 4$ qu'on souhaite vistiter lorsqu'on se trouve
+    à la \textbf{ville} $\boldsymbol{1}$, soient $f_1(1,2)$, $f_1(1,3)$, $f_1(1,4)$  :                  
+
+    \[%
+    \begin{aligned}
+        f_1(1, 2) &= 0.8 \, (2 + f_2^*(2)) + 0.2 \, (4 + f_2^*(3)) + 0.0\, (3 + f_2^*(4)), \\
+        f_1(1, 3) &= 0.1 \, (2 + f_2^*(2)) + 0.6 \, (4 + f_2^*(3)) + 0.3 \, (3 + f_2^*(4)), \\
+        f_1(1, 4) &= 0.0 \, (2 + f_2^*(2)) + 0.3 \, (4 + f_2^*(3)) + 0.7 \, (3 + f_2^*(4)).
+    \end{aligned}
+    \]%
+
+    En considérant chaque poids de chemin probables, 
+    le poids du \textbf{chemin minimal probable} est 
+    le poids minimal parmi ceux-ci :
+
+    \[%
+    \begin{aligned}
+        f^*(1) &= \min \left\{ f_1(1, 2), f_1(1, 3), f_1(1, 4) \right\}, \\
+               &= \min_{x_1 \in \{2, 3, 4\}} f_1(1, x_1), \\
+               &= \min_{x_1 \in A_2} \left\{ \sum_{i=1}^{|A_2|} p_1^i(1, x_1) \, \big( \lambda_{1,s_2^i} + f_2^*(s_2^i) \big) \right\}.
+    \end{aligned}
+    \]%
+
+    De façon générale, pour une étape $n$ et un état $s_n$, 
+    nous avons la formule de récurence suivante : 
+
+
+    \[%
+    \boxed{
+        f_n^*(s_n) = \min_{x_n \in A_{n+1}} \left\{ 
+        \sum_{i=1}^{|A_{n+1}|} p_n^i(s_n, x_n) \left( \lambda_{s_n,s_{n+1}^i} + f_{n+1}^*(s_{n+1}^i) \right)
+        \right\}
+    }
+    \]%
+
+    \section{Généralisation}
+
+    \subsection{Programmation probabiliste}
+    \begin{align*}
+        &f_n(s_n, x_n) = C_n + f_{n+1}^*(s_{n+1}) \\
+        &f_n^*(s_n) = \min \text{ ou } \max_{x_n \in X(s_n)} \{ f_n(s_n, x_n) \}
+    \end{align*}
+
+    \subsection{Programmation probabiliste}
+    \begin{align*}
+        &f_n(s_n, x_n) 
+        = 
+        \sum_{i=1}^{|A_{n+1}|} 
+        p_n^i(s_n, x_n) 
+        \left( C_n^i + f_{n+1}^*(s_{n+1}^i) \right) 
+        \\
+        &f_n^*(s_n) 
+        = 
+        \min \text{ ou } 
+        \max_{x_n \in X(s_n)} \{ f_n(s_n, x_n) \}
+    \end{align*}
+    où \( X(s_n) \) est ensemble des décisions possibles 
+    dans l’état \( s_n \) à l’étape \(n \)
+    \newpage
+
+    % \chapter{Modèles sotachastiques}
+    %
+    % \section{Espace échantillon} 
+    % Soit une expérience dont le résultat n'\textbf{est pas prévisible}  
+    % et supposons que nous connaisssons à l'avance tous les résultatsa possibles 
+    % pour constituer un ensemble dénoté \textbf{espace échantillon} $S$.   
+    %
+    % \noindent 
+    % \textbf{Exemples}  
+    % \begin{itemize}
+    %     \item [$\rhd$ ] \textbf{Tirages d'une pièce de monnaire} : 
+    %     \begin{align*}
+    %         S = \{P, F\}
+    %     \end{align*} 
+    %     \item [$\rhd$ ] Lancement d'un dé : 
+    %     \begin{align*}
+    %         S = \{ 1, 2, 3, 4, 5, 6 \} 
+    %     \end{align*}        
+    %     \item [$\rhd$ ] Lancement d'un dé : 
+    %     \begin{align*}
+    %         S = \big\{ (i, j): i,j \in \{ 1, 2, 3, 4, 5, 6 \} \big\}
+    %     \end{align*}                    
+    % \end{itemize}   
+    %
+    % \subsection{Loi des grands nombres}
+    % Soit les différents sous-ensembles 
+    % $E \subseteq S$ :
+    % \begin{align*}
+    %   S =  \big\{ \\
+    %         &\emptyset, 
+    %         \{ 1 \}, \{ 2 \}, \dots, \{ 6 \}, 
+    %         \\
+    %         &\{ 1, 2 \}, \{ 1, 3 \}, 
+    %         \\
+    %         &\dots, 
+    %         \\
+    %         &\{ 1,2,3 \}, 
+    %         \\
+    %         &\dots, 
+    %         \\
+    %         &\{ 1, 2, 3, 4, 5, 6 \} 
+    %         \\
+    %     \big\}
+    % \end{align*}
+    % $\blacktriangleright$ Par exemple, $\{ 2, 4, 6\} \subseteq S$ 
+    % est l'évènement qu'on obtienne un nombre pair. 
+    %
+    %
+    % En  répétant une expérience de manière indépendante et 
+    % dans des conditions identiques, 
+    % \textbf{la fréquence empirique}  d'un événement donné $E$ 
+    % tendra vers sa probabilité théorique $P(E)$.
+
+    \chapter{File d'attente}
+
+
+    \section{Principe}
+    Un file d'attente est introduite lorsque le \textbf{demande} 
+    excède la capacité d'\textbf{offre de service}. 
+    Or, bien qu'\textbf{augmenter la capacité}  entraîne une 
+    amélioration de la \textbf{qualité du service}, 
+    cela entraîne aussi une augmentation de \textbf{coût}                   .
+
+
+
+    \begin{center}
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, minimum height=2em, minimum width=4em}, 
+        arrow/.style={-{Triangle[angle=60:1.5mm]}, thick},
+        dashedbox/.style={dashed, draw, inner sep=0.5cm, rounded corners},
+        node distance=3cm, auto]
+
+        % Nodes
+        \node[block] (population) at (0, 0) {Population};
+
+        \node[block]  (queue) at (4, 0) {File d’attente};
+        \node[block] (service) at (5.75, -4){Service};
+        
+        % Dashed box
+        \node[dashedbox, fit={(queue) (service)}, label=above:] {};
+        
+        % Arrows
+        \draw[arrow] (population) -- node[above, midway, xshift=-0.35cm] {clients} (queue);
+        \draw[arrow] (queue) -- ++(1.75,0) --  (service);
+        \draw[arrow] (service) -- ++(2cm,0);
+
+    \end{tikzpicture}
+    \end{center}
+
+    La théorie des files d'attente permet de 
+    \textbf{modéliser }      
+    un tel problème pour aider le gestionnaire à 
+    \textbf{prendre une décision éclairée}.  
+    \begin{center}
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, minimum height=2em, minimum width=4em}, 
+        arrow/.style={-{Triangle[angle=60:1.5mm]}, thick},
+        dashedbox/.style={dashed, draw, inner sep=0.5cm, rounded corners},
+        dot/.style={rectangle, draw, fill=black, minimum size=0.5em},
+        redannotation/.style={rectangle, draw=red, thick, text=red, align=center},
+        regularnnotation/.style={rectangle, draw=black, thick,align=center},
+        node distance=3cm, auto
+    ]
+
+    % Nodes
+    \node[block] (population) at (0, 0) {Population};
+    \node[block] (queue) at (4, 0) {File d’attente};
+    \node[block, minimum height=6em, minimum width=3em] (service) at (5.75, -4) {};
+
+    % Dashed box
+    \node[dashedbox, fit={(queue) (service)}, label=above:] {};
+
+    % Servers inside the service node
+    \node[dot] (server1) at (5.75, -3.25) {};
+    \node[dot] (server2) at (5.75, -3.6) {};
+    \node (dots) at (5.75, -3.95) {$\vdots$};
+    \node[dot] (server3) at (5.75, -4.5) {};
+
+    % Annotation for servers
+    \node[redannotation, below=1.5cm of service] (annotation) {Un ou plusieurs serveurs};
+    \node[regularnnotation] (annotation2) at (1,-2) {Serveur};
+    \draw[arrow, red, dashed] (annotation.north) -- (service.south);
+
+    % Arrows
+    \draw[arrow] (population) -- node[above, midway, xshift=-0.35cm] {clients} (queue);
+    \draw[arrow] (queue) -- ++(1.75, 0) -- (service);
+    \draw[arrow] (service.east) -- ++(1.25cm,0);
+    \draw[arrow,dashed] (annotation2.south) -- ++(0,-1) -- (server1.west);
+
+    \end{tikzpicture}
+    \end{center}
+
+    \section{Notation}
+    \begin{itemize}
+        \item [$\rhd$ ] \( s \) : nombre de \textbf{serveurs}  
+        \item [$\blacktriangleright$ ] Soient \( n \) client dans le système :
+            \begin{itemize}
+                \item [$\rhd$ ] \( \lambda_n \) : \textbf{Taux d'arrivée} des clients.
+                    On suppose que : 
+                \begin{align*}
+                    \lambda_n = \lambda 
+                \end{align*}
+                Autrement dit, le nombre de clients $n$ dans le système n'affecte 
+                pas le taux t'arrivée $\lambda$ et donc le 
+                taux d'arrivé ne varie par selon $n$ : $\lambda_n = \lambda$. 
+                \item [$\rhd$ ] \( \mu_n \) : \textbf{Taux moyen} de service 
+                    \textit{pour l'ensemble des serveurs}.  
+                \item [$\rhd$ ] \( \mu \) : Taux moyen de service \textbf{par serveur} : 
+                    \begin{align*}
+                        \mu_n  = s\mu, \quad \forall n \geq s
+                    \end{align*}
+                \item [$\rhd$ ] \( \sfrac{1}{\lambda_n} \) : Taux moyen entre 
+                    \textbf{deux arrivées consécutives} 
+            \end{itemize}
+                \item [$\rhd$ ] \( \sfrac{1}{\mu} \) : \textbf{Temps}   moyen 
+                    de service \textit{par serveur}.   
+            \item [$\rhd$ ] \( \rho \) : \textbf{Facteur d'utilisation}   :
+                \begin{align*}
+                    \rho = \frac{\lambda}{s\mu}
+                \end{align*}
+    \end{itemize}
+
+    \textcolor{myr}{\textbf{Au début}}, l'état du système 
+    correspond à $n$, soit le nombre de client dans la 
+    file et le nombre de client \textbf{entrain d'être servis}  
+
+    Le système atteint éventuellement un \textbf{équilibre} où 
+    il y a une distribution de probabilités 
+    \( \{ P(n) = P_n : n \in \mathbb{N}  \}\)
+    \begin{note}{}{}
+        L'équilibre est atteint tant que le \textbf{facteur d'utilisation} 
+        n'est pas excessif :
+        \begin{align*}
+            \rho < 1 
+        \end{align*}
+        Autre, la file \textcolor{myr}{\textbf{croît à l'infini}}.  
+    \end{note}
+
+    \begin{itemize}
+        \item [$\rhd$ ] \( P_n \) : \textbf{Probabilité}  qu'il y ait \( n \) clients 
+        dans le système
+    \item [$\rhd$ ] \( L_{\phantom{q}} \) : \textbf{Nombre moyen} de clients dans le système. 
+        \item [$\rhd$ ] \( L_q \) : \textbf{Nombre moyen} de client dans la file. 
+            Soit $s$ représentant le service :
+            \begin{align*}
+                L = L_q + n_s
+            \end{align*}
+        \item [$\rhd$ ] \( W \) : \textbf{Temps moyen} passé par un client 
+            \textbf{dans le système}
+        \item [$\rhd$ ] \( W_q \) : \textbf{Temps moyen} passé par un client 
+            \textbf{dans la file}
+
+    \end{itemize}
+
+    \section{Formule de Little}
+    \begin{center}
+        \begin{empheq}[box=\othermathbox]{align*}
+            &L_{\phantom{q}} = \lambda W
+            \\ 
+            &L_q = \lambda W_q 
+            \\ 
+            &W_{\phantom{i}} = W_q + \sfrac{1}{\mu}
+        \end{empheq}
+    \end{center}
+
+    \section{Loi de Poisson Rappel}
+    La \textbf{Loi de Poisson} permet de d'écrire le 
+    \textbf{nombre d'évènements} se produisant dans un intervalle 
+    de temps donnée. 
+
+    Une distribution d'évènements obéit à la loi de Poisson 
+    si elle respecte \textbf{trois conditions} :
+    \begin{itemize}
+        \item [$\rhd$ ] Les évènements sont \textbf{indépendants}  
+        \item [$\rhd$ ] La probabilité que deux évènements se 
+            produisent sur un intervalle très court est \textbf{néglibable}.
+    \end{itemize}
+   \begin{center}
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, minimum height=2em, minimum width=4em}, 
+        arrow/.style={-{Triangle[angle=60:1.5mm]}, thick},
+        dashedbox/.style={dashed, draw, inner sep=0.5cm, rounded corners},
+        dot/.style={rectangle, draw, fill=black, minimum size=0.5em},
+        client/.style={circle, draw, fill=black, minimum size=0.5em},
+        redannotation/.style={rectangle, draw=red, thick, text=red, align=center},
+        regularnnotation/.style={rectangle, draw=black, thick,align=center},
+        node distance=3cm, auto
+    ]
+
+    % Nodes
+    \node[block] (population) at (0, 0) {Population};
+    \node[block] (queue) at (4, 0) {File d’attente};
+    \node[block, minimum height=6em, minimum width=3em] (service) at (5.75, -4) {};
+
+    % Dashed box
+    \node[dashedbox, fit={(queue) (service)}, label=above:] {};
+    \node[client] (client1) at (2.55, 0.2) {}; 
+    \node[client] (client2) at (2.55, -0.2) {}; 
+
+    % Servers inside the service node
+    \node[dot] (server1) at (5.75, -3.25) {};
+    \node[dot] (server2) at (5.75, -3.6) {};
+    \node (dots) at (5.75, -3.95) {$\vdots$};
+    \node[dot] (server3) at (5.75, -4.5) {};
+
+    % Annotation for servers
+    \node[regularnnotation] (annotation2) at (1,-2) {Serveur};
+    \node[] (indication) at (3.25, -1) {\( t = 0.5s\)};
+    % Arrows
+    \draw[arrow] (population) -- node[above, midway, xshift=-0.35cm] {clients} (queue);
+    \draw[arrow] (queue) -- ++(1.75, 0) -- (service);
+    \draw[arrow] (service.east) -- ++(1.25cm,0);
+    \node[redannotation, below=5.5cm of client2] (annotation) 
+        {Deux client ne peuvent pas \\ arriver \textit{exactement en même temps}};
+
+    \draw[arrow,dashed] (annotation2.south) -- ++(0,-1) -- (server1.west);
+    \draw[arrow, red, dashed] (annotation.north) -- (client2.south);
+
+    \end{tikzpicture}
+    \end{center}
+    \begin{itemize}
+        \item [$\rhd$ ] La probabilité d'occurence d'un évènement 
+            sur un intervalle donné
+            est proportionnelle à la taille de l'intervalle 
+    \end{itemize}
+
+
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, minimum height=2em, minimum width=4em}, 
+        arrow/.style={-{Triangle[angle=60:1.5mm]}, thick},
+        dashedbox/.style={dashed, draw, inner sep=0.5cm, rounded corners},
+        dot/.style={rectangle, draw, fill=black, minimum size=0.5em},
+        client/.style={circle, draw, fill=black, minimum size=0.5em},
+        redannotation/.style={rectangle, draw=red, thick, text=red, align=center},
+        regularnnotation/.style={rectangle, draw=black, thick,align=center},
+        node distance=3cm, auto
+    ]
+
+    % Nodes
+    \node[block] (population) at (0, 0) {Population};
+    \node[block] (queue) at (4, 0) {File d’attente};
+
+    \node[] (indication2) at (5.25, -1) {\( t = 2 \text{ min}\)};
+
+    \node[] (indication3) at (3.25, -2) {\( \lambda_n = 2\)};
+
+    % Dashed box
+    \node[dashedbox, fit={(queue) (indication3) (indication2)}, label=above:] {};
+    \node[client] (client1) at (2.55, 0.2) {}; 
+    \node[client] (client2) at (2.55, -0.2) {}; 
+
+
+    \node[client] (client3) at (5.55, 0.6) {}; 
+    \node[client] (client4) at (5.55, 0.2) {}; 
+    \node[client] (client5) at (5.55, -0.2) {}; 
+    \node[client] (client6) at (5.55, -0.6) {}; 
+
+    % Servers inside the service node
+
+    % Annotation for servers
+    \node[] (indication) at (3.25, -1) {\( t = 1 \text{ min}\)};
+
+    % Arrows
+    \draw[arrow] (population) -- node[above, midway, xshift=-0.35cm] {clients} (queue);
+    \node[redannotation, below=2.75cm of client2] (annotation) 
+        {Si deux clients arrivent à $t_1$ \\ On s'attend à ce que 
+        qu'il y ait  au total $4$ clients à $t_2$ };
+
+    \draw[arrow, red, dashed] (annotation.north) -- (client2.south);
+
+    \end{tikzpicture}
+    \vspace{-2em}
+    \subsection{Formule mathématique de la loi de poisson}
+    Soit $i$, le nombre \textbf{d'évenèment} observé dans un intervalle 
+    $\lambda$ le \textbf{taux moyens} d'évènement observables, 
+    la probabilité d'observer un évènement $i$ dans cet intervalle 
+    est donné par :
+
+        \begin{empheq}[box=\othermathbox]{align*}
+        p(i) = \dfrac{\lambda^{i}e^{-\lambda}}{i!}
+        \quad 
+        i = 0, 1, 2, \dots
+        \end{empheq}
+
+    \section{Arrivée des clients}
+    Le \textbf{taux d'arrivé des clients} \( \lambda \) est une 
+    \textbf{variable aléatoire} qui obéit à la Loi de Poisson. 
+    \begin{note}{}{}
+        Par concidence, la variable représentant le taux d'arrivé $\lambda$ 
+        a le même symbole qu'une variable alétoire quelconque 
+        obéissant à la Loi de Poisson et ayant un taux moyen de 
+        $\lambda$. 
+    \end{note}
+
+    $\blacktriangleright$ Si le taux moyen d'arrivé est de $\lambda = 6$ client 
+    pas minutes, la probabilité qu'il y a $2$ clients qui arrivent 
+    dans la prochaine minute est de :
+    \begin{align*}
+         p(2) = \dfrac{6^{2}e^{-6}}{2!}
+         \approx 0.0446 = 4.46 \%
+    \end{align*}
+
+    \subsection{Espérance du taux d'arrivé}
+    \textcolor{myr}{\textbf{L'espérance d'une variable aléatoire 
+    \( \boldsymbol{X}  \)}}  correspond à sa 
+    \textbf{valeur moyenne sur le long terme}.
+    Pour une loi de Poisson de paramètre \( \lambda \), 
+    l'espérance est simplement \( \lambda \). 
+    Cela signifie que si l' on observe le système sur une longue période, 
+    le nombre moyen de clients arrivant par unité de temps sera 
+    $\lambda$. Plus formellement, on a :
+
+
+    \begin{empheq}[box=\othermathbox]{align*}
+        E[X] 
+        = 
+        \sum_{i=0}^{\infty }ip(i) 
+        =
+        \sum_{i=0}^{\infty }\dfrac{\lambda^{i}e^{-\lambda}}{i!} 
+        = 
+        \lambda e^{-\lambda}e^{\lambda} = \entoure{$\lambda$}
+    \end{empheq}
+
+
+    \section{Variable aléatoire continue}
+    Une \textbf{variable aléatoire continue} peut prendre une infinité 
+    de valeur sur un intervalle donnée. La probabilité qu'elle 
+    prenne une valeur spécifique est donc nulle, puisque l'ensemble 
+    des valeurs possibles est \textbf{infini}. 
+    pour étudier 
+    une variable aléatoire continue, on utilise plutôt 
+    une \textcolor{myr}{\textbf{fonction de densité de probabilité $\textbf{f(x)}$} }  qui satisfait les conditions :
+            \begin{align*}
+               \rhd \quad \forall x, f(x) \geq 0 \text{ et }  \quad\quad \int_{-\infty}^{\infty }f(x)dx = 1
+            \end{align*}
+    La \textcolor{myr}{\textbf{probabilité qu'une variable aléatoire continue 
+    $\boldsymbol{X}$ prenne une valeur dans l'intervale \( \boldsymbol{[a, b]}   \)}} 
+    est donné par :
+    \begin{align*}
+        P(a \leq X \leq b) = \int_{a}^{b}f(x)dx  
+    \end{align*}
+
+    \section{Variable aléatoire exponentielle}
+    Il s'agit d'un \textbf{cas particulier} d'une variable aléatoire continue
+    qui modélise le \textcolor{myr}{\textbf{temps entre deux évènements qui suivent 
+    un processus Poisson}}---des évènements qui arrivent de manière 
+    alétoire mais à taux constant. 
+    
+
+    Une variable aléatoire exponentielle $X$ a une 
+    \textcolor{myr}{\textbf{fonction de densité de probabilité}} :
+    \begin{align*}
+        f(x) = 
+        \begin{cases}
+            \lambda e^{-\lambda x} \quad \text{ si } x \geq 0 
+            \\ 
+            0 \quad\quad\quad\text{ si } x < 0
+        \end{cases}
+    \end{align*}    
+
+    En intégrant par partie on obtien l'espérence $E[X]$
+        \begin{empheq}[box=\othermathbox]{align*}
+            E[X] 
+            = 
+            \int_{-\infty}^{+\infty}\textcolor{myr}{x}f(x)dx 
+            =
+            \int_{-\infty}^{+\infty}\lambda e^{-\lambda x} =  \dfrac{1}{\lambda}
+        \end{empheq}
+
+    \section{Arrivées consécutives des clients }
+    Le temps $t$ qui s'écoule entre deux arrivés consécutives 
+    est un \textcolor{myr}{\textbf{variable aléatoire exponentielle de paramètre 
+    \( \lambda \)}}. La \textbf{fonction de densité de probabilité} est donc    
+
+    \begin{align*}
+        f(t) = 
+        \begin{cases}
+            \lambda e^{-\lambda t} \quad \text{ si } t \geq 0 
+            \\ 
+            0 \quad\quad\quad \text{ si } t < 0
+        \end{cases}
+    \end{align*} 
+
+    Soit $T$ une variable aléatoire exponentielle, la probabilité 
+    qu'il s'écoule ($T > t$) plus d'une unité de temps entre 
+    deux arrivées consicutives de clients est équivalent à 
+    la probabilité qu'il n'y ai aucun client aui arrive pendant 
+    une unité de temps : 
+    \begin{align*}
+        P(T > t) 
+        = 
+        1 - P(T \leq t) 
+        &= 
+        1 - \int_{0}^{t}f(x)dx 
+        \\
+        &= 
+        1 - \int_{0}^{t}\lambda e^{-\lambda t} 
+        = 
+        e^{-\lambda t}
+    \end{align*}
+    On a alors :
+    \begin{align*}
+        P(T > 1) = e^{\lambda} = P(X = 0) = p(0)
+    \end{align*}
+
+    \section{Temps de service}
+    Le temps  de service  est 
+    \textcolor{myr}{\textbf{variable aléatoire exponentielle de paramètre 
+    \( \mu \)}}. La \textbf{fonction de densité de probabilité} est donc : 
+
+    \begin{align*}
+        f(t) = 
+        \begin{cases}
+            \mu e^{-\mu t} \quad \text{ si } t \geq 0 
+            \\ 
+            0 \quad\quad\quad \text{ si } t < 0
+        \end{cases}
+    \end{align*} 
+
+    L'espérance, c'est-à-dire le temps moyen de service, 
+    est donné par $\sfrac{1}{\mu}$
+
+    
+    \newpage
+    \chapter{File d'attente avec un serveur}
+
+    De façon générale, \( \boldsymbol{P_n }  \) est la 
+    \textcolor{myr}{\textbf{probabilité qu'il y ait \( \boldsymbol{n}  \) 
+    client dans le système}}---qu'il s'agisse de clients 
+    dans la file ou au service. 
+
+    Il est possible dériver des équations d'états pour 
+    montrer que :
+    \begin{align*}
+        P_n 
+        = 
+        \dfrac{\lambda_n}{\mu_n}P_0 
+        = 
+        \left( \dfrac{\lambda}{\mu} \right)^n P_0 = \rho^nP_0, 
+        \quad \text{ puisque }  \rho = \dfrac{\lambda}{\mu}
+    \end{align*}    
+
+
+    De façon générale, on a :
+    \begin{empheq}[box=\othermathbox]{align*}
+        P_0 = \rho^nP_0, \quad n = 1, 2, \dots    
+    \end{empheq}
+
+    Puisque $n$ est une variable aléatoire l'espérence de $n$, 
+    soit $L$, le nombre moyen de client dans le système est donné par :
+    \begin{align*}
+        E[n] = L = \sum_{n=0}^{\infty }nP_n 
+    \end{align*}
+
+
+    En dérivant partiellement, on obtient :
+
+    \begin{empheq}[box=\othermathbox]{align*}
+        L =  \dfrac{\rho}{1 - \rho}
+    \end{empheq}
+
+    Ou, puisqu'on sait que $p = \sfrac{\lambda}{\mu}$, on a :
+
+    \begin{empheq}[box=\othermathbox]{align*}
+        L =  \dfrac{\lambda}{\mu - \lambda}
+    \end{empheq}
+
+    Les équations de Little demeurent valides. Généralement, 
+    il suffit d'observer les variables fournies par une problème 
+    pour déduire les inconnues 
+    \textcolor{myr}{\textbf{en appliquant les formules de Little}}.
+    Lorsqu'on parvient à identifier soit $L$, $L_q$, $W$,  
+    ou $W_q$, il est possible de déduire toutes les autres 
+    inconnues. 
+        \section{Formule de Little}
+    \begin{center}
+        \begin{empheq}[box=\othermathbox]{align*}
+            &L_{\phantom{q}} = \lambda W
+            \\ 
+            &L_q = \lambda W_q 
+            \\ 
+            &W_{\phantom{i}} = W_q + \sfrac{1}{\mu}
+        \end{empheq}
+    \end{center}
+
+    \chapter{File d'attent avec plusieurs serveurs}
+    On considère \textbf{deux scénarios} :
+    \begin{itemize}
+        \item [$\rhd$ ]  \( n < s \) où le service augmente selon le nombre de clients
+        \item [$\rhd$ ]  \( n \geq s \) où le le taux moyen de service $\mu$ reste stable à $s\mu$
+    \end{itemize}
+    \textcolor{myr}{\textbf{Lorsque \( \boldsymbol{n < s}  \)}} , \( \boldsymbol{P_n }  \) la 
+    \textcolor{myr}{\textbf{probabilité qu'il y ait \( \boldsymbol{n}  \) 
+    clients dans le système}} est donnée par :
+    \begin{empheq}[box=\othermathbox]{align*}
+        P_n 
+        = 
+        \dfrac{\left(\sfrac{\lambda}{\mu}\right)^n}{n!}P_0, \quad n = 1, 2, \dots, s
+    \end{empheq}    
+
+    \noindent Pour simplifier la notation, on considère le facteur 
+    $C_n = \dfrac{\left(\sfrac{\lambda}{\mu}\right)^n}{n!}$ : 
+    \begin{empheq}[box=\othermathbox]{align*}
+        P_n 
+        = 
+        C_nP_0, \quad n = 1, 2, \dots, s
+    \end{empheq}
+
+
+    \textcolor{myr}{\textbf{Lorsque \( \boldsymbol{n \geq s}  \)}} , \( \boldsymbol{P_n }  \) la 
+    \textcolor{myr}{\textbf{probabilité qu'il y ait \( \boldsymbol{n}  \) 
+    clients dans le système}} est donnée par :
+    \begin{empheq}[box=\othermathbox]{align*}
+        P_n 
+        = 
+        \dfrac{\left(\sfrac{\lambda}{\mu}\right)^n}{s^{n-s}s!}P_0, \quad n = s + 1, s + 2, \dots
+    \end{empheq}    
+    \noindent Pour simplifier la notation, on considère le facteur 
+    $C_n$ :
+    \begin{empheq}[box=\othermathbox]{align*}
+        \dfrac{\left(\sfrac{\lambda}{\mu}\right)^n}{s^{n-s}s!} 
+    \end{empheq}                    
+
+    Puisque \( P_n \) est une \textbf{distribution de probabilité}, nous avons 
+    \( \sum_{n=0}^{\infty }P_n = 1\). De là, nous pouvons montrer que :
+    \begin{align*}
+        \sum_{n=0}^{\infty }P_n = P_0 + \sum_{n=1}^{\infty }P_n  = P_0 + \sum_{n=1}^{\infty }C_nP_0 = 1
+    \end{align*}
+
+    Nous pouvons réarranger les expressions pour montrer que :
+    \begin{align*}
+        P_0 = 
+        \dfrac{1}{1+\sum_{n=1}^{\infty }C_n} 
+        = 
+        \left(
+            1 + \sum_{n=1}^{\infty }C_n
+        \right)^{-1}
+    \end{align*}
+
+    En simplifiant l'expression, on obtient la formule qui permet 
+    de déterminer la \textcolor{myr}{\textbf{probabilité d'être à l'état 0 dans 
+    une file d'attente de plusieurs serveur }} :
+    \begin{empheq}[box=\othermathbox]{align*}
+        \left( 
+            \sum_{n=0}^{s-1}
+            \dfrac{\left(\sfrac{\lambda}{\mu}\right)^{n}}{n!} 
+            +   
+            \left(
+                \dfrac{\left(\sfrac{\lambda}{\mu}\right)^n}{s!} 
+                \cdot
+                \dfrac{1}{1 - \rho}
+            \right)
+        \right)^{-1}
+    \end{empheq}        
+
+    Soit 
+    $L_q = 0\cdot P_0, + \dots + 0\cdot P_{s-1} + \sum_{n=s}^{\infty }(n-1)P_n$, 
+    il est possible de dériver l'expression pour 
+    obtenir une formule simplifiée de $L_q$ : 
+
+    \begin{empheq}[box=\othermathbox]{align*}
+        L_q
+        =
+        \dfrac{P_0\left( \sfrac{\lambda}{\mu} \right)^s}{s! \left(1 - \rho\right)^2}
+    \end{empheq}
+
+    \chapter{Problème du Camelo}
+    Le problème illustre une situation où un camelot commande des journaux 
+    \textbf{la veille} et veut les vendre \textbf{le lendemain}. Dans ce scénario, 
+    la \textbf{demande} est une variable aléatoire discrète 
+    puisqu'il est impossible 
+    de savoir à l'avance la quantité de personne qui achetera 
+    des journaux. 
+
+    \section{Notation}
+    \begin{itemize}
+        \item [$\rhd$ ] \( x \) : Nombre de journaux commandés la veille 
+        \item [$\rhd$ ] \( c \) : Coût de chaque journal
+        \item [$\rhd$ ] \( p \) : Prix de vente de chaque journal
+        \item [$\rhd$ ] \( D \) : Variable aléatoire représentant la demande
+    \end{itemize}
+    Soient les \textbf{bornes inférieure et supérieure} 
+    \( \underline{d} \) et \( \overline{d} \) respectivement, 
+    on a la fonction de probabilité suivante : 
+    \begin{align*}
+        p(d) = P(D = d), \quad \underline{d} \leq d \leq \overline{d}
+    \end{align*}
+
+    Si le demande est inférieure à la quantité de journaux commandé la veille, 
+    le camelot vendras \textbf{autant de journaux que la demande}, soit \( d \).
+    Sinon, il vendra la \textbf{totalité des journaux qu'il a commandé}, soit \( x \) : 
+    \begin{align*}
+        &\text{Journaux vendus} 
+        = 
+        \min\{d, x\}
+        = 
+        \begin{cases}
+            d \quad \text{ si } d < x
+            \\
+            x \quad \text{ si } d > x
+        \end{cases}
+        \\
+        &\text{Profit} : A(d, x) = -cx + p \min\{ d, x\}
+    \end{align*}        
+
+    Le profit espéré, la moyenne du profit sur le long terme est, est 
+    simplement l'espérance de la variable aléatoire du profit, \( A(d,x)) \) :
+
+    \begin{align*}
+        E(D(D, x)) 
+        &= 
+        \sum_{d=\underline{d}}^{\overline{d}}A(d, x)P(D = d)
+        = 
+        \sum_{d=\underline{d}}^{\overline{d}}(-cx + p)P(D = d)
+        \\
+        &= 
+        -cx \sum_{d=\underline{d}}^{\overline{d}}P(D = d) 
+        +
+        p \sum_{d=\underline{d}}^{\overline{d}}\min\{d, x\}P(D=d)
+        \\
+        &= 
+        -cx(1)\phantom{\sum_{d=\underline{d}}^{\overline{d}}P(D=)}
+        + 
+        p \sum_{d=\underline{d}}^{\overline{d}}\min\{d, x\}P(D=d)
+        \\
+        &=
+        -cx \phantom{\sum_{d=\underline{d}}^{\overline{d}}P(D=d1)}
+        +
+        p \sum_{d=\underline{d}}^{\overline{d}}\min\{d, x\}P(D=d)
+    \end{align*}            
+
+
+    On a alors la formule du profit espéré 
+    \( A(x) \) :
+    \begin{align*}
+        \underbrace{E(A(D, x))}_{A(x)}
+        =
+        -cx 
+        +
+        p \sum_{d=\underline{d}}^{\overline{d}}\min{d, x}P(D=d)
+    \end{align*}
+
+    Pour maximiser le profit espérer, il faut donc déterminer la quantité 
+    optimale \( x^* \) de journaux à commander :
+    \begin{empheq}[box=\othermathbox]{align*}
+        \max_{\underline{d} \leq x \leq \overline{d}} 
+        \left\{A(x)\right\} 
+        = 
+        \max_{\underline{d} \leq x \leq \overline{d}} 
+        \left\{ 
+            -cx 
+            +
+            p \sum_{d=\underline{d}}^{\overline{d}}\min\{d, x\}P(D=d)
+        \right\}
+    \end{empheq}
+
+
+    \newpage
+
+    \chapter{Modèle inventaire}
+    Il s'agit d'un problème où déterminer \textbf{quand acheter}  
+    ou \textbf{combien} de lot il faut acheter, 
+    en considérant les contraintes de coût d'inventaire, 
+    de coût fixe par lot, de coût de lot par unité de produit 
+    de demande, etc. 
+
+   \begin{center}
+    \begin{tikzpicture}[
+        block/.style={rectangle, draw, minimum height=2em, minimum width=4em}, 
+        arrow/.style={-{Triangle[angle=60:1.5mm]}, thick},
+        dashedbox/.style={dashed, draw, inner sep=0.5cm, rounded corners},
+        dot/.style={rectangle, draw, fill=black, minimum size=0.5em},
+        client/.style={circle, draw, fill=black, minimum size=0.5em},
+        redannotation/.style={rectangle, draw=red, thick, text=red, align=center},
+        regularnnotation/.style={rectangle, draw=black, thick,align=center},
+        node distance=3cm, auto
+    ]
+
+    % Nodes
+    \node[block] (population) at (0, 0) {Usine};
+    \node[block] (queue) at (4, 0) {Iventaire};
+    \node[block, minimum height=6em, minimum width=3em] (service) at (5.75, -4) {};
+
+    \node[regularnnotation] (clients) at (5.75, -5.5) {clients};
+    % Dashed box
+    \node[dashedbox, fit={(queue) (service) (clients)}, label=above:] {};
+
+
+    % Servers inside the service node
+    \node[dot] (server1) at (5.75, -3.25) {};
+    \node[dot] (server2) at (5.75, -3.6) {};
+    \node (dots) at (5.75, -3.95) {$\vdots$};
+    \node[dot] (server3) at (5.75, -4.5) {};
+
+    % Annotation for servers
+    % Arrows
+    \draw[arrow] (population) -- (queue);
+    \draw[arrow] (queue) -- ++(1.75, 0) -- (service);
+
+
+    \end{tikzpicture}
+    \end{center}
+
+    \section{Modèle de commande périodique en lot}
+    On considère que la gestion se fait en considérant 
+    le demande et en lots et en décidant quant à 
+    la \textbf{quantité optimale}  \( Q^{*} \) 
+    d'unité de produit dans un lot à acheter selon \textbf{contraintes de coût}  
+
+    \subsection{Notation}
+    \begin{itemize}
+        \item [$\rhd$ ] \( a \) : Taux de \textbf{demande}---nb.
+            unités de produit par unité de temps  
+        \item [$\rhd$ ] \( K \) : Coût \textbf{fixe} d'aquisition d'\textbf{un lot}    
+        \item [$\rhd$ ] \( c \) : Coût d'acquisition par unité du produit 
+        \item [$\rhd$ ] \( h \) Coût d'inventaire par unité du produit par unité de temps 
+        \item [$\rhd$ ] \( Q \) Nombre d'\textbf{unités de produit} das un lot  
+    \end{itemize}   
+
+
+    \begin{tikzpicture}[scale=1.5, >=stealth]
+
+    % Axes
+    \draw[->] (0,0) -- (4,0) node[below right] {temps};
+    \draw[->] (0,0) -- (0,3) {};
+
+    % Labels sur les axes
+    \node[above left] at (0,2.5) {$Q$};
+    \node[below] at (3,0) {$Q/\alpha$};
+
+    % Approximation continue (ligne décroissante continue)
+    \draw[thick] (0,2.5) -- (3,0);
+
+    % Approximation discrète (marche en escalier)
+    \draw[dashed, blue] (0,2.5) -- (0.5,2.5);
+    \draw[dashed, blue] (0.5,2.5) -- (0.5,2);
+    \draw[dashed, blue] (0.5,2) -- (1,2);
+    \draw[dashed, blue] (1,2) -- (1,1.5);
+    \draw[dashed, blue] (1,1.5) -- (1.5,1.5);
+    \draw[dashed, blue] (1.5,1.5) -- (1.5,1);
+    \draw[dashed, blue] (1.5,1) -- (2,1);
+    \draw[dashed, blue] (2,1) -- (2,0.5);
+    \draw[dashed, blue] (2,0.5) -- (2.5,0.5);
+    \draw[dashed, blue] (2.5,0.5) -- (2.5,0);
+
+    % Texte pour l'approximation continue
+    \node[right] at (3.2,1.5) {\rotatebox{-90}{Approximation continue}};
+
+    % Pointillés sur les axes
+    \draw[dotted] (3,0) -- (3,2.5);
+    \draw[dotted] (0,2.5) -- (3,2.5);
+
+    \end{tikzpicture}
+    La logeur d'un cycle est donnée par \( \dfrac{Q}{a} \). En effet, 
+    si on commande $Q$ unité et vend un quantité $a = Q$, il restera
+    $Q - Q = 0$ unités à la fin du cycle.  
+
+    En considérant \( Q > 0\), le niveau \textbf{moyen d'inventaire } et 
+    le \textbf{coût moyen d'inventaire} respectivement, son donné par 
+    \begin{align*}
+        \sfrac{Q}{2}, \quad \sfrac{hQ}{2}
+    \end{align*}
+
+    On a alors le \textcolor{myr}{\textbf{coût d'inventaire par cycle}} :
+    \begin{align*}
+        \sfrac{hQ}{2} \cdot \sfrac{Q}{a} = \sfrac{hQ^2}{2a}
+    \end{align*}
+
+    Soient le \textcolor{myr}{\textbf{coût d'inventaire par cycle }} 
+    \( \sfrac{hQ^2}{2a} \), 
+    et le  \textcolor{myr}{\textbf{coût d'acquisition par cycle}} 
+    \(  K + cQ\), on a le coût total par cycle :
+    \begin{align*}
+        K + cQ + \sfrac{hQ^2}{2a}
+    \end{align*}
+
+    Le coût moyen par unité de temps est alors :
+    \begin{align*}
+        T(Q) 
+        =
+        \dfrac{K + cQ + \sfrac{hQ^2}{2a}}{\sfrac{Q}{a}}
+    \end{align*}
+
+    En dérivant paritiellement, on obtient :
+    \begin{empheq}[box=\othermathbox]{align*}
+        Q^{*} = \sqrt{\dfrac{2aK}{h}}
+    \end{empheq}                    
+
+
+    \newpage    
+    \section{Modèle de demande variable}
+    On divise le temps en \textbf{périodes} et suppose que la demande 
+    peut varier selon la période.
+    \subsection{Notation}
+    \begin{itemize}
+        \item [$\rhd$ ] \( r_n \) : Nombre d'\textbf{unités du produit} demandées.
+            à la période \( n = 1, \dots, N \) 
+        \item [$\rhd$ ] \( K \) : 
+            \textbf{Coût fixe} d'acquisition d'unités du produit.    
+        \item [$\rhd$ ] \( c \) : Coût d'acquisition \textbf{par unité du produit}.  
+        \item [$\rhd$ ] \( h \) : \textbf{Coût d'inventaire} par unité de produit par 
+            période. 
+    \end{itemize}
+
+    Il faut donc déterminer le nombre d'unité du produit 
+    à obtenir \textcolor{myr}{\textbf{au début de chaque période}}
+    afin de \textbf{minimiser le coût} sur \( N \)
+    périodes \textcolor{myr}{\textbf{tout en satisfaisant la demande}}.  
+
+    \subsection{Programmation dynamique}
+    Soient \( n \) \textbf{périodes}, un état \( s_n \) correspondant au nombre 
+    d'\textbf{unités en inventaire}   au début de la période \( n \), et 
+    une variable \( x_n \) correspondant au \textbf{nombre d'unités à acquérir}
+    au début de la périodes \( n \), la contribution directe 
+    à la valeur de l'objectif est donnée par :
+    \begin{align*}
+        B_n(s_, x_n) = 
+            \begin{cases}
+                K + cx_n + h(s_n + x_n - r_n) \quad \text{ si } x_n > 0 
+                \\ 
+                h(s -r_n) \quad\quad\quad\quad\quad\quad\quad\;\;\, \text{ si } x_n = 0
+            \end{cases}
+    \end{align*}
+
+    Le coût d'acquisition jusqu'à la fin 
+    de la période \( \textcolor{myr}{\boldsymbol{N }  }  \) si 
+    \( s_n \) unités sont en inventaire et la décision 
+    est prise d'acquérir \( x_n \) nouvelles unités au début de la 
+    période \( n \) est alors :
+    \begin{align*}
+        f_n(s_n, x_n) = B_n(s_n, x_n) + f^{n+1}(s_n + x_n -r_n)
+    \end{align*}
+
+    Le coût \textcolor{myr}{\textbf{coût minimal d'acquisition}}, \( f_n(s_n) \) 
+    est donné par :
+    \begin{align*}
+        f_n^{s_n} 
+        = 
+        \min_{x_n \geq \max\{0, r_n -s_n \}}
+        \Bigl\{ f_n (s_n, x_n) \Bigr\}
+        = 
+        f_n(s_n, x_n^{*})
+    \end{align*}
+
+
+    On a donc la formule de récurrence : 
+    \begin{empheq}[box=\othermathbox]{align*}
+        f_n^{*}(s_n) 
+        = 
+        \min_{x_n \geq \max\{0, r_n -s_n \}}
+        \Bigl\{ 
+            B_n(s_n, x_n) + f_{n+1}(s_n + x_n - r)
+        \Bigr\}
+    \end{empheq}                    
+    
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+\end{multicols*}
+\end{document}
+
+                        
+
+ 
