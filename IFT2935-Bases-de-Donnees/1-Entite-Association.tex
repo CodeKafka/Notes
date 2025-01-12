@@ -1,0 +1,442 @@
+\documentclass[a4paper]{report}
+
+
+
+
+
+% Custom files; preamble and choice of font
+%==================
+% Custom Files 
+%==================
+\input{preamble/main.tex}
+\input{preamble/language/font-choice.tex}
+
+
+
+
+\begin{document}
+%==================
+% Title page 
+%==================
+\frontmatter                    % Declares numbering style of chapters
+\input{preamble/title-page.tex}
+\pagebreak
+
+
+%==================
+% Table of contents
+%==================
+% table of contents numered in romain numerals
+\thispagestyle{plain}
+\tableofcontents
+
+
+\mainmatter % Declares numbering style of chapter
+\thispagestyle{plain}           % Simple header after each new chapter
+\chapter{Introduction}
+
+    \section{Concepts généraux}
+
+    \begin{Définition}[Donnée]
+        Une donnée  est une \textbf{représentation d'un fait} à l'aide 
+        d'un code binaire stocké en mémoire. 
+    \end{Définition}
+
+
+
+    \begin{center}
+        \begin{tikzpicture}[
+            node distance=1.5cm and 1.5cm,
+            every node/.style={font=\sffamily},
+            box/.style={rectangle, draw, fill=gray!30, minimum height=0.75cm, minimum width=1cm, align=center},
+            desc/.style={rectangle, draw, text width=3.5cm, align=left, font=\sffamily\small},
+            arrow/.style={-{Stealth}, thick}
+        ]
+            % Noeuds principaux (les couches)
+            \node[box] (box1) at (0, 6) {Phénomène};
+            \node[right=4.5cm of box1] (data1) {1011100 \faWindows \; \faApple \; \faLinux 
+};
+            \draw[arrow, dashed] (box1.east) -- (data1.west);
+        \end{tikzpicture}
+
+        Les \textbf{types de données} représentent la nature du codage utilisé 
+        pour \textbf{représenter les données} ainsi que l'ensemble 
+        des opérations exécutables sur celles-ci.
+    \end{center}
+
+    \begin{Concept}
+        Il faut savoir faire la \textbf{distinction} entre une donnée et une information :
+        \begin{center}
+                \fontfamily{lmss}\selectfont 
+                \undertext{\texttt{Marie a 5 ans}}{\text{Information}} \quad\quad : 
+                \undertext{\texttt{5}}{\text{Donnée (âge)}}
+        \end{center}                
+    \end{Concept}                   
+
+    \section{Opérations Simples}
+    \begin{center}
+        \begin{tikzpicture}[dirtree]
+            \node[directory] {\fontfamily{lmss}\selectfont Opération simples}
+            child { node {Sélection}}
+            child { node[directory] {Modification}
+                child { node {Insertion}}
+                child { node {Mise à Jour}}
+            }
+            child [missing] {} child [missing] {} child [missing] {} child [missing] {}
+            child { node {Suppression}}
+            ;
+        \end{tikzpicture}%
+    \end{center}                
+
+    Soit le tableau suivant, nous pouvons utiliser des commandes \texttt{SQL} pour manipuler 
+    les données. 
+    \begin{rndtable}{|c|c|l|c|c|}
+            MAT & NOM       & FONCTION   & COURS   & AN\_ENT \\ \hline
+            \texttt{62945}  & Gilles    & Prof\_adj  & \texttt{MRT1111}   & 1997 \\ \hline
+            \texttt{34560}  & Myriam    & Prof\_agr  & \texttt{MRT2221}   & \texttt{1993}   \\ \hline
+            \texttt{21539}  & Claudine  & Prof\_adj  & \texttt{MRT3331}   & \texttt{1999}   \\ \hline
+            \texttt{80200}  & Bernard   & Prof\_tit  & \texttt{MRT1112}   & \texttt{1982}   \\ \hline
+            \texttt{75902}  & Yida      & Prof\_agr  & \texttt{MRT1664}   & \texttt{1990}   \\ \hline
+    \end{rndtable}
+
+ 
+
+    \begin{EExample}{Sélection d'éléments via SQL}{}
+        \begin{center}
+            \begin{minted}[baselinestretch=1.2, fontsize=\small]{sql}
+                        SELECT NOM, FONCTION
+                        FROM PROFESSEUR
+                        WHERE AN_ENT > 1992;
+            \end{minted} 
+            \( \downarrow \)
+        \end{center}
+
+
+        \begin{rndtable}{|c|c|}
+                        NOM      & FONCTION   \\ \hline
+                        Gilles   & Prof\_adj  \\ \hline
+                        Myriam   & Prof\_agr  \\ \hline
+                        Claudine & Prof\_adj  \\ \hline
+        \end{rndtable}
+
+        \fontfamily{lmss}\selectfont
+        \begin{tabular}{l l}
+            % Ligne 1
+            \xfbox[black!80!cyan!40]{\texttt{SELECT}} & spécifie la colonne à sélectioner  \\
+            % Ligne 2
+            \xfbox[black!80!cyan!40]{\texttt{FROM}} & spécifie la BD, soit le tableau \texttt{PROFESSEUR} 
+            \\
+            % Ligne 3
+            \xfbox[black!80!cyan!40]{\texttt{WHERE}} & spécifie permet d'introduire une condition  \\
+        \end{tabular}
+          
+    \end{EExample}              
+
+
+    \begin{EExample}{Insertion d'un élément via SQL}{}
+        \begin{center}
+            \begin{minted}[baselinestretch=1.2, fontsize=\small]{sql}
+        INSERT INTO PROFESSEUR (MAT, NOM, FONCTION, COURS, AN_ENT)
+        VALUES (662301, 'Jian', 'Prof_adj', 'MRT2323', 1996);
+            \end{minted}
+            \( \downarrow \)
+        \end{center}
+
+        \begin{rndtable}{|c|c|c|c|c|}
+            MAT     & NOM    & FONCTION  & COURS    & AN\_ENT \\ \hline
+            \texttt{62945}  & Gilles    & Prof\_adj  & \texttt{MRT1111}   & 1997 \\ \hline
+            \texttt{34560}  & Myriam    & Prof\_agr  & \texttt{MRT2221}   & \texttt{1993}   \\ \hline
+            \texttt{21539}  & Claudine  & Prof\_adj  & \texttt{MRT3331}   & \texttt{1999}   \\ \hline
+            \texttt{80200}  & Bernard   & Prof\_tit  & \texttt{MRT1112}   & \texttt{1982}   \\ \hline
+            \texttt{75902}  & Yida      & Prof\_agr  & \texttt{MRT1664}   & \texttt{1990}   \\ \hline
+            662301  & Jian   & Prof\_adj & MRT2323  & 1996    \\ \hline
+        \end{rndtable}
+
+        \fontfamily{lmss}\selectfont
+        \begin{tabular}{l l}
+            % Ligne 1
+            \xfbox[black!80!cyan!40]{\texttt{INSERT INTO}} & insère des données dans la table  \\
+            % Ligne 2
+            \xfbox[black!80!cyan!40]{\texttt{VALUES}} & fournit les valeurs à insérer pour
+            chaque colonne \\
+        \end{tabular}
+    \end{EExample}
+
+    \begin{EExample}{Mise à jour d'un élément via SQL}{}
+        \begin{center}
+            \begin{minted}[baselinestretch=1.2, fontsize=\small]{sql}
+                        UPDATE PROFESSEUR
+                        SET COURS = 'MRT2325'
+                        WHERE MAT = 662301;
+            \end{minted}
+            \( \downarrow \)
+        \end{center}
+
+        \begin{rndtable}{|c|c|c|c|c|}
+            MAT     & NOM    & FONCTION  & COURS    & AN\_ENT \\ \hline
+            \texttt{62945}  & Gilles    & Prof\_adj  & \texttt{MRT1111}   & 1997 \\ \hline
+            \texttt{34560}  & Myriam    & Prof\_agr  & \texttt{MRT2221}   & \texttt{1993}   \\ \hline
+            \texttt{21539}  & Claudine  & Prof\_adj  & \texttt{MRT3331}   & \texttt{1999}   \\ \hline
+            \texttt{80200}  & Bernard   & Prof\_tit  & \texttt{MRT1112}   & \texttt{1982}   \\ \hline
+            \texttt{75902}  & Yida      & Prof\_agr  & \texttt{MRT1664}   & \texttt{1990}   \\ \hline
+            662301  & Jian   & Prof\_adj & MRT2325  & 1996    \\ \hline
+        \end{rndtable}
+
+        \fontfamily{lmss}\selectfont
+        \begin{tabular}{l l}
+            % Ligne 1
+            \xfbox[black!80!cyan!40]{\texttt{UPDATE}} & modifie les données dans une table \\
+            % Ligne 2
+            \xfbox[black!80!cyan!40]{\texttt{SET}} & spécifie les nouvelles valeurs \\
+            % Ligne 3
+            \xfbox[black!80!cyan!40]{\texttt{WHERE}} & définit une condition pour la mise à
+            jour \\
+        \end{tabular}
+    \end{EExample}
+
+    \begin{EExample}{Destruction d'un élément via SQL}{}
+        \begin{center}
+            \begin{minted}[baselinestretch=1.2, fontsize=\small]{sql}
+                    DELETE FROM PROFESSEUR
+                    WHERE MAT = 662301;
+            \end{minted}
+            \( \downarrow \)
+        \end{center}
+
+        \begin{rndtable}{|c|c|c|c|c|}
+            MAT     & NOM    & FONCTION  & COURS    & AN\_ENT \\ \hline
+            \texttt{62945}  & Gilles    & Prof\_adj  & \texttt{MRT1111}   & 1997 \\ \hline
+            \texttt{34560}  & Myriam    & Prof\_agr  & \texttt{MRT2221}   & \texttt{1993}   \\ \hline
+            \texttt{21539}  & Claudine  & Prof\_adj  & \texttt{MRT3331}   & \texttt{1999}   \\ \hline
+            \texttt{80200}  & Bernard   & Prof\_tit  & \texttt{MRT1112}   & \texttt{1982}   \\ \hline
+            \texttt{75902}  & Yida      & Prof\_agr  & \texttt{MRT1664}   & \texttt{1990}   \\ \hline
+            % Aucune ligne correspondante après la suppression
+        \end{rndtable}
+
+        \fontfamily{lmss}\selectfont
+        \begin{tabular}{l l}
+            % Ligne 1
+            \xfbox[black!80!cyan!40]{\texttt{DELETE FROM}} & supprime les données d'une table \\
+            % Ligne 2
+            \xfbox[black!80!cyan!40]{\texttt{WHERE}} & limite la suppression aux lignes qui
+            respectent une condition \\
+        \end{tabular}
+    \end{EExample}
+
+    \section{Base de données}
+    \begin{Concept}[Bases de données]
+        Les larges collections de données nécessitent des \textbf{systèmes}---les bases de données---et 
+        des \textbf{logiciels} pour être gérées. 
+    \end{Concept}                   
+
+    \begin{center}
+        \begin{tikzpicture}[dirtree]
+            \node[directory] {\fontfamily{lmss}\selectfont Propriétés des bases de données}
+            child { node[directory] {Structuré}}
+            child { node[directory] {Cohérent}
+                child { node {L'ensemble a une signification}}
+            }
+            child [missing] {} child [missing] {} child [missing] {}
+            child { node[directory] {Paratagé}
+                child { node {Utilisé par \textbf{plusieurs utilisateurs}}}
+            }
+            child [missing] {} child [missing] {} 
+            child { node[directory] {A une raison d'être}}
+            ;
+        \end{tikzpicture}%
+    \end{center}
+
+    \begin{note}{}{}
+        On retrouve \textbf{trois type d'acteurs} qui interagissent avec les BD, soit les 
+        concepteurs, les administrateurs et les utilisateurs finaux.
+    \end{note}
+
+
+    \begin{center}
+        \begin{tikzpicture}[dirtree]
+            \node[directory] {\fontfamily{lmss}\selectfont Avantages des bases de données}
+            child { node[directory] {Réduit la redondance}}
+            child [missing] {}
+            child { node[directory] {Évite l'incohérence}}
+            child [missing] {} 
+            child { node[directory] {Permet le partage des données}
+            }
+            child [missing] {} child [missing] {} 
+            child { node[directory] {Garantie la sécurité}
+                    child{ node {Pour les utilisiteurs}}
+                    child{ node {Pour les Administration}
+                           child[missing] {}
+                           child{ node {consultation, destruction, insertion}}
+                    }
+            }
+            child [missing] {} child [missing] {} 
+            child { node[directory] {Assure l'intégrité}
+            }
+            child [missing] {} child [missing] {} 
+            child { node[directory] {Établir des priorités}
+            }
+            child [missing] {} child [missing] {} 
+            child { node[directory] {Assure l'indépendance des données}
+            }
+            ;
+        \end{tikzpicture}%
+    \end{center}
+
+    \section{SGBD}
+    \begin{Concept}[Système de gestion de base de données]
+        Les SGBD sont des \textbf{logiciels} spécialisés qui permettent 
+        la définition, la construction, la manipulation et la maintenance des BD. 
+        Ils reposent sur les \textbf{langage de définition de données} (LDD) 
+        et les \textbf{langage de manipulation de données} (LMD) : 
+        \begin{center}
+            \texttt{SGBD} = \texttt{LDD} + \texttt{LMD}      
+        \end{center}
+    \end{Concept}
+
+    \begin{tikzpicture}[dirtree]
+        \fontfamily{lmss}\selectfont
+        \node[directory] {Composantes d'un SGBD}
+            child{ node[directory] {LDD}
+                    child{ node {Définit les \textbf{types}   de données de la BD}}
+                    child{ node {Définit les \textbf{structures de données}  de données de la BD}}
+            }
+            child[missing] {} child[missing] {} 
+                        child{ node[directory] {LMD}
+            child{ node {Lire}}
+            child{ node {Ajouter}}
+            child{ node {Supprimer}}
+            child{ node {Modifier}}
+            }
+         ;
+    \end{tikzpicture}
+
+
+
+    \fontfamily{lmss}\selectfont
+
+    \begin{center}
+    \begin{tikzpicture}[node distance=2cm]
+
+        % Styles des formes
+        \tikzstyle{entity} = [rectangle, draw=black, fill=gray!30, 
+                              minimum width=1.75cm, minimum height=1.5cm, text centered]
+        \tikzstyle{arrow} = [thick,->,>=stealth]
+        \tikzstyle{description} = [text width=6cm, align=center, font=\small]
+
+        % Noeuds
+        \node (users) [circle, draw=black, fill=gray!30, 
+                       minimum size=2cm, text centered] 
+                       {Utilisateurs};
+                       
+        \node (sgbd) [entity, right of=users, xshift=3.5cm] 
+                       {SGBD};
+                       
+        \node (database) [cylinder, draw=black, fill=gray!30, shape border rotate=90,
+                          minimum height=1.5cm, minimum width=1.5cm, right of=sgbd, 
+                          xshift=4cm, text centered] 
+                          {BD};
+
+        % Flèches
+        \draw [arrow] (users) -- (sgbd) node[midway, above, font=\small] 
+                       {Interface utilisateur};
+        \draw [arrow] (sgbd) -- (database) node[midway, above, font=\small] 
+                       {Interface d'accès physique};
+        \draw [arrow] (database) -- (sgbd) node[yshift=1.2cm, midway, above, font=\small] 
+                       {Tâches : Stockage / accès aux données};
+        \draw [arrow] (sgbd) -- (users) node[yshift=-1.2cm, midway, below, font=\small] 
+                       {Tâches : Déf. contenu BD, Interrogation BD, MAJ BD};
+
+    \end{tikzpicture}
+
+    \end{center}
+
+    \begin{Concept}[Architecture à 3 niveaux d'un SGBD]
+        L'architecture d'un SGBD est organisée en trois niveaux distincts. 
+        Le \textbf{niveau externe} représente la vue des utilisateurs et des programmes 
+        qui interagissent avec le système, adaptée à leurs besoins spécifiques. 
+        Le \textbf{niveau conceptuel} offre une vue commune et intermédiaire qui est indépendante 
+        des applications et de l'implantation physique, 
+        permettant de se concentrer sur la structure logique des données. 
+        Enfin, le \textbf{niveau interne} se concentre sur la gestion des 
+        données telles qu'elles sont stockées physiquement, en prenant en 
+        compte les détails techniques de leur organisation. 
+        Cette architecture à trois niveaux garantit une abstraction efficace, 
+        une indépendance des données et une gestion optimisée.
+    \end{Concept}
+
+
+
+    \begin{EExample}{Illustration des niveaux conceptuel, interne et externe}{}
+        \fontfamily{lmss}\selectfont
+        \textbf{Conceptuel :} Définition logique des données.
+
+        \begin{rndtable}{|l|l|}
+            \hline
+            \texttt{Employee}   &                                  \\ \hline
+            \texttt{Num\_emp}   & \texttt{CHARACTER (6)}           \\ \hline
+            \texttt{Num Dept}   & \texttt{CHARACTER (46)}          \\ \hline
+            \texttt{Salaire}    & \texttt{NUMERIC}                 \\ \hline
+        \end{rndtable}
+
+        \vspace{0.5cm}
+        \textbf{Interne :} Définition physique et stockage des données.
+
+        \begin{rndtable}{|l|l|l|}
+            \hline
+            \texttt{STORED\_EMP} & \texttt{LENGTH=20}              &                     \\ \hline
+            \texttt{PREFIX}      & \texttt{TYPE=BYTE(6)}           & \texttt{OFFSET=0}   \\ \hline
+            \texttt{EMP\#}       & \texttt{TYPE=BYTE(6)}           & \texttt{OFFSET=6,}  \\
+                                 &                                 & \texttt{INDEX=EMPX} \\ \hline
+            \texttt{DEPT\#}      & \texttt{TYPE=BYTE(4)}           & \texttt{OFFSET=12}  \\ \hline
+            \texttt{PAY}         & \texttt{TYPE=FULLWORD}          & \texttt{OFFSET=16}  \\ \hline
+        \end{rndtable}
+
+        \vspace{0.5cm}
+        \textbf{Externe 1 :} Représentation spécifique pour une application.
+
+        \begin{minted}[baselinestretch=1.2, fontsize=\small]{c}
+            typedef struct {
+                char mat[6];
+                float sal;
+            } employe;
+        \end{minted}
+
+        \vspace{0.5cm}
+        \textbf{Externe 2 :} Une autre vue externe adaptée à une application.
+
+        \begin{minted}[baselinestretch=1.2, fontsize=\small]{c}
+            typedef struct {
+                char mat[6];
+                char dept[46];
+            } employe2;
+        \end{minted}
+    \end{EExample}
+
+
+    \begin{Définition}[Architecture client-serveur d'un SGBD]
+    L'architecture client-serveur dans un système de gestion de base de données (SGBD) repose 
+    sur la séparation des rôles entre un client et un serveur. Le programme d'application 
+    agit comme client, fournissant une interface utilisateur graphique (GUI) et prenant 
+    en charge le traitement lié au domaine d'application. Le SGBD, quant à lui, joue le rôle 
+    de serveur, en fournissant l'accès aux données, souvent appelé "data server". 
+    \end{Définition}
+
+
+
+
+
+
+    
+
+
+
+%==================
+% Appendix Chapters 
+%==================
+% \backmatter
+% \chapter{Appendices}
+% \section{Protocoles Courants (Détails des Commandes UNIX)}%
+% \fontfamily{lmss}\selectfont
+
+
+\end{document}
