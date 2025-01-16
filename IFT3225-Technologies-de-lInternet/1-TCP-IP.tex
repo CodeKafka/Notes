@@ -81,7 +81,8 @@
         Le modèle TCP/IP est une architecture simplifiée 
         en \textbf{4 couches}  qui décrit 
         comment les données sont échangées sur un réseau, 
-        notamment l'Internet. 
+        notamment l'Internet, en décrivant les technologies nécessaires 
+        à l'acheminement des données.
     \end{Définition}        
 
     \section{Couche Application}
@@ -92,7 +93,7 @@
 
     \begin{note}{}{}
         Le Modèle OSI (\textit{Open System Interconnection}) est un modèle 
-        en \textbf{sept couches} qui décrits les fonctionnalités nécessaires 
+        en \textbf{sept couches} qui décrit les fonctionnalités nécessaires 
         à la communication des systèmes informatiques en réseau
     \end{note}
 
@@ -702,63 +703,118 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
         de communication utilisé pour \textbf{transférer des données sur le Web}. Il est 
         basé sur un modèle client-serveur où le client (p. ex., un navigateur 
         web) envoie une requête au serveur, et le serveur répond avec les 
-        ressources demandées. 
+        ressources demandées. Plusieurs \textbf{proxy entre un client et un serveur peuvent intervenir et certains proxy peuvent mémoriser les réponse (ISP)}. Ainsi, les fournisseurs 
+        de services internet peuvent déterminer l'empreinte digitale de chacun
+        de leurs utilisateurs en fonctions des sites que ceux-ci visitent 
+        gardés en mémoire cache par l'ISP. 
     \end{Concept}
 
     \begin{center}
         \begin{tikzpicture}[dirtree]
             \node[directory] {\fontfamily{lmss}\selectfont Types de Requêtes HTTP}
-            child { node {GET}}
-            child { node {POST}}
-            child { node {PUT}}
-            child { node {DELETE}};
+                child { node[directory] {GET} 
+                child {node  {\fontfamily{lmss}\selectfont Aucun corps, simplement pour accéder à une ressource}}
+            }
+            child[missing] {}
+            child { node[directory] {POST}
+                child {node  {\fontfamily{lmss}\selectfont Envoie un paramètre dans le corps de la requête}
+            }}
+            child[missing] {}
+            child { node[directory] {PUT}
+                child {node  {\fontfamily{lmss}\selectfont Modifie une ressource existante}
+            }}
+            child[missing] {}
+            child { node[directory] {DELETE}
+                child { node  {Supprime une ressource}}
+            }
+            child[missing] {}
+            child[directory]{ node{HEAD}
+                child { node {Uniquement pour l'envoie d'en-tête}}
+            }
+            ;
         \end{tikzpicture}%
     \end{center}
+
+
+    \subsection{Syntaxe d'une requête HTTP}
 
     \normalfont
 
     \begin{note}{}{}
-        Chaque requête \texttt{HTTP}  est \textbf{indépendante des autres}  , 
-                  ce qui simplifie les interactions mais nécessite des mécanismes 
-                  supplémentaires (comme les cookies) pour maintenir l'état.
+        Chaque requête \texttt{HTTP}  est \textbf{indépendante des autres}, 
+        ce qui simplifie les interactions mais nécessite des mécanismes 
+        supplémentaires (comme les cookies) pour maintenir l'état.
     \end{note}
 
 
 
     \section{Utilisation de \texttt{curl} pour requêtes \texttt{HTTP}  }
 
-    \begin{EExample}{Requête simple avec \texttt{curl}}{}
+    \begin{EExample}{Requête \texttt{GET} simple avec \texttt{curl}}{}
         \begin{lstlisting}
     curl https://www.google.ca/
         \end{lstlisting}
+        L'outil \texttt{curl} est utilisé pour faire une requête \texttt{GET} qui contient 
+        uniquement une en-tête.
         \begin{center}
             \hyperlink{Requête simple avec curl}{
-                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails des options \;}
+                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails de la requête \texttt{GET} simple\;}
             }
         \end{center}
     \end{EExample}
 
-    \begin{EExample}{Requête détaillée (\texttt{-v}) avec \texttt{curl}}{}
+    \begin{EExample}{Requête \texttt{GET} détaillée (\texttt{-v}) avec \texttt{curl}}{}
         \begin{lstlisting}
     curl -v https://www.google.ca/
         \end{lstlisting}
+        Cette commande engendre une requête qui 
+        demande la page racine (\texttt{/}) du site \texttt{www.google.ca} via HTTP 1.1.
+        Le \texttt{User-Agent} spécifie que \texttt{curl} est utilisé. \texttt{Accept} indique que 
+        tous les types de contenu (\texttt{*/*}) sont acceptés.
+        \begin{lstlisting}
+            GET / HTTP/1.1
+            Host:www.google.ca 
+            User-Agent curl/7.58.0 
+            Accept:*/*
+        \end{lstlisting}
         \begin{center}
             \hyperlink{Requête détaillée avec curl}{
-                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails des options \;}
+                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails de la requête \texttt{GET} détaillée   \;}
             }
         \end{center}
     \end{EExample}
 
-    \begin{EExample}{Télécharger une page web avec \texttt{-o}}{}
+    \begin{EExample}{Télécharger une page web avec \texttt{-o} : réponse \emph{moved permanently}}{}
         \begin{lstlisting}
     curl -o out -v https://diro.umontreal.ca/accueil/
         \end{lstlisting}
+        Cette commande \texttt{curl} effectue une requête GET vers 
+        l'\textbf{ancienne page d'acceuil}   du DIRO avec des options.
+        L'option \texttt{-o out} sauvegarde la réponse dans un fichier nommé \texttt{out}.
+        L'option \texttt{-v} : Affiche les détails de la requête et de la réponse qui indique 
+        que \textbf{l'url a été déplacé}.
         \begin{center}
             \hyperlink{Télécharger une page web avec curl}{
-                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails des options \;}
+                \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails de la réponse\;}
             }
         \end{center}
     \end{EExample}
+
+    \begin{EExample}{Redirection temporaire avec \texttt{curl} : \emph{moved permanently \& temporary redirect}}{}
+    \begin{lstlisting}
+curl -v http://diro.umontreal.ca
+    \end{lstlisting}
+    Cette commande \texttt{curl} effectue une requête \texttt{GET}  vers 
+    l'\textbf{ancienne URL} du DIRO.  
+    La réponse montre une redirection initiale permanente vers une version HTTPS de l'URL, 
+    suivie d'une redirection temporaire vers la page d'accueil. 
+    \begin{center}
+        \hyperlink{Redirection temporaire avec curl}{
+            \xtargetbox[myb]{\fontfamily{lmss}\selectfont Détails des réponses\;}
+        }
+    \end{center}
+\end{EExample}
+
 
     \begin{EExample}{Télécharger des données JSON}{} 
         \begin{lstlisting}
@@ -806,7 +862,7 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
     \begin{EExample}{Modification de données avec une requête \texttt{PUT}}{}
         \begin{lstlisting}
     curl -X PUT -v -d                                       \
-    '{"id": 101, "title": "foo","body": "bar","userId": 1}' \
+    '{"id": 101, "title": "foo h","body": "bar","userId": 1}' \
          https://jsonplaceholder.typicode.com/posts/1       \
          -H 'Content-Type: application/json'
         \end{lstlisting}
@@ -817,8 +873,18 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
         \end{center}
     \end{EExample}
 
+    % TODO : Complete the chapter 
 
-\backmatter
+    % \chapter{Introduction au scriptage en \texttt{csh}}
+    %
+    % \begin{note}{}{}
+    %     Le commande \texttt{iconv} permet de convertir les caractères   
+    % \end{note}
+    %
+    % setenv LANG fr_CA
+
+
+     h\backmatter
 \chapter{Appendices}
 \section{Protocoles Courants (Détails des Commandes UNIX)}%
 \fontfamily{lmss}\selectfont
@@ -882,24 +948,24 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
     spécifie que la sortie (le contenu des messages) doit être écrite 
     dans un fichier nommé \texttt{mail.pop};  
 
-\xfbox[black!80!cyan!40]{\texttt{-v}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{-v}} 
     active le mode \textit{verbose}, qui affiche des informations détaillées 
     sur la connexion et le transfert des données, utile pour le débogage;  
 
-\xfbox[black!80!cyan!40]{\texttt{--ssl-reqd}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{--ssl-reqd}} 
     force l'utilisation de \texttt{SSL/TLS} pour sécuriser la connexion au 
     serveur POP;  
 
-\xfbox[black!80!cyan!40]{\texttt{-u 'felipe:passwd'}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{-u 'felipe:passwd'}} 
     fournit les informations d'identification  
     pour s'authentifier auprès du serveur \texttt{POP};  
 
-\xfbox[black!80!cyan!40]{\texttt{--request UIDL}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{--request UIDL}} 
     envoie la commande \texttt{UIDL} au serveur, 
     qui renvoie une liste des messages présents dans la boîte de réception 
     avec leurs identifiants uniques, sans les télécharger;  
 
-\xfbox[black!80!cyan!40]{\texttt{--url pop3://mail.iro.umontreal.ca}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{--url pop3://mail.iro.umontreal.ca}} 
     spécifie l'URL du serveur \texttt{POP}, permettant de 
     se connecter au serveur à l'adresse \texttt{mail.iro.umontreal.ca}.  
 
@@ -907,15 +973,15 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
 \xfbox[black!80!cyan!40]{\hypertarget{Connexion simple via curl avec IMAP}{\texttt{--url}}} 
     spécifie l'URL du serveur \texttt{IMAP} pour établir une connexion;
 
-\xfbox[black!80!cyan!40]{\texttt{--insecure}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{--insecure}} 
     désactive la vérification des certificats SSL/TLS (à éviter en production);
 
-\xfbox[black!80!cyan!40]{\texttt{--user}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{--user}} 
     fournit les informations d'identification pour s'authentifier 
     auprès du serveur.
 
 \subsection{Examiner une boîte de réception avec \texttt{EXAMINE INBOX}}
-\xfbox[black!80!cyan!40]{\hypertarget{Examiner une boîte de réception avec EXAMINE INBOX}{\texttt{--request}}} 
+\noindent\xfbox[black!80!cyan!40]{\hypertarget{Examiner une boîte de réception avec EXAMINE INBOX}{\texttt{--request}}} 
     permet d'envoyer une commande IMAP spécifique, comme 
     \texttt{EXAMINE INBOX}, pour afficher des informations détaillées 
     sur la boîte de réception.
@@ -925,7 +991,7 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
     enregistre le contenu du message dans un fichier local (e.g., 
     \texttt{mail.imap});
 
-\xfbox[black!80!cyan!40]{\texttt{UID}} 
+\noindent\xfbox[black!80!cyan!40]{\texttt{UID}} 
     identifie un message spécifique dans la boîte de réception pour 
     téléchargement.
 
@@ -940,21 +1006,82 @@ curl -o mail.pop -v --ssl-reqd -u 'felipe:passwd' \
     du message (e.g., signature ou pièces jointes encodées).
 
 
-\section{Détails des commandes \texttt{curl}}
-\subsection{Requête simple avec \texttt{curl}}
+    \section{Détails des commandes \texttt{curl} pour requêtes \texttt{GET}}
+\subsection{Détail de la requête \texttt{GET} simple avec \texttt{curl}}
 \xfbox[black!80!cyan!40]{\hypertarget{Requête simple avec curl}{\texttt{curl}}}
 envoie une requête GET par défaut à l'URL spécifiée et affiche la réponse brute 
 dans le terminal.
 
-\subsection{Requête détaillée avec \texttt{curl}}
+\subsection{Détail de la requête \texttt{GET} détaillée avec \texttt{curl}}
 \xfbox[black!80!cyan!40]{\hypertarget{Requête détaillée avec curl}{\texttt{-v}}}
-active le mode verbose pour afficher les détails de la requête et de la réponse 
+active le mode verbose pour afficher les détail
 (e.g., en-têtes HTTP).
 
-\subsection{Télécharger une page web avec \texttt{curl}}
-\xfbox[black!80!cyan!40]{\hypertarget{Télécharger une page web avec curl}{\texttt{-o}}}
-enregistre la réponse dans un fichier nommé spécifiquement (\texttt{out} dans cet 
-exemple).
+\subsection{Détail de la réponse \emph{Moved Permanently}}
+\xfbox[black!80!cyan!40]{\hypertarget{Télécharger une page web avec curl}{\texttt{Pour la réponse suivante}}}
+\begin{verbatim}
+HTTP/1.1 301 Moved Permanently
+Date: Tue, 07 Jan 2020 03:40:45 GMT
+Server: Apache
+Location: http://diro.umontreal.ca/
+Content-Length: 351
+Content-Type: text/html; charset=iso-8859-1
+\end{verbatim}
+\noindent\xfbox[black!80!cyan!40]{\texttt{HTTP/1.1 301 Moved Permanently}} indique que la ressource a été 
+déplacée de façon permanente.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Date}} spécifie l’heure de la réponse : \texttt{Tue, 07 Jan 2020 03:40:45 GMT}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Server}} indique que le serveur utilisé est \texttt{Apache}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Location}} redirige vers l’URL \texttt{http://diro.umontreal.ca/}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Content-Length}} indique que la longueur du contenu est de 351 octets.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Content-Type}} précise que le contenu est du HTML encodé 
+
+\subsection{Détail des réponses \emph{Moved Permanently} et \emph{Temporary Redirect}}
+\xfbox[black!80!cyan!40]{\hypertarget{Redirection temporaire avec curl}{\texttt{Pour les réponses suivantes}}}
+\begin{verbatim}
+HTTP/1.1 301 Moved Permanently
+Location: https://diro.umontreal.ca/
+Server: BigIP
+Connection: Keep-Alive
+Content-Length: 0
+
+HTTP/1.1 307 Temporary Redirect
+Date: Mon, 06 Jan 2020 05:50:18 GMT
+Vary: Host
+Location: https://diro.umontreal.ca/accueil/
+Content-Length: 0
+Content-Type: text/html; charset=UTF-8
+X-Server-By: web1
+Age: 0
+grace: none
+X-Cache: MISS
+Connection: keep-alive
+Set-Cookie: BIGipServerCms.dgtic-pool=1076201482.20480.0000; path=/; Httponly; Secure
+\end{verbatim}
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{HTTP/1.1 301 Moved Permanently}} indique que la ressource a été 
+déplacée de façon permanente vers \texttt{https://diro.umontreal.ca/}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Location}} redirige vers une version HTTPS de l'URL.
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Server}} précise que le serveur utilisé est \texttt{BigIP}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Connection}} spécifie que la connexion reste active (\texttt{Keep-Alive}).  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{HTTP/1.1 307 Temporary Redirect}} indique une redirection temporaire 
+vers \texttt{https://diro.umontreal.ca/accueil/}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Date}} précise l’heure de la réponse : \texttt{Mon, 06 Jan 2020 05:50:18 GMT}.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Vary}} informe que la réponse varie selon l’hôte.  
+
+\noindent\xfbox[black!80!cyan!40]{\texttt{Set-Cookie}} configure un cookie pour des sessions futures, 
+avec des options sécurisées (\texttt{Httponly} et \texttt{Secure}).
+
 
 \subsection{Télécharger des données JSON avec \texttt{curl}}
 \xfbox[black!80!cyan!40]{\hypertarget{Télécharger des données JSON}{\texttt{-o}}}
