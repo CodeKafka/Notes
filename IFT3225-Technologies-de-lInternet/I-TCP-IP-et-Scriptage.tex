@@ -1,0 +1,1263 @@
+\documentclass[a4paper, 14pt]{report}
+\usepackage{mathtools}
+\usepackage{romannum} 
+
+
+
+
+% Custom files; preamble and choice of font
+%==================
+% Custom Files 
+%==================
+\input{preamble.tex}
+\usetikzlibrary{positioning}
+\usepackage{xpatch,letltxmacro}
+\LetLtxMacro{\cminted}{\minted}
+\let\endcminted\endminted
+\xpretocmd{\cminted}{\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}}{}{}
+\renewcommand{\figurename}{Listing}
+
+
+
+
+
+
+
+\usemintedstyle{default}
+\begin{document}
+%==================
+% Title page 
+%==================
+\frontmatter                    % Declares numbering style of chapters
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+\scalebox{1.65}{
+    \Huge\bfseries\color{gray}
+    \sffamily Technologies
+    }
+    \\
+    \vspace{0.2cm}%
+    {\LARGE\sffamily\textcolor{gray}{de l'internet}}\par 
+    \vspace{4cm}%
+    {\LARGE\textcolor{gray}{\sffamily FRANZ GIRARDIN
+        }
+    }\par%
+    {\large\sffamily Université de Montréal}
+    \par%
+    
+    \vspace{1cm}
+    
+    {\large\sffamily CHARGÉE DE COURS}\par
+    {\normalsize\sffamily Philippe Langlais}\par
+    {\small\sffamily 
+        Département d'Informatique et de Recherche Opérationnelle
+    }\par%
+    \vspace{1cm}
+    
+    {\large\textsc
+        {\sffamily \textbf
+            {Notes de cours}  
+        }%
+    }\par
+    {\normalsize\sffamily 
+            TPC/IP, sciptage
+    }\par
+    \vfill
+    {\Large\sffamily Montréal 2025}\par
+    {\small\sffamily\textit{\today}}
+
+\end{titlepage}
+\pagebreak
+
+
+%==================
+% Table of contents
+%==================
+% table of contents numered in romain numerals
+\thispagestyle{plain}
+\tableofcontents
+
+
+
+\mainmatter                     % Declares numbering style of chapter
+\thispagestyle{plain}           % Simple header after each new chapter
+
+\chapter{Modèle TCP-IP}
+    \begin{Définition}[TCP-IP]
+        Architecture simplifiée 
+        en \textbf{4 couches} décrivant 
+        comment les données sont échangées sur un réseau, 
+        notamment l'Internet, en référençant les technologies nécessaires. 
+        \begin{align*}
+            \underbrace{
+            \textsf{Application
+            }}_{\scriptsize{
+                \texttt{HTTP, FTP, SMTP, SSH, Telnet}
+            }} 
+            + 
+            \underbrace{
+            \textsf{\phantom{A}
+            Transport\phantom{A}
+            }}_{\scriptsize{
+            \texttt{TCP, UDP}
+            }}  
+            +\;
+            \underbrace{
+            \textsf{\phantom{T}
+            Internet
+            \phantom{p}} }_{
+            \scriptsize{\texttt{IP, ICMP}
+            }}
+            \;\;+ \;
+            \underbrace{
+            \textsf{\phantom{T}
+            Réseau
+            \phantom{p}}}_{
+            \scriptsize{\texttt{Ethernet, Wi-Fi}
+            }}
+        \end{align*}
+
+        La couche
+        \textit{application} 
+            gère les interactions utilisateurs; 
+        \textit{transport} 
+            permet la communication machine;   
+        \textit{internet}   
+            sert à l'adressage et routage des paquets;
+        et la couche
+        \textit{réseau} 
+            est responsable du transport physique des données.  
+    \end{Définition}
+
+    \section{SSH}
+        SSH est un protocole de réseau qui permet d'établir 
+        une connexion sur une machine distante afin d'exécuter 
+        des opérations en ligne de commande et d'effectuer le transfert 
+        de fichiers via des technologies auxiliaires telles SCP et SFTP. 
+        \begin{figure}[h]       
+\begin{center}
+    \scalebox{0.85}{
+    \begin{tikzpicture}
+        \node (laptop) {\faLaptopCode};
+        \node[above of=laptop, yshift=-14] (pin1) {$\blacktriangledown$};
+        \node[above of=pin1, yshift=-18] (description1) {\textsf{\small{client ssh}}};
+
+        \node (serveur) at ($(laptop) + (10.5cm, 0)$) {\faLayerGroup};
+        \node[above of=serveur, yshift=-14] (pin2) {$\blacktriangledown$};
+        \node[above of=pin2, yshift=-18] (description2) {\textsf{\small{serveur ssh}}};
+
+        \draw[->Stealth] (laptop) -- (serveur);
+
+        \node[align=left, yshift=1.25cm] (export) at ($(laptop)!0.5!(serveur)$)
+            {$\overbracket{\texttt{Hello, bonjour}}^{\textsf{message/commande envoyé}}\underbracket{\cdots\cdots\cdots}_{\textsf{encryption}}\texttt{\$yb38r}\underbracket{\cdots\cdots\cdots}_{\textsf{décryption}}\overbracket{\texttt{Hello, bonjour}}^{\textsf{message/commande reçu}}$};
+
+\end{tikzpicture}}
+\caption{Transmission sécurisée d’un message via SSH}
+\end{center}
+\end{figure}
+
+        % \[ \arraycolsep=1.4pt\def\arraystretch{1.5}
+        % \begin{array}{lll}
+        %     \underset{\blacktriangledown}{\texttt{client ssh}} & & 
+        %     \underset{\blacktriangledown}{\texttt{serveur ssh}}
+        %     \\
+        %     \hspace{1.75em}\text{\faLaptopCode} & 
+        %     \overset{\overbracket{\texttt{Hello, bonjour}}^{\text{message/commande envoyé}}\underbracket{\cdots\cdots\cdots}_{\text{encryption}}\texttt{\$yb38r}\underbracket{\cdots\cdots\cdots}_{\text{décryption}}\overbracket{\texttt{Hello, bonjour}}^{\text{message/commande reçu}}}{\xrightarrow{\hspace*{7cm}}} & 
+        %     \hspace{2.175em}
+        %     \text{\faLayerGroup}
+        % \end{array}
+        % \]
+
+
+
+
+
+    \section{FTP, SFTP, SMTP, POP, IMAP, UDP}
+        \textbf{\textsf{SFTP}} (\textit{Secure File Transfer Protocol})
+        date de 1995 et
+        est un successeur de FTP (1970). Contrairement à son prédecesseur, 
+        SFTP permet le transport sécuritaire des données 
+        de fichiers en communicant sur le port \( 22 \) et 
+        en utilisant un seul canal chiffré et authentifié par SSH. 
+\begin{figure}[H]
+\begin{center}
+% [>=stealth, node distance=1.4cm, every node/.style={align=center}]
+
+\scalebox{0.625}{
+    \begin{tikzpicture}
+        [scale=1.0,node distance=1.4cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=2.9cm, minimum height=2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+  % Nodes (top row)
+  \node (client)     [box] {\faLaptopCode\\\texttt{Client}};
+  \node (cloud)      [box, right=of client] {\faCloud\\\texttt{Connexion}};
+  \node (interface)  [box, right=of cloud] {\faCode\\\texttt{Interface SFTP}};
+  \node (request)    [box, right=of interface] {\faArrowDown\\\texttt{Requête}};
+
+  % Node (right side)
+  \node (server)     [box, below=of request] {\faServer\\\texttt{Serveur}};
+
+  % Bottom row
+  \node (encrypted)  [box, left=of server] {\faFolder\\\faLock\\\texttt{Fichier chiffré}};
+  \node (decrypt)    [box, left=of encrypted] {\faUnlock\\\texttt{Déchiffrement}};
+  \node (decrypted)  [box, left=of decrypt] {\faFolderOpen\\\texttt{Fichier clair}};
+
+  % Arrows (top row)
+  \draw[->] (client) -- (cloud);
+  \draw[->] (cloud) -- (interface);
+  \draw[->] (interface) -- (request);
+  \draw[->] (request) -- (server);
+
+  % Arrows (bottom path)
+  \draw[->] (server) -- (encrypted);
+  \draw[->] (encrypted) -- (decrypt);
+  \draw[->] (decrypt) -- (decrypted);
+\draw[->] (decrypted.west) -- ++ (-0.5, 0)|- (client.west);
+
+\end{tikzpicture}}
+\end{center}
+\caption{ Étapes d’un transfert de fichier sécurisé via SFTP}
+\end{figure}
+
+\paragraph{}%
+\textsf{\textbf{SMTP}} (\textit{Simple Mail Transfer Protocol}) est un protocole standard de l'Internet destiné 
+à l’\textit{envoi} et au relais de courriels électroniques. 
+Il fonctionne sur le port \(25\), en mode non sécurisé, 
+sauf lorsqu’il est encapsulé via des alternatives chiffrées telles que SMTPS 
+ou TLS.
+
+
+\begin{figure}[H]
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}[scale=1.0,node distance=2.2cm and 2.5cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=2.9cm, minimum height=2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+  % Ligne du haut : expéditeur -> SMTP -> internet
+  \node (sender)   [box] {\faDesktop\\\texttt{Expéditeur}};
+  \node (smtp)     [box,right=of sender] {\faServer\\\texttt{Serveur SMTP}};
+  \node (cloud)    [box, right=of smtp] {\faCloud\\\texttt{Internet}};
+
+  % Ligne du bas : POP/IMAP -> destinataire
+  \node (popimap)  [box, below=of cloud] {\faServer\\\texttt{Serveur POP/IMAP}};
+  \node (receiver) [box, left=of popimap] {\faLaptop\\\texttt{Destinataire}};
+
+  % Flèches en haut (envoi)
+  \draw[->] (sender) -- (smtp);
+  \draw[->] (smtp) -- (cloud);
+
+  % Flèche vers le bas : Internet vers serveur POP/IMAP
+  \draw[->] (cloud) -- (popimap);
+
+  % Flèche bas → gauche : POP/IMAP vers Destinataire
+  \draw[->] (popimap) -- (receiver);
+\end{tikzpicture}}
+\end{center}
+\caption{Chemin de transmission d’un courriel via SMTP et POP/IMAP}
+\end{figure}
+    Notons que SMTP est un protocole à \textit{flux unidirectionnel} : 
+    il est \textit{utilisé exclusivement pour l’envoi de messages}. 
+    Il ne permet ni la réception, ni la consultation du courrier par le destinataire.
+        
+
+
+    \textbf{\textsf{POP}}  (\textit{Post Office Protocol}) 
+    est un protocole de la couche 
+        application du modèle qui est utilisé 
+        par les clients de messagerie pour récupérer
+        ou pour supprimer les courriels 
+        depuis un serveur mail. Le flux est unidirectionnel. Il permet 
+        uniquement de stocker localement le courriel disponible 
+        sur un serveur. 
+        Le protocole opère de façon 
+        non sécurisée sur le port \(110\) ou de façon sécurisée 
+        sur le port \( 995 \). 
+
+\begin{figure}[H]
+\begin{center}
+\scalebox{0.85}{
+\begin{tikzpicture}[
+    >=Stealth,
+    node distance=5cm and 3cm,
+    every node/.style={align=center}
+  ]
+  % Noeuds
+  \node (email)   [] {\faEnvelope\\\texttt{e-mail}};
+  \node (server)  [right=of email] {\faServer\\\texttt{Serveur mail}};
+  \node (client)  [right=of server] {\faLaptop\\\texttt{Ordinateur utilisateur}};
+
+  % SMTP
+  \draw[->] (email) -- node[above]{\textsf{envoie via \textsf{SMTP}}} (server);
+
+  % POP3 téléchargement (haut)
+  \coordinate (aboveServer) at ($(server.north)+(0,1)$);
+  \coordinate (aboveClient) at ($(client.north)+(0,1)$);
+  \draw[->] (server.north) -- (aboveServer) -- (aboveClient) -- (client.north);
+  \node at ($(aboveServer)!0.5!(aboveClient)$) [above] {\textsf{\textsf{POP3} télécharge les messages}};
+
+  % POP3 suppression (bas)
+  \coordinate (belowClient) at ($(client.south)-(0,1)$);
+  \coordinate (belowServer) at ($(server.south)-(0,1)$);
+  \draw[->] (client.south) -- (belowClient) -- (belowServer) -- (server.south);
+  \node at ($(belowClient)!0.5!(belowServer)$) [below] {\textsf{Supprime les messages après récupération}};
+
+\end{tikzpicture}}
+\end{center}
+\caption{Fonctionnement du protocole POP3 pour la réception des courriels}
+\end{figure}
+        \textbf{\textsf{IMAP}} (\textit{Internet Message Access Protocol})
+        est un protocole de la couche \textit{application} du modèle 
+        qui permet lire, organiser les courriels à distance  
+        sur le serveur. Le protocole a un 
+        \textit{flux bidirectionnel} : les changements                  
+        effectué localement sont répercuté sur le serveur. 
+        IMAP fonctionne via le port \(143\) par défaut 
+        (non sécurisé) ou de façon sécurisée via le port 
+        \( 993 \) en TLS.
+
+
+        \begin{figure}[H]
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}
+[scale=1.0,node distance=2.2cm and 3cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=2.8cm, minimum height=2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+
+  % Clients
+  \node (client1) [box] 
+    {\faLaptop\\\texttt{Client IMAP }};
+    
+
+  
+  % Serveur IMAP
+  \node (server) [box, left=2.25cm of client1] 
+    {\faServer\\\texttt{Serveur IMAP}};
+  \node (server2) [box, left=5.5cm of server] 
+    {\faServer\\\texttt{Serveur IMAP }};
+  \node (client2) [box] 
+      at ($(server)!0.5!(server2)+(0,-5cm)$) 
+    {\faDesktop\\\texttt{Client IMAP }};
+
+  % Flèches bidirectionnelles
+  \draw[<->] ($(client2.north) + (0.25, 0)$) |-  ($(server.west) + (0,-0.75)$);
+  \draw[<->] ($(client2.north) + (-0.25, 0)$) |-  ($(server2.east) + (0,-0.75)$);
+  \draw[<->] (server.east) --  (client1.west);
+
+  % Encadrés de texte explicatif
+  \node[anchor=west, align=left, text width=5cm, right=0.5cm of client2] (rightbox) {
+          \small\textsf{Il a un contrôle total sur ses dossiers courriel. 
+    Il peut les créer, supprimer, déplacer ou vider, même entre 
+différents comptes ou serveurs.}
+  };
+
+  \node[anchor=east, align=left, text width=5cm, below=0.5cm of client2] (leftbox) {
+    \small \textsf{Le client décide où stocker les messages. 
+    Il peut les copier localement ou les laisser sur le serveur.}
+  };
+\node[align=left] (multiple) at ($(server)!0.5!(server2)$)  {\small \textsf{Un client peut communiquer} \\ \textsf{avec plusieurs serveurs}};
+
+    \textbf{\textsf{TCP}} \textit{Transmission Control Protocol}
+    est un protocole de la couche \textit{transport} qui foutnit 
+    un service de transimission fiablle, ordonné 
+    et avec un contrôle de flux entre hôtes sur un réseau 
+    IP. 
+
+
+  \node[align=left, text width=7cm] (bottombox) 
+      at ($(client1.south) + (-2.2cm, -1.5)$){
+    \small\textsf{IMAP permet à plusieurs clients d'accéder au même compte 
+    en conservant les messages sur le serveur depuis n'importe où.}
+  };
+
+\end{tikzpicture}}
+\end{center}
+\caption{Architecture IMAP avec accès simultané à plusieurs serveurs}
+\end{figure}
+
+        \textbf{\textsf{TCP}} \textit{Transmission Control Protocol}
+        est un protocole de la couche \textit{transport} qui foutnit 
+        un service de transimission fiablle, ordonné 
+        et avec un contrôle de flux entre hôtes sur un réseau 
+        IP. 
+
+        \begin{figure}
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}[scale=1.0,node distance=2.2cm and 3.5cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=2.8cm, minimum height=2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+  % Nœuds client et serveur
+  \node (client) [box] 
+    {\faLaptop\\\texttt{Client TCP}};
+    
+  \node (server) [box, right=6.5cm of client] 
+    {\faServer\\\texttt{Serveur TCP}};
+
+  % Flèches handshake
+  \draw[->] (client.north) -- ++ (0, 1) -|  (server.north);
+  \node at ($(client)!0.5!(server) +(0,2.25)$) {\textsf{1.} \texttt{SYN}};
+  \draw[->] ($(server.west)+(0,0)$) -- node[above] {\textsf{2.} \texttt{SYN-ACK}} ($(client.east)+(0,0)$);
+
+  \draw[->] (server.south) -- ++ (0, -1) -|  (client.south);
+
+  \node at ($(client.south)!0.5!(server.south) +(0,-1.25)$) {\textsf{3.} \texttt{ACK}};
+  % Échange de données
+  \draw[<->, thick, dashed] ($(server.south) +(-0.5,0)$) -- ($(server.south) +(-0.5,-0.5)$)  
+      |-($(client.south) +(0.5,-0.5)$) -- ++ (0, 0.5) ;
+
+  % Encadrés explicatifs
+  \node[align=left, text width=6.5cm, anchor=north] (expl1) at ($(client.north)+(1.8,+3)$) {
+      \small  \textsf{Le client envoie un paquet \texttt{SYN} pour initier une connexion TCP. 
+    Il propose un numéro de séquence initial.} };
+
+  \node[align=left, text width=5.2cm, anchor=north] (expl2) at ($(server.north)+(-0.5,3)$) {
+          \small \textsf{Le serveur répond avec \texttt{SYN-ACK} pour accepter la connexion et envoyer son propre numéro de séquence.}
+  };
+
+  \node[align=left, text width=7.5cm, anchor=north] (expl3) at ($(client.south)!0.5!(server.south)+(0,-1.85)$) {
+          \small \textsf{Le client confirme avec un \texttt{ACK} final. La connexion est alors établie et les données peuvent être échangées de manière fiable.}
+  };
+
+\node[] (dataEx) at ($(client.south)+(0, 0.25)!0.5!(server.south)+(0, 0.25)$)  
+    {\textsf{Échange de données}};
+
+\end{tikzpicture}}
+\end{center}
+\caption{Établissement d’une connexion TCP selon le \textit{three-way handshake}}
+\end{figure}
+
+
+        \begin{Remarque}[Modèle TCP/IP et protocole TCP]
+            Il faut savoir distinguer le modèle TCP/IP qui fait référence à un concept décrivant 
+            les quatres couches de technologies impliquées dans le système TCP/IP de la 
+            \textit{technologie} TCP 
+            qui est un protocole à part entière faisant 
+            partie de la couche transport du modèle TCP/IP.   
+        \end{Remarque}
+        \textbf{\textsf{UDP}}  (\textit{User Datagram Protocol}) est un protocole de la couche 
+        \textit{transport} de la suite IP, conçu pour envoyer des datagrammes---des unités de données échangées 
+        sur les réseau à commutation de paquets---sans établir de connexion préalable et sans garantie de 
+        livraison. 
+
+\begin{figure}[H]
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}
+[scale=1.0,node distance=1.4cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=2.9cm, minimum height=2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+
+  % Nœuds client et serveur
+  \node (client) [box] 
+    {\faLaptop\\\texttt{Client UDP}};
+    
+  \node (server) [box, right=6.5cm of client] 
+    {\faServer\\\texttt{Serveur UDP}};
+
+  % Flèche unidirectionnelle
+  \draw[->] (client.east) -- node[above]{\textsf{Datagramme envoyé}} (server.west);
+
+  % Flèche retour optionnelle (UDP est bidirectionnel, mais sans état)
+  \draw[->, dashed] ($(server.west) + (0, -0.25)$) -- node[below]{\textsf{Datagramme de réponse (optionnel)}} ($(client.east) + (0, -0.25)$);
+
+  % Encadré 1 : envoi direct
+  \node[align=left, text width=6cm, anchor=north] at ($(client.north)+(1.65,+1.75)$) {
+      \small \textsf{Le client envoie un datagramme sans établir de connexion. 
+      Aucun numéro de séquence n’est négocié.}
+  };
+
+  % Encadré 2 : pas de garantie
+  \node[align=left, text width=5.5cm, anchor=north] at ($(server.south)+(-0.5,-0.5)$) {
+      \small \textsf{Le serveur reçoit le message, mais il n’y a aucune garantie de réception, d’ordre ou de duplication.}
+  };
+
+
+
+\end{tikzpicture}}
+\end{center}
+\caption{Envoi de datagrammes sans connexion avec UDP}
+\end{figure}
+
+UDP est un protocole léger, sans connexion, 
+      adapté aux applications qui privilégient la rapidité à la fiabilité, 
+      comme le streaming ou le DNS.
+
+        \section{Datagramme}
+        Un datagramme est une unité de données qui comporte deux compsant structurels, 
+        soit une en-tête aussi appelée \textit{header} et  une charge utile 
+        aussi appelé \textit{payload}.  
+
+        L'en-tête contient les informations de routate (adresse, longueur, type, etc.), alors que la 
+        charge utile transporte les données de l'utilisateur. Dans le contexte de la suite 
+        TCP/IP, les paquets IP sont essentiellement des datagrammes IP.
+\begin{figure}[H]
+\begin{center}
+\scalebox{0.75}{
+\begin{tikzpicture}[scale=1.0,node distance=0cm, >=stealth,
+        box/.style={rectangle, draw,rounded corners, minimum width=4cm, minimum height=1cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+  % Ports (première ligne)
+  \node[box] (src) {\textsf{Port source (16 bits)}};
+  \node[box, right=0cm of src] (dst) {\textsf{Port destination (16 bits)}};
+
+  % Longueur + Checksum (deuxième ligne)
+  \node[box, below=0cm of src] (len) {\textsf{Longueur (16 bits)}};
+  \node[box, below=0cm of dst] (chk) {\textsf{Checksum (16 bits)}};
+
+  % Données (troisième ligne, pleine largeur)
+  \node[align=left,box, below=0.5cm of len.east |- chk.east] (data) {\textsf{Données (variable)}};
+
+  % Légende en bas
+  \node[align=left, text width=10cm, below=0.5cm of data] (expl) {
+    \small \textsf{Un datagramme UDP est minimaliste : 8 octets d’en-tête (ports, longueur, checksum) suivis de la charge utile. 
+    Contrairement à TCP, il ne gère ni la connexion ni l’ordre des paquets.}
+  };
+
+\end{tikzpicture}}
+\end{center}
+\caption{Format de l’en-tête UDP}
+\end{figure}
+
+        \section{Procesus sans connexion UDP et TCP}
+        Contraitement à TCP qui effectue un \textit{handshake} en trois temps pour négocier 
+        l'ouverture d'une session avant d'envoyer des données, UDP se contente 
+        d'envoyer des datagrammes de façon aveugle. Par conséquent, l'expéditeur 
+        n'attend pas de confirmation (SYN) que le destinataire est prêt à 
+        recevoir. 
+
+        Par ailleurs, UDP ne prévoit ni accusé de réception (ACK), ni réordonnancement, ni 
+        de retransmission automatique. Ainsi, il n'y a pas de garantie que 
+        les données atteignent leur destination ou que leur intégrité soit préservée. 
+        UDP est donc considéré comme un protocole \textit{connectionless} et 
+        \textit{unreliable}---sans garantie de fidelité.   
+        
+        \section{Identificateur et localisateur}
+        Une URI ou \textit{Universal Ressource Identifier} est un identifiant générique 
+        de ressource sur le Web. La syntaxe générale d'un URI est la suivante :
+        \begin{align*}
+        \fontfamily{lmss}\selectfont
+         \underbrace{\texttt{\phantom{t}mailto\phantom{g}}}_{\text{schéma}}%
+        \texttt{:}%
+        \underbrace{\phantom{t}\texttt{[alice\@gmail.com]\phantom{g}}}_{\text{chemin}} \; % 
+        \underbrace{\phantom{t}\texttt{[?...]\phantom{g}}}_{\text{requête}} \; % 
+        \underbrace{\phantom{t}\texttt{[\#...]\phantom{g}}}_{\text{fragment}} 
+        \\ 
+        \end{align*}
+        Il existe \textbf{plusieurs type d'\uppercase{uri}} : les \textbf{\uppercase{urn} }  pour les technologies de courrier,
+        les \uppercase{urn} pour 
+        les numéro d'\uppercase{isbn}, et les \textbf{\uppercase{URL}}  
+        pour les pages Web sont des exemples d'\uppercase{uri}. 
+
+
+        \begin{Concept}[URL]
+            Une \uppercase{url} est composée, entre autres, 
+            d'un \textit{schéma}, p. ex. \uppercase{HTTP}, 
+        d'un \textit{nom de domaine}, d'un \textit{chemin}, de 
+        \textit{paramètres}  
+        et d'une \textit{ancre}.   
+        \begin{align*}
+        \fontfamily{lmss}\selectfont
+         \underbrace{\texttt{\phantom{t}scheme\phantom{g}}}_{\text{protocole}}%
+        \texttt{:}%
+        \underbrace{\texttt{[//authority]}}_{\text{authentification ou domaine}}%
+        \underbrace{\texttt{\phantom{t}path\phantom{g}}}_{\text{chemin}} \; %
+        \underbrace{\phantom{t}\texttt{[?query]}\phantom{g}}_{\text{paramètres}} \;%
+        \underbrace{\phantom{t}\texttt{[\#anchor]\phantom{g}}}_{\text{ancre}}
+        \\ 
+        \end{align*}
+        C'est un \textbf{type particulier} d'\uppercase{uri} qui, en plus d'identifier, localise la ressource 
+        et indique comment y accéder. 
+    \end{Concept}
+        \section{Fonctionnement du Web et URI}
+        \begin{center}
+            \textsf{Web} = \textsf{URI} + \textsf{HTTP} + \textsf{HTML}        
+        \end{center}
+        Le modèle ci-haut permet de mettre en évidences les trois briques fondamentales du Web. 
+        Le protocole \textbf{\uppercase{http}} régit la communication entre différentes sources et destinataires 
+        selon le modèle \textit{client-serveur}. Le langage \textbf{\uppercase{html}}   permet la conception 
+        de page Web, et les technologies d'\textbf{\uppercase{uri}} permettent d'associer une ressource telle qu'une page 
+        à des caractéristiques d'identification, de localisation et destinations.
+
+        
+
+        \begin{figure}[H]
+            \[
+            \small
+            \texttt{http://}\underbrace{\texttt{www.iro.umontreal.ca}}_{\text{nom de domaine}}%
+            \texttt{/}\underbrace{\texttt{\~felipe/new-home/frontal.php}}_{\textit{path}}%
+            \texttt{?}\underbrace{\texttt{page=resume}}_{\textit{query}}
+            \] 
+            \normalsize
+            \caption{Exemple d'\uppercase{URI}}
+        \end{figure}                        
+
+
+    \section{DNS}
+    Le \uppercase{DNS} est un système distribué 
+        utilisé pour \textit{traduire les noms de domaine}  
+        lisibles par l'humain 
+        en adresses IP compréhensibles 
+        par les machines. 
+     
+\begin{figure}[H]
+    \begin{center}
+        \scalebox{0.85}{
+    \begin{tikzpicture}[scale=0.25,
+        box/.style={rectangle, draw, myb, rounded corners, minimum width=1.5cm, minimum height=0.5cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, },
+        dashedarrow/.style={-{Stealth}, dashed},
+        label/.style={font=\small}
+    ]
+
+    \sffamily
+    % Nodes
+    \node[box] (client) {Client (example.com)};
+    \node[box, below=1.5cm of client] (resolver) {DNS Resolver};
+    \node[box, below right=1.5cm and 2cm of resolver] (rootserver) {Serveur Racine};
+    \node[box, below=1.5cm of rootserver] (tldserver) {Serveur TLD  (.com, .org)};
+    \node[box, below=1.5cm of tldserver] (authserver) {Serveur Authoritative};
+    \node[box, right=3.5cm of client] (webserver) {Serveur Web};
+
+    % Arrows (Recursive Queries)
+    \draw[arrow] (client.south) -- node[label, left] {1. Requête Initiale} (resolver.north);
+
+    % Arrows (Iterative Queries)
+    \draw[dashedarrow] ([yshift=0.25cm]resolver.east) --  ++(0.5,0) -| node[label, below right, yshift=-0.095cm] {2. Requête} ([xshift=0.35cm]rootserver.north);
+    \draw[dashedarrow] ([xshift=-0.1cm]rootserver.north) |- node[label, below left] {3. Réponse} ([yshift=-0.25cm]resolver.east);
+
+    \draw[dashedarrow] ([xshift=1cm]resolver.south)  |- node[label, above right] {4. Requête} ([yshift=0.15cm]tldserver.west);
+    \draw[dashedarrow] ([yshift=-0.25cm]tldserver.west)   -| node[label, below, xshift=1.20cm] {5. Réponse} ([xshift=0.5cm]resolver.south);
+
+    \draw[dashedarrow] ([xshift=-0.25cm]resolver.south)  |- node[label, above right] {6. Requête} ([yshift=0.15cm]authserver.west);
+    \draw[dashedarrow] ([yshift=-0.25cm]authserver.west) -- ++(-0.5,0) -| node[label, below right] {7. Réponse} ([xshift=-0.75cm]resolver.south);
+
+    % Arrows (Réponse to client)
+    \draw[arrow] ([xshift=0.4cm]resolver.north) -- node[label, right] {8. Résponse Finale} ([xshift=0.4cm]client.south);
+a
+    % Web Serveur
+    \draw[arrow] (client.east) -- node[label, above] {9. Requête HTTP} (webserver.west);
+    \draw[arrow] ([yshift=-0.4cm]webserver.west) --  node[label, below] {10. Réponse HTTP } ([yshift=-0.4cm]client.east);
+
+    % Additional labels
+    \node[align=center, below=0.25cm of rootserver, font=\small, text width=3cm] (note1) 
+        {[A-M] Serveur K reçoit $\sim$20k requêtes/s};
+        
+\end{tikzpicture}}
+    \end{center}
+    \caption{Étapes de requête d'une résolution DNS} 
+\end{figure}
+
+
+
+\noindent La résolution DNS débute par la requête initiale du client
+vers son \textit{resolver} local configuré par le FAI (étape 1).
+Le resolver envoie une requête itérative au serveur racine
+(étape 2), qui répond en fournissant l’adresse d’un TLD adapté (étape 3).
+Le resolver interroge alors le serveur TLD responsable des 
+adresses \textit{.com} et \textit{.org}, par exemple (étape 4),
+lequel renvoie l’adresse du serveur \textit{authoritative} pour le domaine
+(étape 5). Celui-ci retourne l’enregistrement A/AAAA demandé (étape 7). Le
+resolver assemble les réponses puis envoie la réponse finale au client
+(étape 8). Le client initie ensuite une connexion HTTP vers le serveur Web
+obtenu (étape 9) et reçoit la réponse HTTP (étape 10).
+
+\section{DNS Resolver}
+    Le \textit{stub resolver} est intégré à l’OS et transmet les
+    requêtes DNS aux resolvers récursifs (BIND, Unbound, services
+    FAI ou tiers publics).  Le resolver est avant tout un logiciel, côté client
+    et côté serveur. Certains routeurs ou appliances réseau
+    intègrent un resolver optimisé en firmware.
+
+\begin{figure}[H]
+    \begin{center}
+
+\scalebox{0.75}{
+    \begin{tikzpicture}[scale=0.25,
+        box/.style={rectangle, draw, myb, rounded corners, minimum width=2.8cm, minimum height=1.2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}},
+        label/.style={font=\small}
+    ]
+
+    \sffamily
+    % --- Noeuds principaux ---
+    \node[box] (os) {Système d'exploitation \\ (\textit{Stub Resolver})};
+    \node[box, below=3cm of os] (resolver) {Resolver DNS récursif \\ (BIND, Unbound, FAI, services publics)};
+    \node[box, below left=3cm and 0.5cm of resolver] (router) {Routeur / Appliance réseau \\ (Resolver embarqué)};
+    \node[box, above right=0.5cm and  -0.75cm of resolver] (public) {Resolvers publics \\ (Google DNS, Cloudflare, etc.)};
+    \node[box, below=3cm of resolver] (dnsinfra) {Infrastructure DNS globale \\ (Serveurs racine, TLD, Authoritative)};
+
+    % --- Flèches principales ---
+    \draw[arrow] (os.south) -- node[label, right] {Requête DNS} (resolver.north);
+
+    \draw[arrow] (resolver.south) -- node[label, right] {Résolution récursive} (dnsinfra.north);
+    \draw[arrow] (dnsinfra.north) -- ++(0,1.5) node[label, right] {Réponse DNS} (resolver.south);
+
+    \draw[arrow] (resolver.north) -- ++(0,1.5) node[label, left] {Réponse DNS} (os.south);
+
+    % --- Flèches supplémentaires ---
+    \draw[arrow, dashed] (os.west) -- ++(-3,0) node[label, above, xshift=-2.25cm, yshift=0.5] {Certaines appliances intègrent un resolver} -| (router.north);
+
+    \draw[arrow, dashed, xshift=6.75] (resolver.east) -|  (public.south);
+    \node[label, above] at ($(public.south) + (0, -9.5)$) {\textsf{Resolver publics (alternatifs)}};
+    % --- Notes supplémentaires ---
+    \node[align=left, below=0.5cm of router, font=\small, text width=5cm] (note-router)
+        {Firmware optimisé : résolveur intégré \\ pour les environnements locaux.};
+
+\end{tikzpicture}}
+    \end{center}
+    \caption{Fonctionnement du DNS Resolver (Stub, récursif, public, intégré)}
+\end{figure}
+\section{Emplacement du Resolver}
+    Le stub resolver vit dans chaque poste utilisateur.
+    Le resolver récursif peut résider dans le routeur local,
+    chez le FAI ou chez un fournisseur DNS public (1.1.1.1).
+\section{Serveur Racine}
+    Le serveur racine gère la zone « . » et renvoie les adresses
+    anycast des serveurs TLD responsable 
+    des adresses .com, .org, .fr, etc., sans fournir
+    directement l’enregistrement final.
+
+\begin{figure}[H]
+    \begin{center}
+    \scalebox{0.75}{
+    \begin{tikzpicture}[scale=0.3,
+        box/.style={rectangle, draw, myb, rounded corners, minimum width=2.8cm, minimum height=1.2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, thick},
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+
+    \sffamily
+    % --- Noeuds principaux ---
+    \node[box] (resolver) {Resolver DNS récursif};
+    \node[box, below=6.25cm of resolver] (root) {Serveur Racine \\ (zone « . »)};
+    \node[box, below left=0.5cm and 1cm of root] (tldcom) {Serveur TLD \\ .com};
+    \node[box, below=2cm of root] (tldorg) {Serveur TLD \\ .org};
+    \node[box, below right=0.5cm and 1cm of root] (tldfr) {Serveur TLD \\ .fr};
+
+    % --- Flèches principales ---
+    \draw[arrow] (resolver.south) -- node[right, label, above, sloped] {Requête : example.com} (root.north);
+    
+    % Réponses vers Resolver
+    \draw[arrow] (root.north) --  node[right, sloped, label, right, xshift=-2.5cm, yshift=0.25cm] {Réponse : Adresses anycast TLD} (resolver.south);
+
+    % Flèches root vers TLD
+    \draw[dashedarrow] (root.south west) -| node[label, above, xshift=1.5cm] {Info .com} (tldcom.north);
+    \draw[dashedarrow] (root.south) -- node[label, right] {Info .org} (tldorg.north);
+    \draw[dashedarrow] (root.south east) -| node[label, above, xshift=-1.5cm] {Info .fr} (tldfr.north);
+
+    % --- Notes ---
+    \node[align=left, below=0.5cm of tldorg, font=\small, text width=10cm] (note) 
+        {\textbf{Rôle :} Le serveur racine gère la zone « . » et renvoie \\ 
+        les adresses \textit{anycast} des serveurs TLD. \\ 
+        };
+
+\end{tikzpicture}}
+    \end{center}
+    \caption{Fonctionnement du Serveur Racine DNS}
+\end{figure}
+
+\section{Enregistrements A et AAAA}
+    Les enregistrements A associent un nom de domaine
+    à une adresse IPv4, tandis que AAAA fournit une
+    adresse IPv6. Lorsqu’un resolver interroge un serveur DNS pour 
+    obtenir les enregistrements
+    A/AAAA, il reçoit l’adresse IP cible pour établir la connexion.
+
+
+\begin{figure}[H]
+    \begin{center}
+    \scalebox{0.75}{
+    \begin{tikzpicture}[scale=0.3,
+        box/.style={rectangle, draw, myb, rounded corners, minimum width=2.8cm, minimum height=1.2cm, align=center, fill=myb!5},
+        arrow/.style={-{Stealth}, thick},
+        dashedarrow/.style={-{Stealth}, thick, dashed},
+        label/.style={font=\small}
+    ]
+
+    \sffamily
+    % --- Noeuds ---
+    \node[box] (client) {Client / Resolver DNS};
+    \node[box, right=6cm of client] (dns) {Serveur DNS};
+    \node[box, below =2cm of dns] (server) {Serveur Web cible};
+
+    % --- Flèches ---
+    \draw[arrow] ($(client.east) + (0,0.25)$) -- node[label, above] {Requête : "A / AAAA pour \texttt{example.com}"} ($(dns.west) + (0,0.25)$);
+    \draw[arrow] ($(dns.west) + (0,-0.25)$) -- node[label, below] {Réponse : IPv4 (A)  ou IPv6 (AAAA) } ($(client.east) + (0,-0.25)$);
+
+    % Connexion IP finale
+    \draw[arrow, dashed] (client.south) -- ++(0,-4.5) -- ++(40,0) |- (server.east);
+
+    % --- Légendes IP ---
+    \node[below=0.75cm of dns, align=left,xshift=-14, font=\small\sffamily, text width=12cm] (notes) {
+         \textbf{A} : Associe le domaine à une \textbf{IPv4} (ex. \texttt{93.184.216.34})};
+    \node[below=1.5cm of dns, align=left, xshift=-100, font=\small\sffamily, text width=12cm] (notes2) {
+        \textbf{AAAA} : Associe le domaine à une \textbf{IPv6} (ex. \texttt{2606:2800:220:1:248:1893:25c8:1946})
+    };
+
+
+\end{tikzpicture}}
+    \end{center}
+    \caption{Résolution DNS avec enregistrements A (IPv4) et AAAA (IPv6)}
+\end{figure}
+
+
+\section{Serveur TLD}
+    Un serveur TLD gère un \textit{Top-Level Domain}
+    (.com, .org, .fr). Il délègue la résolution des noms aux
+    serveurs \textit{authoritative} via des enregistrements NS.
+
+\section{Serveur authoritative}
+    Le serveur \textit{authoritative} détient la copie officielle
+    des enregistrements DNS d’une zone (maître ou secondaire).
+    Il répond de manière définitive aux requêtes sans délégation
+    supplémentaire.
+
+\section{Avantages de la répartition}
+    Cette hiérarchie garantit la scalabilité en partageant
+    la charge, améliore la performance grâce aux caches
+    et à la répartition géographique, renforce la
+    robustesse via la redondance et permet une
+    gestion déléguée et sécurisée.
+
+
+   \section{HTTP}
+    Protocole basé sur le modèle client-serveur où le \( C \) envoie une requête 
+    au \( S \) et le \( S \) répond avec les ressources demandées. Plusieurs 
+    proxy intermédiaires peuvent intervenir entre l'envoie et la réception. 
+
+    \textbf{\textsf{Sans état}} : HTTP  est un des rares 
+    protocoles sans état  . SMTP  , IMAP et FTP maintiennent 
+    une session durant laquelle des 
+    informations de contexte sont échangées.
+
+
+    \textbf{\textsf{Types de requêtes}} : GET récupère la ressource; POST   
+    crée une ressource en envoyant des données; PUT  remplace ou crée la ressource; 
+    DELETE la supprime; HEAD   renvoie uniquement les entêtes.
+
+    \chapter{Scriptage}
+    La connaissance de commandes UNIX et une compréhension générale 
+    du langage bash évite souvent d'avoir à programmer des scripts 
+    élaborés qui peuvent être remplacé par des commandes
+    simples mais sophistiquées.  
+
+    \section{Commande linux de navigation et de gestion de fichiers}
+    \begin{tikzpicture}[dirtree]
+        \node[directory] {\fontfamily{lmss}\selectfont Commandes Linux}
+            child { node[directory] {ls}
+                child { node {\fontfamily{lmss}\selectfont Liste le contenu d'un répertoire} }
+            }
+            child[missing] {}
+            child { node[directory] {cd rep}
+                child { node {\fontfamily{lmss}\selectfont Se déplace dans le répertoire \texttt{rep}} }
+            }
+            child[missing] {}
+            child { node[directory] {rm file}
+                child { node {\fontfamily{lmss}\selectfont Supprime le fichier \texttt{rep}} }
+            }
+            child[missing] {}
+            child { node[directory] {mkdir rep}
+                child { node {\fontfamily{lmss}\selectfont Crée le répertoire \texttt{rep} dans le répertoire courant} }
+            }
+            child[missing] {}
+            child { node[directory] {cd}
+                child { node {\fontfamily{lmss}\selectfont Se déplace dans le répertoire \texttt{home}} }
+            }
+            child[missing] {}
+            child { node[directory] {pwd}
+                child { node {\fontfamily{lmss}\selectfont Indique le répertoire courant} }
+            }
+            ;
+    \end{tikzpicture}
+
+
+    \subsection{Pipeline de redirection}
+    \begin{Concept}[Pipeline]
+        La pipeline dénotée par la syntaxe \xfbox[black!80!cyan!40]{|} permet 
+    de diriger la sortie d'une première commande 
+    sur l'entrée standard d'une seconde commande afin que l'\textit{output}
+    de la première serve d'\textit{input} à la seconde.
+    \end{Concept}
+
+    \begin{Exemple}[Utilisation d'une pipeline pour inverser l'affichage d'un string]
+
+        La commande \xfbox[black!80!cyan!40]{\texttt{rev}} renverse le texte en \textit{input} 
+        ligne à ligne.   
+            \begin{minted}{bash}
+                            echo "bonjour" | rev
+            \end{minted}
+    \end{Exemple}
+    On contaste que, contrairement à \xfbox[black!80!cyan!40]{\texttt{tac}}, 
+    la commande \textsf{rev} ne modifie par l'ordre des lignes. Par ailleurs, 
+    \texttt{rev} n'inverse pas tous le contenu d'un  fichier, mais 
+    plutôt \textbf{chaque ligne individuellement}. 
+    \verb|rev|. 
+
+    \begin{Note}[Directionnalité]
+        L'inversion de l'ordre de la commande n'est pas possible puisque 
+        \xfbox[black!80!cyan!40]{\texttt{rev}} lit uniquement 
+        sur des entrées standard (\texttt{input} d'une pipeline) ou un fichier, et ne prend pas 
+        directement d'argument de texte en ligne de commande : 
+        \begin{center}
+            \begin{minted}{bash}
+                        rev "bonjour" | echo
+            \end{minted}
+        \end{center}
+        L'exemple ci-haut \textbf{ne respecte pas la syntaxe}. D'ailleurs,  
+        \xfbox[black!80!cyan!40]{echo} s'attend à un argument qui le succède.
+    \end{Note}
+
+
+
+
+    \begin{Concept}[Redirection en \texttt{csh}]
+            
+        Le symbole de redirection
+        \noindent\xfbox[black!80!cyan!40]{\texttt{>}}  
+        redirige la sortie standard vers un fichier. 
+        Si le fichier existe déjà, \textbf{il est écrasé}.
+        \vspace{0.5em}
+
+        L'opérateur \noindent\xfbox[black!80!cyan!40]{\texttt{>!}}  
+        Force la redirection de la sortie standard vers un fichier. 
+        Cela écrase le fichier existant \textbf{sans avertissement}.
+
+        \vspace{0.5em}
+
+        L'opérateur \noindent\xfbox[black!80!cyan!40]{\texttt{>>}}  
+        ajoute la sortie standard à la fin d'un fichier existant. Si le fichier 
+        n'existe pas, il est créé. 
+    \end{Concept}
+
+    \begin{Exemple}{Redirection vers un fichier}{}
+        \begin{minted}{bash}
+                    echo "bonjour" | rev > fichier.txt
+        \end{minted}
+        La commande \xfbox[black!80!cyan!40]{>} permet d'enregistrer 
+        un \textit{input} dans le fichier \texttt{fichier.txt}.   
+    \end{Exemple}
+
+    \section{Manipulation de fichiers textes}
+    \begin{center}
+        \begin{tikzpicture}[dirtree]
+            \node[directory] {\fontfamily{lmss}\selectfont Commandes UNIX sur fichier texte}
+                child { node[directory] {head}
+                    child { node {\fontfamily{lmss}\selectfont Affiche les premières lignes d'un fichier} }
+                }
+                child[missing] {}
+                child { node[directory] {tail}
+                    child { node {\fontfamily{lmss}\selectfont Affiche les dernières lignes d'un fichier} }
+                }
+                child[missing] {}
+                child { node[directory] {tr}
+                    child { node {\fontfamily{lmss}\selectfont Transforme ou supprime des caractères dans un texte} }
+                }
+                ;
+        \end{tikzpicture}
+    \end{center}
+
+    \section{La commande \texttt{tr}}
+
+    \begin{Définition}[Commande \texttt{tr}]
+        La commande \xfbox[black!80!cyan!40]{\texttt{tr}} 
+        est utilisée pour transformer ou supprimer des 
+        caractères dans une entrée standard. 
+    \end{Définition}
+    \subsection{Utilisation de \texttt{tr} et \texttt{-s}}
+
+    \begin{Exemple}{Découpe en mots une ligne avec ponctuation}{}
+
+
+
+    \begin{center}
+  \begin{adjustbox}{max width=\linewidth}
+    \begin{cminted}{bash}
+head -n 1 zola1.txt | tr    '[[:punct:]]' ' ' 
+                    | tr    '[[:space:]]' '\n' 
+                    | tr -s '[[:space:]]'
+    \end{cminted}
+  \end{adjustbox}
+    \end{center}
+        Cette commande découpe la première ligne de \texttt{zola1.txt} en mots en 
+        remplaçant les ponctuations par des espaces, divisant chaque mot sur une 
+        nouvelle ligne et éliminant les espaces redondants.
+
+        \vspace{0.5em}
+
+        L'utilisation de \texttt{tr}  
+        est justifiée par le fait que la commande différencie correctement 
+        un mot suivi d'une virgule ou d'un 
+        point. Par exemple, on obtient la transformation suivante :
+        \begin{center}
+            \( \texttt{Bourse,} \xrightarrow{\hspace*{3cm}} \texttt{Bourse}\)
+        \end{center}
+        \hfill
+    \end{Exemple}
+
+
+    \begin{Note}{}{}
+        L'option \xfbox[black!80!cyan!40]{\texttt{-s}} supprime les \textbf{répétitions successives} 
+        des caractères spécifiés dans l'ensemble donné. Ainsi :
+
+
+
+\begin{center}
+\begin{cminted}{bash}
+    echo "aaa   bbb    ccc" | tr -s ' '
+\end{cminted}
+\end{center}
+
+        engendre le \textit{output} \texttt{"aaa bbb ccc"} en supprimant les répétitons 
+        d'espaces, soit \xfbox[black!80!cyan!40]{\texttt{' '}}.
+        \\\hfill
+    \end{Note}
+    \begin{Exemple}{Découpage sélectif des mots alphabétiques}{}
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\begin{cminted}{bash}
+head -n 1 zola1.txt | tr -sc '[[:alpha:]]' '\n'
+\end{cminted}
+\end{minipage}
+\end{center}
+
+        Cette commande découpe la première ligne de \texttt{zola1.txt} en mots, 
+        remplaçant \textit{tous caractères non alphabétiques}, 
+        y compris ponctuation, par des 
+        sauts de ligne.
+
+        \vspace{0.5em}
+        Cette approche est plus concise et efficace. Elle ne nécessite pas de 
+        multiples appels à \texttt{tr} et évite les mots collés à une ponctuation.
+    \end{Exemple}
+
+    \subsection{Utilisation de \texttt{tr} et \texttt{-sc}}
+    \begin{Exemple}[Combinaison avec l'option complément -c]
+        Dans l'exemple 
+        ci-bas, les options \noindent\xfbox[black!80!cyan!40]{\texttt{-sc}} 
+        combinent deux fonctionnalités.
+        L'option \xfbox[black!80!cyan!40]{\texttt{-c}} 
+        prend le complément de l’ensemble spécifié qui est 
+        \texttt{:alpha:}, soit
+        \textbf{tout sauf les lettres alphabétiques}, et
+        l'option
+        \noindent\xfbox[black!80!cyan!40]{\texttt{-c}}  
+        compresse les répétitions
+        des caractères du complément. 
+        \begin{center}
+        \begin{minipage}{0.5\linewidth}
+            \begin{cminted}{bash}
+echo "abc123@@@def456" | tr -sc '[:alpha:]' '\n'
+            \end{cminted}
+        \end{minipage}
+        \end{center}
+
+
+        \vspace{0.5em}
+
+        \noindent 
+        Ainsi, on obtient la transformation suivante :
+        \begin{align*}
+            \textcolor{gray}{\texttt{1.}}  \texttt{abc123@@@def456} \quad \xrightarrow{\hspace*{3cm}} \quad &\textcolor{gray}{\texttt{1.}} \texttt{abc}
+            \\
+                                                 &\textcolor{gray}{\texttt{2.}} \texttt{def}
+        \end{align*}
+
+        Ainsi, les caractères non alphabétiques sont remplacés par des
+        sauts de ligne compressés.
+        \hfill\\
+    \end{Exemple}
+
+    \section{La commande \texttt{grep}}
+    \begin{Concept}[Commande grep]
+        La commande grep est utilisée pour recherches des lignes correspondant 
+        à un \textit{motif}  dans un fichier ou dans une entrée standard. 
+    \end{Concept}
+    \vspace{1em}
+
+
+    \begin{Exemple}[Recherche insensible à la casse avec \texttt{grep -i}]
+        Cette commande recherche toutes les lignes contenant \textit{bonjour}   
+        dans le fichier spécifié, sans tenir compte de la casse. 
+\begin{center}
+\begin{adjustbox}{max width=\linewidth}
+        \begin{cminted}{bash}
+grep -i "bonjour" fichier.txt
+        \end{cminted}
+\end{adjustbox}
+\end{center}
+    \end{Exemple}
+
+
+
+    \begin{Exemple}{Recherche du motif \texttt{ven} insensible à la casse}{}
+\begin{center}
+  \begin{adjustbox}{max width=\linewidth}
+    \begin{cminted}{bash}
+head -n 60 zola1.txt | tr '[[:space:]]' '\n' | grep -i ven
+    \end{cminted}
+  \end{adjustbox}
+\end{center}
+
+        Cette commande extrait les 60 premières lignes du fichier \texttt{zola1.txt},
+        divise chaque mot sur une nouvelle ligne en remplaçant les espaces par des 
+        sauts de ligne, puis recherche toutes les occurrences du motif \texttt{ven}
+        sans tenir compte de la casse.
+    \end{Exemple}
+
+    \vspace{1em}
+    \begin{Exemple}{Recherche avec surlignage du motif \texttt{ven}}{}
+\begin{center}
+  \begin{adjustbox}{max width=\linewidth}
+    \begin{cminted}{bash}
+head -n 60 zola1.txt | tr '[[:space:]]' '\n' | grep --colour -i ven
+    \end{cminted}
+  \end{adjustbox}
+\end{center}
+
+
+        Cette commande effectue la même recherche que l'exemple précédent, mais 
+        utilise l'option \texttt{--colour} pour surligner en couleur toutes les 
+        occurrences du motif \texttt{ven}, rendant les résultats plus visibles.
+    \end{Exemple}
+
+
+    \section{La commande \text{awk}}
+    \begin{Définition}[Commande \texttt{awk}]
+        La commande awk est un langage de traitement de texte utilisé pour
+        analyser et manipuler des fichiers ou des flux de données structurés, ligne
+        par ligne, en fonction de motifs et d'actions spécifiés.
+    \end{Définition}
+    \vspace{2em}
+    \begin{Exemple}{Filtrage de mots fréquents selon leur ordre}{}
+    \begin{center}
+        \begin{adjustbox}{max width=\linewidth}
+            \begin{cminted}{bash}
+head -n 200 zola1.txt | tr '[[:space:]]' '\n' 
+                      | grep -i '^ven' 
+                      | sort | uniq -c 
+                      | sort -k1,1nr | awk '{print $2}'
+            \end{cminted}
+        \end{adjustbox}
+    \end{center}                    
+    \end{Exemple}
+
+    Notons ici que \xfbox[black!80!cyan!40]{\texttt{n}} force le trie 
+    numérique plutôt que le tri par défaut en ASCII, afin que, 
+    par exemple, la chaîne \guillemotleft 10\guillemotright 
+     soit considéré plus grande que 
+    la chaîne \guillemotleft 2\guillemotright. Par ailleurs,
+    le mot clé \xfbox[black!80!cyan!40]{\texttt{r}} permet 
+    d'effectuer le tri en ordre inverse. L'option 
+    \xfbox[black!80!cyan!40]{\texttt{-k1,1}} quant à elle 
+    définit une \guillemotleft clé\guillemotright de tri 
+    qui va du champ 1 au champ 1, c'est-à-dire que seule 
+    la première colonne est inspectée pour décider de l'ordre. 
+    Finalement, \xfbox[black!80!cyan!40]{\texttt{\$2}} désigne 
+    le deuxième champ de chaque ligne. Ainsi, la commande 
+    \xfbox[black!80!cyan!40]{\texttt{awk '{print \$2}'}} 
+    permet d'afficher la deuxième colonne de chaque ligne. 
+
+
+    \begin{Exemple}{Filtrage des mots selon leur occurence}
+        \begin{center}
+            \begin{adjustbox}{max width=\linewidth}
+                \begin{cminted}{bash}
+cat zola1.txt | tr '[[:punct:]]' ' ' 
+              | tr '[[:space:]]' '\n' 
+              | grep -i '^ven' 
+              | sort | uniq -c 
+              | sort -k1,1nr 
+              | awk '$1 > 3 {print $0}'
+                \end{cminted}
+            \end{adjustbox}
+        \end{center}
+    \end{Exemple}
+    
+    Le mot clé \xfbox[black!80!cyan!40]{\texttt{awk '\$1 > 3 {print \$0}'}}
+    affiche uniquement les mots avec plus de 3 occurences, avec leur 
+    fréquence. 
+
+
+    \section{La commande awk}
+    \begin{Définition}[La commande \text{wc}]
+        La commande wc ou \textit{word count} est utilisé 
+        pour compter les lignes, le smots ou les caractères dans uen entrée 
+        standard ou un fichier. 
+    \end{Définition}
+
+    \vspace{1em}
+    \begin{Exemple}{Compter les mots uniques}
+        \begin{center}
+            \begin{adjustbox}{max width=\linewidth}
+                \begin{cminted}{bash}
+cat zola1.txt | tr      '[[:punct:]]' ' ' 
+              | tr   -s '[[:space:]]' 
+              | tr      '[[:space:]]' '\n' 
+              | sort  
+              | uniq -c 
+              | wc   -l
+                \end{cminted}
+            \end{adjustbox}
+        \end{center}
+    \end{Exemple}
+
+    La commande \xfbox[black!80!cyan!40]{\text{\texttt{uniq -c}}} 
+    regroupe les lignes identiques adjacentes. À titre 
+    d'exemple, cette même commande engendrerait la transformation suivante 
+        \begin{align*}
+            &\texttt{arbre} \quad \phantom{\xrightarrow{\hspace*{3cm}}} &
+            \\
+            &\texttt{arbre} \quad \phantom{\xrightarrow{\hspace*{3cm}}}  &\texttt{2 arbre}
+            \\
+            &\texttt{vache} \;\;\quad \xrightarrow{\hspace*{4cm}} &\texttt{1 vache}
+            \\
+            &\texttt{chien} \quad \phantom{\xrightarrow{\hspace*{3cm}}} &\texttt{2 chien}
+            \\
+            &\texttt{chien} \quad \phantom{\xrightarrow{\hspace*{3cm}}} &
+        \end{align*}
+
+        La commande \xfbox[black!80!cyan!40]{\texttt{wc -l}} quant à elle 
+    compte uniquement le nombre de lignes. Ainsi, dans l'exemple c
+
+
+
+
+
+
+
+                                                                                    
+    
+
+
+
+
+
+
+
+
+\end{document}
+
+
